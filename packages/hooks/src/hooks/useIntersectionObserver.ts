@@ -1,13 +1,13 @@
 import { useEffect, useState } from "kaioken";
 
-export const useResizeObserver = (
+export const useIntersectionObserver = (
   ref: Kaioken.Ref<Element>,
-  callback: ResizeObserverCallback,
-  options: ResizeObserverOptions | undefined = undefined
+  callback: IntersectionObserverCallback,
+  options: IntersectionObserverInit | undefined = undefined
 ) => {
   const [isSupported, setIsSupported] = useState(false)
   const [isListening, setIsListening] = useState(true);
-  let observer: ResizeObserver | undefined;
+  let observer: IntersectionObserver | undefined;
 
   const cleanup = () => {
     if (observer) {
@@ -19,13 +19,13 @@ export const useResizeObserver = (
   useEffect(() => {
     cleanup();
     if (isSupported && ref.current && isListening) {
-      observer = new ResizeObserver(callback);
-      observer.observe(ref.current, options);
+      observer = new IntersectionObserver(callback, options);
+      observer.observe(ref.current);
     }
   }, [ref.current, isListening]);
 
   useEffect(() => {
-    setIsSupported(window && 'ResizeObserver' in window)
+    setIsSupported(window && 'IntersectionObserver' in window)
   }, [])
 
   const start = () => {
