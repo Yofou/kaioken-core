@@ -13,6 +13,9 @@ import { useDocumentVisibility } from '../src/hooks/useDocumentVisibility'
 import { useStartTyping } from '../src/hooks/useStartTyping'
 import { useTextareaAutoSize } from '../src/hooks/useTextareaAutoSize'
 import { useRafFn } from '../src/hooks/useRafFn'
+import { useClickOutside } from '../src/hooks/useClickOutside'
+import { useEffectDebounce } from '../src/hooks/useEffectDebounce'
+import { useEffectThrottle } from '../src/hooks/useEffectThrottle'
 
 export {
 	useMouse,
@@ -32,4 +35,7 @@ export {
   useStartTyping,
   useTextareaAutoSize,
   useRafFn,
+  useClickOutside,
+  useEffectDebounce,
+  useEffectThrottle
 }

@@ -60,12 +60,16 @@ export const useRafFn = (
     } else {
       stop
     }
+
+    return () => stop()
   }, [isActive])
 
   useEffect(() => {
     if (options.immediate && !refId.current) {
       start()
     }
+
+    return () => stop()
   }, [])
 
   return {
