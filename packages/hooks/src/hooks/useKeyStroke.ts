@@ -1,4 +1,4 @@
-import { useEventListener } from "./useEventListener"
+import { EventTarget, useEventListener } from "./useEventListener"
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean
 export type KeyFilter = true | string | string[] | KeyPredicate
@@ -6,7 +6,7 @@ export type KeyStrokeEventName = 'keydown' | 'keypress' | 'keyup'
 
 export type KeyOptions = {
   eventName?: KeyStrokeEventName
-  ref?: Kaioken.Ref<Element>
+  ref?: (() => EventTarget | null) | null
   passive?: boolean
 }
 
@@ -43,7 +43,7 @@ export const useKeyStroke = (
   }
 
   return useEventListener(eventName, listener, {
-    ref: () => ref?.current ?? null,
+    ref,
     passive,
   })
 }

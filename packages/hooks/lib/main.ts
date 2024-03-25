@@ -9,6 +9,10 @@ import { useWindowFocus } from '../src/hooks/useWindowFocus'
 import { useWindowScroll } from '../src/hooks/useWindowScroll'
 import { useWindowSize } from '../src/hooks/useWindowSize'
 import { useKeyStroke, useKeyDown, useKeyUp } from '../src/hooks/useKeyStroke'
+import { useDocumentVisibility } from '../src/hooks/useDocumentVisibility'
+import { useStartTyping } from '../src/hooks/useStartTyping'
+import { useTextareaAutoSize } from '../src/hooks/useTextareaAutoSize'
+import { useRafFn } from '../src/hooks/useRafFn'
 
 export {
 	useMouse,
@@ -24,4 +28,8 @@ export {
   useKeyStroke,
   useKeyUp,
   useKeyDown,
+  useDocumentVisibility,
+  useStartTyping,
+  useTextareaAutoSize,
+  useRafFn,
 }

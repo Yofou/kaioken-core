@@ -2,13 +2,16 @@ import { useEffect } from "kaioken";
 
 export type Arrayable<T> = T[] | T;
 
-export const useEventListener = <E extends keyof WindowEventMap>(
+export type EventMap = WindowEventMap & DocumentEventMap
+export type EventTarget = Window | Element | Document
+
+export const useEventListener = <E extends keyof EventMap>(
   event: E,
-  listener: Arrayable<(this: Window, ev: WindowEventMap[E]) => any>,
-  options: AddEventListenerOptions & { ref?: (() => Element | null) | null } = {}
+  listener: Arrayable<(this: Window, ev: EventMap[E]) => any>,
+  options: AddEventListenerOptions & { ref?: (() => EventTarget | null) | null } = {}
 ) => {
   useEffect(() => {
-    let pointer: Window | Element = window;
+    let pointer: EventTarget = window;
 
     const elm = options?.ref?.()
     if (elm) {
