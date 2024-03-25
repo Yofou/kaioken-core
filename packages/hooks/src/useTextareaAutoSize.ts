@@ -1,8 +1,8 @@
-import { useEffect } from "kaioken"
+//  import { useEffect } from "kaioken"
 import { useResizeObserver } from "./useResizeObserver"
+import { useEventListener } from "./useEventListener"
 
 type TextAreaResizeOptions = {
-  input?: string
   onResize?: () => void
   styleTarget?: Kaioken.Ref<HTMLElement>
   styleProp?: "height" | "minHeight"
@@ -10,7 +10,7 @@ type TextAreaResizeOptions = {
 
 export const useTextareaAutoSize = (
   ref: Kaioken.Ref<HTMLTextAreaElement>,
-  options: TextAreaResizeOptions
+  options: TextAreaResizeOptions = {}
 ) => {
   const styleProps = options.styleProp ?? "height"
 
@@ -31,10 +31,13 @@ export const useTextareaAutoSize = (
     textarea.style[styleProps] = height
 
     options?.onResize?.()
+
   }
 
-  useEffect(update, [options.input])
   useResizeObserver(ref, update)
+  useEventListener('input', update, {
+    ref: () => ref.current
+  })
 
   return {
     update,

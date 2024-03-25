@@ -4,19 +4,22 @@ import {
   useEffectDebounce,
   useEffectThrottle,
   useElementBounding,
+  useTextareaAutoSize,
 } from "@kaioken-core/hooks"
 import { useRef, useState } from "kaioken"
 
 export { Page }
 
 function Page() {
-  const ref = useRef<Element>(null)
+  const ref = useRef<HTMLTextAreaElement>(null)
   const [count, setCount] = useState(0)
   const inc = () => setCount(count + 1)
   const { width, height } = useElementBounding(ref)
   useClickOutside(ref, () => {
     //  console.log('click outside')
   })
+
+  useTextareaAutoSize(ref, {})
 
   useEffectDebounce(
     () => {
