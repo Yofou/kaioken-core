@@ -60,9 +60,6 @@ importers:
 
   packages/hooks:
     dependencies:
-      kaioken:
-        specifier: ^0.11.3
-        version: 0.11.3
       vite-plugin-dts:
         specifier: ^3.7.3
         version: 3.7.3(typescript@5.3.3)(vite@5.2.6)
@@ -70,6 +67,9 @@ importers:
         specifier: ^0.0.8
         version: 0.0.8
     devDependencies:
+      kaioken:
+        specifier: ^0.11.3
+        version: 0.11.3
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -1648,7 +1648,6 @@ packages:
 
   /kaioken@0.11.3:
     resolution: {integrity: sha512-O67YT/RQumdNJ6oTYhOf+r6KcmtwDSQYeFstRsPalHI3vp0J1EtmtVt/+b3Xga4ZRVKCG+e0wiHozSQ0bf7W9w==}
-    dev: false
 
   /kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}

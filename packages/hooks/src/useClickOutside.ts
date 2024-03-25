@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "kaioken"
 import { useEventListener } from "./useEventListener"
 
+const noop = () => {}
+
 export type ClickOutsideOptions = {
   ignore?: (Kaioken.Ref<Element> | string)[]
   capture?: boolean
@@ -97,9 +99,9 @@ export const useClickOutside = <T extends ClickOutsideOptions>(
       isIOSWorkaround.current = true
 
       Array.from(window.document.body.children).forEach((el) =>
-        el.addEventListener("click", () => {})
+        el.addEventListener("click", noop)
       )
-      window.document.documentElement.addEventListener("click", () => {})
+      window.document.documentElement.addEventListener("click", noop)
     }
   }, [isIOSWorkaround.current])
 }

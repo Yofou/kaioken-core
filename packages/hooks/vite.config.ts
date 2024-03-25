@@ -20,7 +20,8 @@ export default defineConfig({
       },
     },
   },
-  plugins: [kaioken(), dts({ 
+  plugins: [kaioken(), dts({
     rollupTypes: false,
+    exclude: ['vite.config.ts']
   })]
 })
