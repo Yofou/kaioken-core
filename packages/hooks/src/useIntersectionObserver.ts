@@ -22,7 +22,7 @@ export const useIntersectionObserver = (
       observer = new IntersectionObserver(callback, options)
       observer.observe(ref.current)
     }
-  }, [ref.current, isListening])
+  }, [ref.current, isListening, isSupported])
 
   useEffect(() => {
     setIsSupported(window && "IntersectionObserver" in window)
