@@ -14,10 +14,10 @@
     "build": "tsc && vite build"
   },
   "peerDependencies": {
-    "kaioken": "^0.11.1"
+    "kaioken": "^0.11.3"
   },
   "devDependencies": {
-    "kaioken": "^0.11.1",
+    "kaioken": "^0.11.3",
     "typescript": "^5.3.3",
     "vite": "^5.0.10"
   },

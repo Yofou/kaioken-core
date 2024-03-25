@@ -24,8 +24,8 @@ importers:
         specifier: ^4.18.2
         version: 4.19.1
       kaioken:
-        specifier: ^0.11.1
-        version: 0.11.1
+        specifier: ^0.11.3
+        version: 0.11.3
       tsx:
         specifier: ^4.7.1
         version: 4.7.1
@@ -55,11 +55,14 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vite-plugin-kaioken:
-        specifier: ^0.0.8
-        version: 0.0.8
+        specifier: ^0.0.9
+        version: 0.0.9
 
   packages/hooks:
     dependencies:
+      kaioken:
+        specifier: ^0.11.3
+        version: 0.11.3
       vite-plugin-dts:
         specifier: ^3.7.3
         version: 3.7.3(typescript@5.3.3)(vite@5.2.6)
@@ -67,9 +70,6 @@ importers:
         specifier: ^0.0.8
         version: 0.0.8
     devDependencies:
-      kaioken:
-        specifier: ^0.11.1
-        version: 0.11.1
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -1646,8 +1646,9 @@ packages:
       graceful-fs: 4.2.11
     dev: false
 
-  /kaioken@0.11.1:
-    resolution: {integrity: sha512-YEshCJHqLVc/XX9n2eZELBU7rTLxLYXewF80S3Igt25/FOynn9ixyng2Wcth4SaozPk3x9aXQvFxs24GZR4qEA==}
+  /kaioken@0.11.3:
+    resolution: {integrity: sha512-O67YT/RQumdNJ6oTYhOf+r6KcmtwDSQYeFstRsPalHI3vp0J1EtmtVt/+b3Xga4ZRVKCG+e0wiHozSQ0bf7W9w==}
+    dev: false
 
   /kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
@@ -2489,6 +2490,11 @@ packages:
 
   /vite-plugin-kaioken@0.0.8:
     resolution: {integrity: sha512-i2bLcBrWo7ks3jYBRUFH1bnIpKx5oyibYRmC3h5R3IBPb6wWRpaPkczgG4HTCKUkjjjnFPHiU2cRD0Hc9vf0Bg==}
+    dev: false
+
+  /vite-plugin-kaioken@0.0.9:
+    resolution: {integrity: sha512-UdAP4nm/yq8uLSQ6xZLtQxdDYEYQPz0E2TORc3Fx3Td2cDDj8rG1eLDLiydUh+Iodd7tnxwUM33CUMaZDmkLKA==}
+    dev: true
 
   /vite@5.2.6:
     resolution: {integrity: sha512-FPtnxFlSIKYjZ2eosBQamz4CbyrTizbZ3hnGJlh/wMtCrlp1Hah6AzBLjGI5I2urTfNnpovpHdrL6YRuBOPnCA==}

@@ -17,14 +17,14 @@
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
-    "vite-plugin-kaioken": "^0.0.8"
+    "vite-plugin-kaioken": "^0.0.9"
   },
   "dependencies": {
+    "@kaioken-core/hooks": "workspace:^",
     "express": "^4.18.2",
-    "kaioken": "^0.11.1",
+    "kaioken": "^0.11.3",
     "tsx": "^4.7.1",
     "vike": "^0.4.161",
-    "vite": "^5.1.1",
-    "@kaioken-core/hooks": "workspace:^"
+    "vite": "^5.1.1"
   }
 }
