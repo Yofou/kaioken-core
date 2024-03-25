@@ -8,6 +8,7 @@ import { useResizeObserver } from '../src/hooks/useResizeObserver'
 import { useWindowFocus } from '../src/hooks/useWindowFocus'
 import { useWindowScroll } from '../src/hooks/useWindowScroll'
 import { useWindowSize } from '../src/hooks/useWindowSize'
+import { useKeyStroke, useKeyDown, useKeyUp } from '../src/hooks/useKeyStroke'
 
 export {
 	useMouse,
@@ -20,4 +21,7 @@ export {
   useWindowScroll,
   useWindowFocus,
   useMediaQuery,
+  useKeyStroke,
+  useKeyUp,
+  useKeyDown,
 }

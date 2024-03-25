@@ -5,7 +5,7 @@ export type Arrayable<T> = T[] | T;
 export const useEventListener = <E extends keyof WindowEventMap>(
   event: E,
   listener: Arrayable<(this: Window, ev: WindowEventMap[E]) => any>,
-  options: AddEventListenerOptions & { ref?: () => Element | null } = {}
+  options: AddEventListenerOptions & { ref?: (() => Element | null) | null } = {}
 ) => {
   useEffect(() => {
     let pointer: Window | Element = window;
