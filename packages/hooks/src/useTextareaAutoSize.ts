@@ -1,6 +1,5 @@
-//  import { useEffect } from "kaioken"
-import { useResizeObserver } from "./useResizeObserver"
 import { useEventListener } from "./useEventListener"
+import { useEffect } from "kaioken"
 
 type TextAreaResizeOptions = {
   onResize?: () => void
@@ -31,13 +30,16 @@ export const useTextareaAutoSize = (
     textarea.style[styleProps] = height
 
     options?.onResize?.()
-
   }
 
-  useResizeObserver(ref, update)
-  useEventListener('input', update, {
-    ref: () => ref.current
+  useEventListener("resize", update, {
+    passive: true,
   })
+  useEventListener("input", update, {
+    ref: () => ref.current,
+  })
+
+  useEffect(update, [])
 
   return {
     update,

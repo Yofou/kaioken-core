@@ -16,6 +16,9 @@ import { useRafFn } from "../src/useRafFn"
 import { useClickOutside } from "../src/useClickOutside"
 import { useEffectDebounce } from "../src/useEffectDebounce"
 import { useEffectThrottle } from "../src/useEffectThrottle"
+import { useEffectDeep } from "../src/useEffectDeep"
+import { useParentElement } from "../src/useParentElement"
+import { useActiveElement } from "../src/useActiveElement"
 
 export {
   useMouse,
@@ -38,4 +41,7 @@ export {
   useClickOutside,
   useEffectDebounce,
   useEffectThrottle,
+  useEffectDeep,
+  useParentElement,
+  useActiveElement,
 }
