@@ -1,4 +1,4 @@
-import { useEffect, useState } from "kaioken";
+import { useEffect, useState } from "kaioken"
 
 export const useResizeObserver = (
   ref: Kaioken.Ref<Element>,
@@ -6,39 +6,39 @@ export const useResizeObserver = (
   options: ResizeObserverOptions | undefined = undefined
 ) => {
   const [isSupported, setIsSupported] = useState(false)
-  const [isListening, setIsListening] = useState(true);
-  let observer: ResizeObserver | undefined;
+  const [isListening, setIsListening] = useState(true)
+  let observer: ResizeObserver | undefined
 
   const cleanup = () => {
     if (observer) {
-      observer.disconnect();
-      observer = undefined;
+      observer.disconnect()
+      observer = undefined
     }
-  };
+  }
 
   useEffect(() => {
-    cleanup();
+    cleanup()
     if (isSupported && ref.current && isListening) {
-      observer = new ResizeObserver(callback);
-      observer.observe(ref.current, options);
+      observer = new ResizeObserver(callback)
+      observer.observe(ref.current, options)
     }
-  }, [ref.current, isListening]);
+  }, [ref.current, isListening])
 
   useEffect(() => {
-    setIsSupported(window && 'ResizeObserver' in window)
+    setIsSupported(window && "ResizeObserver" in window)
   }, [])
 
   const start = () => {
-    setIsListening(true);
-  };
+    setIsListening(true)
+  }
 
   const stop = () => {
-    setIsListening(true);
-  };
+    setIsListening(true)
+  }
 
   return {
     isSupported,
     start,
     stop,
-  };
-};
+  }
+}

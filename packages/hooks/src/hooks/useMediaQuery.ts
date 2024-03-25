@@ -10,32 +10,29 @@ export const useMediaQuery = (query: string) => {
   }
 
   const cleanup = () => {
-    if (!mediaQuery)
-      return
-    if ('removeEventListener' in mediaQuery)
-      mediaQuery.removeEventListener('change', handler)
-    else
-      // @ts-expect-error deprecated API
-      mediaQuery.removeListener(handler)
+    if (!mediaQuery) return
+    if ("removeEventListener" in mediaQuery)
+      mediaQuery.removeEventListener("change", handler)
+    // @ts-expect-error deprecated API
+    else mediaQuery.removeListener(handler)
   }
 
   useEffect(() => {
     cleanup()
-    if (!isSupported) return;
+    if (!isSupported) return
 
     mediaQuery = window.matchMedia(query)
 
-    if ('addEventListener' in mediaQuery)
-      mediaQuery.addEventListener('change', handler)
-    else
-      // @ts-expect-error deprecated API
-      mediaQuery.addListener(handler)
+    if ("addEventListener" in mediaQuery)
+      mediaQuery.addEventListener("change", handler)
+    // @ts-expect-error deprecated API
+    else mediaQuery.addListener(handler)
 
     setMatches(mediaQuery.matches)
   }, [query])
 
   useEffect(() => {
-    setIsSupported(window && 'ResizeObserver' in window)
+    setIsSupported(window && "ResizeObserver" in window)
   }, [])
 
   return [matches]

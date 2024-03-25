@@ -7,11 +7,19 @@ export type ClickOutsideOptions = {
   detectIframe?: boolean
 }
 
-export type ClickOutsideHandler<T extends { detectIframe: ClickOutsideOptions['detectIframe'] } = { detectIframe: false }> = (evt: T['detectIframe'] extends true ? PointerEvent | MouseEvent | FocusEvent : PointerEvent | MouseEvent) => void
+export type ClickOutsideHandler<
+  T extends { detectIframe: ClickOutsideOptions["detectIframe"] } = {
+    detectIframe: false
+  },
+> = (
+  evt: T["detectIframe"] extends true
+    ? PointerEvent | MouseEvent | FocusEvent
+    : PointerEvent | MouseEvent
+) => void
 
 export const useClickOutside = <T extends ClickOutsideOptions>(
   ref: Kaioken.Ref<Element>,
-  handler: ClickOutsideHandler<{ detectIframe: T['detectIframe'] }>,
+  handler: ClickOutsideHandler<{ detectIframe: T["detectIframe"] }>,
   options: T = {} as T
 ) => {
   const ignore = options.ignore ?? []
@@ -22,11 +30,11 @@ export const useClickOutside = <T extends ClickOutsideOptions>(
 
   const shouldIgnore = (event: PointerEvent | MouseEvent) => {
     return ignore.some((target) => {
-      if (typeof target === 'string') {
-        return Array.from(window.document.querySelectorAll(target))
-          .some(el => el === event.target || event.composedPath().includes(el))
-      }
-      else {
+      if (typeof target === "string") {
+        return Array.from(window.document.querySelectorAll(target)).some(
+          (el) => el === event.target || event.composedPath().includes(el)
+        )
+      } else {
         const el = target.current
         return el && (event.target === el || event.composedPath().includes(el))
       }
@@ -36,11 +44,9 @@ export const useClickOutside = <T extends ClickOutsideOptions>(
   const listener = (event: PointerEvent | MouseEvent) => {
     const el = ref.current
 
-    if (!el || el === event.target || event.composedPath().includes(el))
-      return
+    if (!el || el === event.target || event.composedPath().includes(el)) return
 
-    if (event.detail === 0)
-      shouldListen.current = !shouldIgnore(event)
+    if (event.detail === 0) shouldListen.current = !shouldIgnore(event)
 
     if (!shouldListen.current) {
       shouldListen.current = true
@@ -50,25 +56,30 @@ export const useClickOutside = <T extends ClickOutsideOptions>(
     handler(event)
   }
 
-  useEventListener('click', listener, {
+  useEventListener("click", listener, {
     passive: true,
-    capture
+    capture,
   })
 
-  useEventListener('pointerdown', (e) => {
-    const el = ref.current
-    shouldListen.current = !shouldIgnore(e) && !!(el && !e.composedPath().includes(el))
-  }, {
-    passive: true,
-  })
+  useEventListener(
+    "pointerdown",
+    (e) => {
+      const el = ref.current
+      shouldListen.current =
+        !shouldIgnore(e) && !!(el && !e.composedPath().includes(el))
+    },
+    {
+      passive: true,
+    }
+  )
 
   if (detectIframe) {
-    useEventListener('blur', (event) => {
+    useEventListener("blur", (event) => {
       setTimeout(() => {
         const el = ref.current
         if (
-          window.document.activeElement?.tagName === 'IFRAME'
-          && !el?.contains(window.document.activeElement)
+          window.document.activeElement?.tagName === "IFRAME" &&
+          !el?.contains(window.document.activeElement)
         )
           handler(event as any)
       }, 0)
@@ -76,17 +87,19 @@ export const useClickOutside = <T extends ClickOutsideOptions>(
   }
 
   useEffect(() => {
-    const isIOS = window?.navigator?.userAgent && (
-      (/iP(ad|hone|od)/.test(window.navigator.userAgent))
-        || (window?.navigator?.maxTouchPoints > 2 && /iPad|Macintosh/.test(window?.navigator.userAgent))
-    )
+    const isIOS =
+      window?.navigator?.userAgent &&
+      (/iP(ad|hone|od)/.test(window.navigator.userAgent) ||
+        (window?.navigator?.maxTouchPoints > 2 &&
+          /iPad|Macintosh/.test(window?.navigator.userAgent)))
 
-    if(isIOSWorkaround.current === false && isIOS) {
+    if (isIOSWorkaround.current === false && isIOS) {
       isIOSWorkaround.current = true
 
-      Array.from(window.document.body.children)
-        .forEach(el => el.addEventListener('click', () => {}))
-      window.document.documentElement.addEventListener('click', () => {})
+      Array.from(window.document.body.children).forEach((el) =>
+        el.addEventListener("click", () => {})
+      )
+      window.document.documentElement.addEventListener("click", () => {})
     }
   }, [isIOSWorkaround.current])
 }

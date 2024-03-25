@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "kaioken"
 import { useEventListener } from "./useEventListener"
 
-export const useWindowScroll = (behavior: ScrollBehavior = 'auto') => {
+export const useWindowScroll = (behavior: ScrollBehavior = "auto") => {
   const [x, _setX] = useState(0)
   const [y, _setY] = useState(0)
 
@@ -11,7 +11,7 @@ export const useWindowScroll = (behavior: ScrollBehavior = 'auto') => {
   }
 
   useEffect(update, [])
-  useEventListener('scroll', update, {
+  useEventListener("scroll", update, {
     capture: false,
     passive: true,
   })
@@ -24,5 +24,5 @@ export const useWindowScroll = (behavior: ScrollBehavior = 'auto') => {
     scrollTo({ top: value, behavior })
   }, [])
 
-  return {x, y, setX, setY}
+  return { x, y, setX, setY }
 }

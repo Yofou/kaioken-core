@@ -1,30 +1,25 @@
 import { useEffect, useRef, useState } from "kaioken"
 
-type RefFnArg =  {
-  delta: number,
+type RefFnArg = {
+  delta: number
   timestamp: DOMHighResTimeStamp
 }
 
 type RefFnOptions = {
-  fpsLimit?: number,
-  immediate?: boolean,
+  fpsLimit?: number
+  immediate?: boolean
 }
 
-export const useRafFn = (
-  callback: (arg: RefFnArg) => void,
-  options: RefFnOptions
-) => {
+const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
   const [isActive, setIsActive] = useState(false)
   const refId = useRef<null | number>(null)
   const intervalLimit = options?.fpsLimit ? 1000 / options.fpsLimit : null
   let previousFrameTimestamp = 0
 
   function loop(timestamp: DOMHighResTimeStamp) {
-    if (!isActive || !window)
-      return
+    if (!isActive || !window) return
 
-    if (!previousFrameTimestamp)
-      previousFrameTimestamp = timestamp
+    if (!previousFrameTimestamp) previousFrameTimestamp = timestamp
 
     const delta = timestamp - previousFrameTimestamp
 
@@ -77,4 +72,10 @@ export const useRafFn = (
     stop,
     isActive,
   }
+}
+
+export {
+  useRafFn,
+  useRafFn as useRequestAnimationFrame,
+  useRafFn as useRafAnimationFrameFn,
 }

@@ -2,11 +2,11 @@ import { useEffect, useRef } from "kaioken"
 
 type UseEffectThrottleOptions = {
   // in Milliseconds
-  maxWait?: number,
-} 
+  maxWait?: number
+}
 
 export const useEffectThrottle = (
-  callback: () => void, 
+  callback: () => void,
   deps: unknown[] | undefined,
   options: UseEffectThrottleOptions = {}
 ) => {
@@ -15,7 +15,7 @@ export const useEffectThrottle = (
 
   useEffect(() => {
     if (
-      lastEffectTrigger.current == null || 
+      lastEffectTrigger.current == null ||
       Date.now() >= lastEffectTrigger.current + maxWait
     ) {
       lastEffectTrigger.current = Date.now()

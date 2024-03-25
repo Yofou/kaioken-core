@@ -1,4 +1,4 @@
-import { useEffect, useState } from "kaioken";
+import { useEffect, useState } from "kaioken"
 
 export const useIntersectionObserver = (
   ref: Kaioken.Ref<Element>,
@@ -6,39 +6,39 @@ export const useIntersectionObserver = (
   options: IntersectionObserverInit | undefined = undefined
 ) => {
   const [isSupported, setIsSupported] = useState(false)
-  const [isListening, setIsListening] = useState(true);
-  let observer: IntersectionObserver | undefined;
+  const [isListening, setIsListening] = useState(true)
+  let observer: IntersectionObserver | undefined
 
   const cleanup = () => {
     if (observer) {
-      observer.disconnect();
-      observer = undefined;
+      observer.disconnect()
+      observer = undefined
     }
-  };
+  }
 
   useEffect(() => {
-    cleanup();
+    cleanup()
     if (isSupported && ref.current && isListening) {
-      observer = new IntersectionObserver(callback, options);
-      observer.observe(ref.current);
+      observer = new IntersectionObserver(callback, options)
+      observer.observe(ref.current)
     }
-  }, [ref.current, isListening]);
+  }, [ref.current, isListening])
 
   useEffect(() => {
-    setIsSupported(window && 'IntersectionObserver' in window)
+    setIsSupported(window && "IntersectionObserver" in window)
   }, [])
 
   const start = () => {
-    setIsListening(true);
-  };
+    setIsListening(true)
+  }
 
   const stop = () => {
-    setIsListening(true);
-  };
+    setIsListening(true)
+  }
 
   return {
     isSupported,
     start,
     stop,
-  };
-};
+  }
+}

@@ -1,41 +1,53 @@
-import { PageTitle } from "$/components/PageTitle";
-import { useClickOutside, useEffectDebounce, useEffectThrottle, useElementBounding } from "@kaioken-core/hooks";
-import { useRef, useState } from "kaioken";
+import { PageTitle } from "$/components/PageTitle"
+import {
+  useClickOutside,
+  useEffectDebounce,
+  useEffectThrottle,
+  useElementBounding,
+} from "@kaioken-core/hooks"
+import { useRef, useState } from "kaioken"
 
-export { Page };
+export { Page }
 
 function Page() {
-  const ref = useRef<Element>(null);
+  const ref = useRef<Element>(null)
   const [count, setCount] = useState(0)
   const inc = () => setCount(count + 1)
   const { width, height } = useElementBounding(ref)
-  useClickOutside(
-    ref,
+  useClickOutside(ref, () => {
+    //  console.log('click outside')
+  })
+
+  useEffectDebounce(
     () => {
-      //  console.log('click outside')
+      console.log("debounce")
+    },
+    [count],
+    {
+      maxWait: 1000,
     }
   )
 
-  useEffectDebounce(() => {
-      console.log("debounce")
-  }, [count], {
-    maxWait: 1000,
-  })
-
-  useEffectThrottle(() => {
+  useEffectThrottle(
+    () => {
       console.log("throttled")
-  }, [count], {
-    maxWait: 1000,
-  })
+    },
+    [count],
+    {
+      maxWait: 1000,
+    }
+  )
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <PageTitle>Home</PageTitle>
-      <p>{width} - {height}</p>
+      <p>
+        {width} - {height}
+      </p>
       <textarea ref={ref}></textarea>
       <div className="py-4">
         <button onclick={inc}>{count}</button>
       </div>
     </div>
-  );
+  )
 }

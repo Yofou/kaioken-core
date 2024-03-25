@@ -1,4 +1,4 @@
-import { useEffect, useState } from "kaioken";
+import { useEffect, useState } from "kaioken"
 
 export const useMutationObserver = (
   ref: Kaioken.Ref<Element>,
@@ -6,39 +6,39 @@ export const useMutationObserver = (
   options: MutationObserverInit | undefined = undefined
 ) => {
   const [isSupported, setIsSupported] = useState(false)
-  const [isListening, setIsListening] = useState(true);
-  let observer: MutationObserver | undefined;
+  const [isListening, setIsListening] = useState(true)
+  let observer: MutationObserver | undefined
 
   const cleanup = () => {
     if (observer) {
-      observer.disconnect();
-      observer = undefined;
+      observer.disconnect()
+      observer = undefined
     }
-  };
+  }
 
   useEffect(() => {
-    cleanup();
+    cleanup()
     if (isSupported && ref.current && isListening) {
-      observer = new MutationObserver(callback);
-      observer.observe(ref.current, options);
+      observer = new MutationObserver(callback)
+      observer.observe(ref.current, options)
     }
-  }, [ref.current, isListening, isSupported]);
+  }, [ref.current, isListening, isSupported])
 
   useEffect(() => {
-    setIsSupported(window && 'MutationObserver' in window)
+    setIsSupported(window && "MutationObserver" in window)
   }, [])
 
   const start = () => {
-    setIsListening(true);
-  };
+    setIsListening(true)
+  }
 
   const stop = () => {
-    setIsListening(true);
-  };
+    setIsListening(true)
+  }
 
   return {
     isSupported,
     start,
     stop,
-  };
-};
+  }
+}

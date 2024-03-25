@@ -2,7 +2,7 @@ import { EventTarget, useEventListener } from "./useEventListener"
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean
 export type KeyFilter = true | string | string[] | KeyPredicate
-export type KeyStrokeEventName = 'keydown' | 'keypress' | 'keyup'
+export type KeyStrokeEventName = "keydown" | "keypress" | "keyup"
 
 export type KeyOptions = {
   eventName?: KeyStrokeEventName
@@ -11,12 +11,9 @@ export type KeyOptions = {
 }
 
 function createKeyPredicate(keyFilter: KeyFilter): KeyPredicate {
-  if (typeof keyFilter === 'function')
-    return keyFilter
-
-  else if (typeof keyFilter === 'string')
+  if (typeof keyFilter === "function") return keyFilter
+  else if (typeof keyFilter === "string")
     return (event: KeyboardEvent) => event.key === keyFilter
-
   else if (Array.isArray(keyFilter))
     return (event: KeyboardEvent) => keyFilter.includes(event.key)
 
@@ -24,22 +21,16 @@ function createKeyPredicate(keyFilter: KeyFilter): KeyPredicate {
 }
 
 export const useKeyStroke = (
-  key: KeyFilter, 
-  handler: (event: KeyboardEvent) => void, 
+  key: KeyFilter,
+  handler: (event: KeyboardEvent) => void,
   options: KeyOptions = {}
 ) => {
-  const {
-    ref,
-    eventName = 'keydown',
-    passive = false,
-  } = options
+  const { ref, eventName = "keydown", passive = false } = options
   const predicate = createKeyPredicate(key)
   const listener = (e: KeyboardEvent) => {
-    if (e.repeat)
-      return
+    if (e.repeat) return
 
-    if (predicate(e))
-      handler(e)
+    if (predicate(e)) handler(e)
   }
 
   return useEventListener(eventName, listener, {
@@ -49,23 +40,23 @@ export const useKeyStroke = (
 }
 
 export const useKeyDown = (
-  key: KeyFilter, 
-  handler: (event: KeyboardEvent) => void, 
-  options: Omit<KeyOptions, 'eventName'> = {}
+  key: KeyFilter,
+  handler: (event: KeyboardEvent) => void,
+  options: Omit<KeyOptions, "eventName"> = {}
 ) => {
   return useKeyStroke(key, handler, {
     ...options,
-    eventName: 'keydown'
+    eventName: "keydown",
   })
 }
 
 export const useKeyUp = (
-  key: KeyFilter, 
-  handler: (event: KeyboardEvent) => void, 
-  options: Omit<KeyOptions, 'eventName'> = {}
+  key: KeyFilter,
+  handler: (event: KeyboardEvent) => void,
+  options: Omit<KeyOptions, "eventName"> = {}
 ) => {
   return useKeyStroke(key, handler, {
     ...options,
-    eventName: 'keyup'
+    eventName: "keyup",
   })
 }
