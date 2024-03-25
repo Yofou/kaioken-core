@@ -1,7 +1,7 @@
 {
   "name": "@kaioken-core/hooks",
   "public": true,
-  "version": "0.0.1-5",
+  "version": "0.0.1-6",
   "type": "module",
   "files": [
     "dist"
@@ -10,7 +10,7 @@
   "module": "./dist/main.js",
   "types": "./dist/lib/main.d.ts",
   "scripts": {
-    "dev": "vite",
+    "dev": "tsc && vite build --watch",
     "build": "tsc && vite build"
   },
   "peerDependencies": {

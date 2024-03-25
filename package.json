@@ -5,7 +5,8 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "bump": "cd ./packages/hooks && pnpm version prerelease && git add . && git commit -a -m 'version bump' && git push && pnpm publish"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
@@ -14,6 +15,5 @@
   "packageManager": "pnpm@8.9.0",
   "engines": {
     "node": ">=18"
-  },
-  "version": "0.0.1-1"
+  }
 }
