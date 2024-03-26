@@ -8,10 +8,8 @@ export function PageTitle({
   ...props
 }: ElementProps<"h1">) {
 
-  return <div>
-    <h1 className={`text-5xl ${className ?? ""}`}>{children} boop</h1>
-    <p></p>
+  return <>
     <Boop />
     <Boop />
-  </div>
+  </>
 }
