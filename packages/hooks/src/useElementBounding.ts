@@ -9,6 +9,17 @@ type UseElementBoundingOptions = {
   immediate?: boolean
 }
 
+const getDefault = () => ({
+  width: 0,
+  height: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0,
+  x: 0,
+  y: 0,
+})
+
 export const useElementBounding = (
   ref: Kaioken.Ref<Element>,
   options: UseElementBoundingOptions = {
@@ -20,39 +31,18 @@ export const useElementBounding = (
   const windowResize = options?.windowResize ?? true
   const immediate = options.immediate ?? true
 
-  const [width, setWidth] = useState(0)
-  const [height, setHeight] = useState(0)
-  const [top, setTop] = useState(0)
-  const [right, setRight] = useState(0)
-  const [bottom, setBottom] = useState(0)
-  const [left, setLeft] = useState(0)
-  const [x, setX] = useState(0)
-  const [y, setY] = useState(0)
+  const [bounding, setBounding] = useState(getDefault)
 
   const update = () => {
     const el = ref.current
 
     if (!el) {
-      setWidth(0)
-      setHeight(0)
-      setTop(0)
-      setRight(0)
-      setBottom(0)
-      setLeft(0)
-      setX(0)
-      setY(0)
+      setBounding(getDefault())
       return
     }
 
-    const rect = el.getBoundingClientRect()
-    setWidth(rect.width)
-    setHeight(rect.height)
-    setTop(rect.top)
-    setRight(rect.right)
-    setBottom(rect.bottom)
-    setLeft(rect.left)
-    setX(rect.x)
-    setY(rect.y)
+    const bounding = el.getBoundingClientRect()
+    setBounding(bounding.toJSON())
   }
 
   useResizeObserver(ref, update)
@@ -75,14 +65,7 @@ export const useElementBounding = (
   }, [])
 
   return {
-    width,
-    height,
-    top,
-    right,
-    bottom,
-    left,
-    x,
-    y,
+    ...bounding,
     update,
   }
 }

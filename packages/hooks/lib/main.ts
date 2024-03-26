@@ -19,6 +19,8 @@ import { useEffectThrottle } from "../src/useEffectThrottle"
 import { useEffectDeep } from "../src/useEffectDeep"
 import { useParentElement } from "../src/useParentElement"
 import { useActiveElement } from "../src/useActiveElement"
+import { useCurrentElement } from "../src/useCurrentElement"
+import { useRootNode } from "../src/useRootNode"
 
 export {
   useMouse,
@@ -44,4 +46,6 @@ export {
   useEffectDeep,
   useParentElement,
   useActiveElement,
+  useCurrentElement,
+  useRootNode
 }

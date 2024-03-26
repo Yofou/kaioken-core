@@ -1,5 +1,6 @@
-import { useParentElement } from "@kaioken-core/hooks"
-import { useEffect, type ElementProps } from "kaioken"
+import { type ElementProps } from "kaioken"
+
+export const Boop = () => <p>Hello world</p>
 
 export function PageTitle({
   children,
@@ -7,9 +8,10 @@ export function PageTitle({
   ...props
 }: ElementProps<"h1">) {
 
-  const boop = useParentElement()
-  useEffect(() => {
-      console.log(boop)
-  }, [boop])
-  return <h1 className={`text-5xl ${className ?? ""}`}>{children} boop</h1>
+  return <div>
+    <h1 className={`text-5xl ${className ?? ""}`}>{children} boop</h1>
+    <p></p>
+    <Boop />
+    <Boop />
+  </div>
 }
