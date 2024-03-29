@@ -21,6 +21,7 @@ import { useParentElement } from "../src/useParentElement"
 import { useActiveElement } from "../src/useActiveElement"
 import { useCurrentElement } from "../src/useCurrentElement"
 import { useRootNode } from "../src/useRootNode"
+import { useElementVisibility } from '../src/useElementVisibility'
 
 export {
   useMouse,
@@ -47,5 +48,6 @@ export {
   useParentElement,
   useActiveElement,
   useCurrentElement,
-  useRootNode
+  useRootNode,
+  useElementVisibility,
 }

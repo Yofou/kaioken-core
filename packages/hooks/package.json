@@ -6,7 +6,7 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/main.umd.cjs",
+  "main": "./dist/main.js",
   "module": "./dist/main.js",
   "types": "./dist/lib/main.d.ts",
   "scripts": {
