@@ -14,7 +14,7 @@ export const useEventListener = <E extends keyof EventMap>(
 ) => {
   useEffect(() => {
     let pointer: EventTarget = window
-    const _listener = listener
+    const _listener = structuredClone(listener)
 
     const elm = options?.ref?.()
     if (elm) {
