@@ -3,12 +3,13 @@ import {
   useElementBounding,
   useElementVisibility,
   useEventListener,
+  useMutationObserver,
   useRootNode,
+  useTextareaAutoSize,
 } from "@kaioken-core/hooks"
-import { useRef, useState } from "kaioken"
+import { useCallback, useRef, useState } from "kaioken"
 
 const Page = () => {
-  const [ref, isVisible] = useElementVisibility()
   const [opacity, setOpacity] = useState(1)
 
   const mouseMove = () => {
@@ -19,9 +20,22 @@ const Page = () => {
     setOpacity(opacity + 1)
   }
   
-  useEventListener('mousemove', mouseMove, {}, [opacity])
+  //  useEventListener('mousemove', mouseMove, {}, [opacity])
   useEventListener('click', click, {}, [opacity])
-  console.log(isVisible)
+
+  const ref = useRef<HTMLTextAreaElement>(null);
+  const test = useCallback(() => {
+      console.log(opacity)
+  }, [opacity])
+
+  useTextareaAutoSize(ref)
+
+  useMutationObserver(ref, test, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true,
+  })
 
   return (
     <div className="findMe h-[200vh]">

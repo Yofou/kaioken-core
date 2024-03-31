@@ -1,4 +1,4 @@
-import { cleanupHook, depsRequireChange, shouldExecHook, useHook, useState, useEffect as useOriginalEffect } from "kaioken"
+import { cleanupHook, depsRequireChange, shouldExecHook, useHook, useState, useEffect as useOriginalEffect, useRef } from "kaioken"
 
 
 export function useEffect(
@@ -35,12 +35,13 @@ export const useMutationObserver = (
   const [isSupported, setIsSupported] = useState(false)
   const [isListening, setIsListening] = useState(true)
   // TODO: use ref here, dildo
-  let observer: MutationObserver | undefined
+  
+  let observer = useRef<MutationObserver | undefined>(undefined)
 
   const cleanup = () => {
     if (observer) {
-      observer.disconnect()
-      observer = undefined
+      observer.current?.disconnect?.()
+      observer.current = undefined
     }
   }
 
@@ -48,8 +49,8 @@ export const useMutationObserver = (
     console.log("callback")
     cleanup()
     if (isSupported && ref.current && isListening) {
-      observer = new MutationObserver(callback)
-      observer.observe(ref.current, options)
+      observer.current = new MutationObserver(callback)
+      observer.current.observe(ref.current, options)
     }
   }, [ref.current, isListening, isSupported, callback])
 
