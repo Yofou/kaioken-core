@@ -1,4 +1,4 @@
-import { cleanupHook, depsRequireChange, shouldExecHook, useHook, useState } from "kaioken"
+import { cleanupHook, depsRequireChange, shouldExecHook, useHook, useState, useEffect as useOriginalEffect } from "kaioken"
 
 
 export function useEffect(
@@ -53,7 +53,7 @@ export const useMutationObserver = (
     }
   }, [ref.current, isListening, isSupported, callback])
 
-  useEffect(() => {
+  useOriginalEffect(() => {
     setIsSupported(window && "MutationObserver" in window)
   }, [callback])
 

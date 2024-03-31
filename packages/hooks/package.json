@@ -1,7 +1,7 @@
 {
   "name": "@kaioken-core/hooks",
   "public": true,
-  "version": "0.0.1-40",
+  "version": "0.0.1-41",
   "type": "module",
   "files": [
     "dist"
