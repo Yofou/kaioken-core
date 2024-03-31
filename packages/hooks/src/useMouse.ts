@@ -24,7 +24,6 @@ export const useMouse = () => {
         y: event.clientY,
       })
     },
-    { passive: true }
   )
 
   return { mouse, delta, client }
