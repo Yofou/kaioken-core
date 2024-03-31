@@ -8,6 +8,7 @@ export const useMutationObserver = (
   const [isSupported, setIsSupported] = useState(false)
   const [isListening, setIsListening] = useState(true)
   let observer: MutationObserver | undefined
+  console.log("boop")
 
   const cleanup = () => {
     if (observer) {

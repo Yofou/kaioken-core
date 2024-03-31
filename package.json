@@ -6,7 +6,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "bump": "cd ./packages/hooks && pnpm version prerelease && git add . && git commit -a -m 'version bump' && git push && pnpm publish"
+    "bump": "cd ./packages/hooks && pnpm build && pnpm version prerelease && git add . && git commit -a -m 'version bump' && git push && pnpm publish"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
