@@ -1,5 +1,5 @@
 import { shouldExecHook, useHook } from "kaioken"
-import { getNodeGlobalContext } from "kaioken/utils"
+import { getNodeGlobalContext } from "kaioken/dist/utils"
 
 type ComponentTree = {
   name: string
