@@ -26,7 +26,7 @@ export const useMutationObserver = (
 
   useEffect(() => {
     setIsSupported(window && "MutationObserver" in window)
-  }, [])
+  }, [callback])
 
   const start = () => {
     setIsListening(true)
