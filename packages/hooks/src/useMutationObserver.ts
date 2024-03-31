@@ -17,7 +17,7 @@ export const useMutationObserver = (
   }
 
   useEffect(() => {
-    console.log(callback)
+    console.log(callback);
     cleanup()
     if (isSupported && ref.current && isListening) {
       observer = new MutationObserver(callback)
