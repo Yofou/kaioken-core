@@ -22,7 +22,7 @@ export const useMutationObserver = (
       observer = new MutationObserver(callback)
       observer.observe(ref.current, options)
     }
-  }, [ref.current, isListening, isSupported])
+  }, [ref.current, isListening, isSupported, callback])
 
   useEffect(() => {
     setIsSupported(window && "MutationObserver" in window)
