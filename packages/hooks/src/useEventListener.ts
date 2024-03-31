@@ -26,5 +26,5 @@ export const useEventListener = <E extends keyof EventMap>(
     return () => {
       pointer.removeEventListener(event, listener as any, options)
     }
-  }, [options])
+  }, [options, listener])
 }
