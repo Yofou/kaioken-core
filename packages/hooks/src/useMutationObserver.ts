@@ -1,31 +1,5 @@
-import { cleanupHook, depsRequireChange, shouldExecHook, useHook, useState, useEffect as useOriginalEffect, useRef } from "kaioken"
+import { useState, useEffect, useRef } from "kaioken"
 
-
-export function useEffect(
-  callback: () => void | (() => void),
-  deps?: unknown[]
-): void {
-  if (!shouldExecHook()) return
-  return useHook(
-    "useEffect",
-    { callback, deps },
-    ({ hook, oldHook, queueEffect }) => {
-      console.log(depsRequireChange(deps, oldHook?.deps))
-      if (depsRequireChange(deps, oldHook?.deps)) {
-        hook.deps = deps
-        if (oldHook) {
-          cleanupHook(oldHook)
-        }
-        queueEffect(() => {
-          const cleanup = callback()
-          if (cleanup && typeof cleanup === "function") {
-            hook.cleanup = cleanup
-          }
-        })
-      }
-    }
-  )
-}
 
 export const useMutationObserver = (
   ref: Kaioken.Ref<Element>,
@@ -51,7 +25,7 @@ export const useMutationObserver = (
     return cleanup 
   }, [ref.current, isListening, isSupported, callback])
 
-  useOriginalEffect(() => {
+  useEffect(() => {
     setIsSupported(window && "MutationObserver" in window)
   }, [callback])
 
