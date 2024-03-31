@@ -11,8 +11,6 @@ export const useEventListener = <E extends keyof EventMap>(
   options: AddEventListenerOptions & {
     ref?: (() => EventTarget | null) | null
   } = {},
-  // @ts-ignore
-  deps: unknown[] = []
 ) => {
   useEffect(() => {
     let pointer: EventTarget = window

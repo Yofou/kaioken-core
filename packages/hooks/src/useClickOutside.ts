@@ -22,8 +22,7 @@ export type ClickOutsideHandler<
 export const useClickOutside = <T extends ClickOutsideOptions>(
   ref: Kaioken.Ref<Element>,
   handler: ClickOutsideHandler<{ detectIframe: T["detectIframe"] }>,
-  options: T = {} as T,
-  deps: unknown[] = []
+  options: T = {} as T
 ) => {
   const ignore = options.ignore ?? []
   const capture = options.capture ?? true
@@ -62,7 +61,7 @@ export const useClickOutside = <T extends ClickOutsideOptions>(
   useEventListener("click", listener, {
     passive: true,
     capture,
-  }, deps)
+  })
 
   useEventListener(
     "pointerdown",
