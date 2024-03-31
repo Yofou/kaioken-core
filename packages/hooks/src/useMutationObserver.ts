@@ -34,24 +34,21 @@ export const useMutationObserver = (
 ) => {
   const [isSupported, setIsSupported] = useState(false)
   const [isListening, setIsListening] = useState(true)
-  // TODO: use ref here, dildo
-  
-  let observer = useRef<MutationObserver | undefined>(undefined)
-
+  const observer = useRef<MutationObserver | undefined>(undefined)
   const cleanup = () => {
-    if (observer) {
+    if (observer.current) {
       observer.current?.disconnect?.()
       observer.current = undefined
     }
   }
 
   useEffect(() => {
-    console.log("callback")
-    cleanup()
     if (isSupported && ref.current && isListening) {
       observer.current = new MutationObserver(callback)
       observer.current.observe(ref.current, options)
     }
+
+    return cleanup 
   }, [ref.current, isListening, isSupported, callback])
 
   useOriginalEffect(() => {
