@@ -1,4 +1,31 @@
-import { useEffect, useState } from "kaioken"
+import { cleanupHook, depsRequireChange, shouldExecHook, useHook, useState } from "kaioken"
+
+
+export function useEffect(
+  callback: () => void | (() => void),
+  deps?: unknown[]
+): void {
+  if (!shouldExecHook()) return
+  return useHook(
+    "useEffect",
+    { callback, deps },
+    ({ hook, oldHook, queueEffect }) => {
+      console.log('identity check', deps === oldHook?.deps, oldHook?.deps)
+      if (depsRequireChange(deps, oldHook?.deps)) {
+        hook.deps = deps
+        if (oldHook) {
+          cleanupHook(oldHook)
+        }
+        queueEffect(() => {
+          const cleanup = callback()
+          if (cleanup && typeof cleanup === "function") {
+            hook.cleanup = cleanup
+          }
+        })
+      }
+    }
+  )
+}
 
 export const useMutationObserver = (
   ref: Kaioken.Ref<Element>,
