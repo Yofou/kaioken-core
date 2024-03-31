@@ -4,7 +4,7 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   build: {
-    minify: true,
+    minify: false,
     lib: {
       entry: './lib/main.ts',
       name: 'KaiokenCore',

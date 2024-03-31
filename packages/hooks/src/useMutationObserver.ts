@@ -7,6 +7,7 @@ export const useMutationObserver = (
 ) => {
   const [isSupported, setIsSupported] = useState(false)
   const [isListening, setIsListening] = useState(true)
+  // TODO: use ref here, dildo
   let observer: MutationObserver | undefined
 
   const cleanup = () => {
