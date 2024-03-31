@@ -10,7 +10,8 @@ export const useEventListener = <E extends keyof EventMap>(
   listener: Arrayable<(this: Window, ev: EventMap[E]) => any>,
   options: AddEventListenerOptions & {
     ref?: (() => EventTarget | null) | null
-  } = {}
+  } = {},
+  deps: unknown[] = []
 ) => {
   useEffect(() => {
     let pointer: EventTarget = window
@@ -26,5 +27,5 @@ export const useEventListener = <E extends keyof EventMap>(
     return () => {
       pointer.removeEventListener(event, listener as any, options)
     }
-  }, [])
+  }, deps)
 }

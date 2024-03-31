@@ -23,7 +23,8 @@ function createKeyPredicate(keyFilter: KeyFilter): KeyPredicate {
 export const useKeyStroke = (
   key: KeyFilter,
   handler: (event: KeyboardEvent) => void,
-  options: KeyOptions = {}
+  options: KeyOptions = {},
+  deps: unknown[] = []
 ) => {
   const { ref, eventName = "keydown", passive = false } = options
   const predicate = createKeyPredicate(key)
@@ -36,27 +37,29 @@ export const useKeyStroke = (
   return useEventListener(eventName, listener, {
     ref,
     passive,
-  })
+  }, deps)
 }
 
 export const useKeyDown = (
   key: KeyFilter,
   handler: (event: KeyboardEvent) => void,
-  options: Omit<KeyOptions, "eventName"> = {}
+  options: Omit<KeyOptions, "eventName"> = {},
+  deps: unknown[] = [],
 ) => {
   return useKeyStroke(key, handler, {
     ...options,
     eventName: "keydown",
-  })
+  }, deps)
 }
 
 export const useKeyUp = (
   key: KeyFilter,
   handler: (event: KeyboardEvent) => void,
-  options: Omit<KeyOptions, "eventName"> = {}
+  options: Omit<KeyOptions, "eventName"> = {},
+  deps: unknown[] = [],
 ) => {
   return useKeyStroke(key, handler, {
     ...options,
     eventName: "keyup",
-  })
+  }, deps)
 }
