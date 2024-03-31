@@ -13,7 +13,6 @@ export const useEventListener = <E extends keyof EventMap>(
   } = {}
 ) => {
   useEffect(() => {
-    console.log('boop')
     let pointer: EventTarget = window
 
     const elm = options?.ref?.()
