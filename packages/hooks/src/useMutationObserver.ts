@@ -10,7 +10,7 @@ export function useEffect(
     "useEffect",
     { callback, deps },
     ({ hook, oldHook, queueEffect }) => {
-      console.log('identity check', deps === oldHook?.deps, oldHook?.deps)
+      console.log(depsRequireChange(deps, oldHook?.deps))
       if (depsRequireChange(deps, oldHook?.deps)) {
         hook.deps = deps
         if (oldHook) {
