@@ -8,7 +8,6 @@ export const useMutationObserver = (
   const [isSupported, setIsSupported] = useState(false)
   const [isListening, setIsListening] = useState(true)
   let observer: MutationObserver | undefined
-  console.log("boop")
 
   const cleanup = () => {
     if (observer) {
@@ -18,7 +17,7 @@ export const useMutationObserver = (
   }
 
   useEffect(() => {
-    console.log(callback);
+    console.log("callback")
     cleanup()
     if (isSupported && ref.current && isListening) {
       observer = new MutationObserver(callback)
