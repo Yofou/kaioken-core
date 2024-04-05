@@ -1,4 +1,4 @@
-import { shouldExecHook, useHook } from "kaioken"
+import { shouldExecHook, useEffect, useHook, useState } from "kaioken"
 import { getNodeGlobalContext } from "kaioken/dist/utils.js"
 
 type ComponentTree = {
@@ -36,9 +36,8 @@ export const crawlDownAndGetComponents = (vNode?: Kaioken.VNode) => {
           node,
         }
         parentComponentTree = components
-      }
-
-      if (parentComponentTree) {
+        lastInstance = parentComponentTree
+      } else if (parentComponentTree) {
         parentComponentTree[type] = {
           node,
           name: node.type.name,
@@ -73,13 +72,13 @@ export const useRootNode = () => {
     return
   }
 
-  return useHook("useRootNode", {}, ({ queueEffect, vNode }) => {
+  return useHook("useRootNode", { hasMounted: false }, ({ vNode }) => {
     const globalCtx = getNodeGlobalContext(vNode)
-    let output = crawlDownAndGetComponents(globalCtx.rootNode)
-    queueEffect(() => {
-      output = crawlDownAndGetComponents(globalCtx.rootNode)
-    })
+    const [state, setState] = useState<any | null>(null);
+    useEffect(() => {
+      setState(crawlDownAndGetComponents(globalCtx.rootNode))
+    }, [])
 
-    return output
+    return state
   })
 }

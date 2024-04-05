@@ -1,0 +1,88 @@
+import { shouldExecHook, useHook } from "kaioken"
+import { noop } from "kaioken/utils.js"
+import { getInterpolator, linear } from "./motion/utils"
+import { Task, TweenedOptions } from "./motion/types"
+import { loop, raf } from "./motion/loop"
+
+export const useTween = <T,>(
+  initial: T | (() => T),
+  defaults = {} as TweenedOptions<T>
+): [T, (value: Kaioken.StateSetter<T>) => void] => {
+  if (!shouldExecHook()) {
+    return [initial instanceof Function ? initial() : initial, noop]
+  }
+
+  return useHook(
+    "useTween",
+    {
+      value: undefined as T,
+      dispatch: noop as (value: Kaioken.StateSetter<T>) => void,
+      task: undefined as Task | undefined,
+      targetValue: undefined as T,
+    },
+    ({ hook, oldHook, update }) => {
+      if (!oldHook) {
+        hook.value = initial instanceof Function ? initial() : initial
+        hook.dispatch = (setter: Kaioken.StateSetter<T>, options = {} as TweenedOptions<T>) => {
+          const newState =
+            setter instanceof Function ? setter(hook.value) : setter
+          hook.targetValue = newState
+
+          if (newState == null) {
+            hook.value = newState
+            return update()
+          }
+
+          let previousTask = hook.task
+
+          let started = false
+          let {
+            delay = 0,
+            duration = 400,
+            easing = linear,
+            interpolate = getInterpolator,
+          } = { ...defaults, ...options }
+
+          if (duration === 0) {
+            if (previousTask) {
+              previousTask.abort()
+              previousTask = undefined;
+            }
+
+            hook.value = newState
+            return update()
+          }
+
+          const start = raf.now() + delay;
+          let fn: (t: number) => T;
+          hook.task = loop((now) => {
+            if (now < start) return true;
+            if (!started) {
+              fn = interpolate(hook.value, newState)
+              if (typeof duration === 'function') {
+                duration = duration(hook.value, newState);
+              }
+              started = true;
+            }
+            if (previousTask) {
+              previousTask.abort();
+              previousTask = undefined;
+            }
+            const elapsed = now - start;
+            if (elapsed > (duration as number)) {
+              hook.value = newState;
+              update();
+              return false;
+            }
+
+            hook.value = fn(easing(elapsed / (duration as number)))
+            update()
+            return true;
+          })
+        }
+      }
+
+      return [hook.value, hook.dispatch]
+    }
+  )
+}

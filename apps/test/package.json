@@ -22,7 +22,7 @@
   "dependencies": {
     "@kaioken-core/hooks": "workspace:^",
     "express": "^4.18.2",
-    "kaioken": "^0.13.1",
+    "kaioken": "^0.13.4",
     "tsx": "^4.7.1",
     "vike": "^0.4.161",
     "vite": "^5.1.1"
