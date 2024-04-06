@@ -24,6 +24,7 @@ import { useRootNode } from "../src/useRootNode"
 import { useElementVisibility } from '../src/useElementVisibility'
 import { useTween } from "../src/useTween"
 import { useSpring } from "../src/useSpring"
+import { useElementByPoint } from "../src/useElementByPoint"
 
 export {
   useMouse,
@@ -54,4 +55,5 @@ export {
   useElementVisibility,
   useTween,
   useSpring,
+  useElementByPoint,
 }

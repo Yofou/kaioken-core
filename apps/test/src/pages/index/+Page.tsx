@@ -1,16 +1,22 @@
 import { PageTitle } from "$/components/PageTitle"
 import {
-  useSpring
+  useElementByPoint,
+  useMouse,
 } from "@kaioken-core/hooks"
+import { useState } from "kaioken"
 
 const Page = () => {
-  const [value, setValue] = useSpring(100, {
-    damping: 0.1,
-    stiffness: 0.3,
+
+  const [showPageTitle, setShowPageTitle] = useState(false)
+  const { mouse } = useMouse();
+  const { element } = useElementByPoint({
+    x: mouse.x,
+    y: mouse.y,
   })
+  console.log(element)
 
   const onClick = () => {
-    setValue(x => x + 100, { hard: true }).then(() => console.log('finish'))
+    setShowPageTitle(true)
   }
 
   return (
