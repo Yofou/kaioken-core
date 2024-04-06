@@ -6,7 +6,6 @@ import {
 import { useState } from "kaioken"
 
 const Page = () => {
-
   const [showPageTitle, setShowPageTitle] = useState(false)
   const { mouse } = useMouse();
   const { element } = useElementByPoint({
@@ -21,12 +20,8 @@ const Page = () => {
 
   return (
     <div className="findMe h-[200vh]">
-      <PageTitle />
-      <PageTitle />
-      <div>1123</div>
       <button onclick={onClick}>Boop</button>
-
-      <div className="w-[var(--dim)] h-[var(--dim)] bg-red-500" style={`--dim: ${value}px`}></div>
+      { showPageTitle && <PageTitle /> }
     </div>
   )
 }
