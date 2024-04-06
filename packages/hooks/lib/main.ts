@@ -24,6 +24,9 @@ import { useRootNode } from "../src/useRootNode"
 import { useElementVisibility } from '../src/useElementVisibility'
 import { useTween } from "../src/useTween"
 import { useSpring } from "../src/useSpring"
+import { useElementByPoint } from "../src/useElementByPoint"
+import { useWindowPosition } from "../src/useWindowPosition"
+
 
 export {
   useMouse,
@@ -54,4 +57,6 @@ export {
   useElementVisibility,
   useTween,
   useSpring,
+  useElementByPoint,
+  useWindowPosition,
 }
