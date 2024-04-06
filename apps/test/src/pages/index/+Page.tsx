@@ -1,20 +1,16 @@
 import { PageTitle } from "$/components/PageTitle"
 import {
-  useTween
+  useSpring
 } from "@kaioken-core/hooks"
-import {
-   elasticInOut
-} from "@kaioken-core/hooks/easing"
-
 
 const Page = () => {
-  const [value, setValue] = useTween(100, {
-    duration: 1000,
-    easing: elasticInOut,
+  const [value, setValue] = useSpring(100, {
+    damping: .2,
+    stiffness: 0.1
   })
 
   const onClick = () => {
-    setValue(400)
+    setValue(300)
   }
 
   return (

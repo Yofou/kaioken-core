@@ -7,7 +7,7 @@ import { loop, raf } from "./motion/loop"
 export const useTween = <T,>(
   initial: T | (() => T),
   defaults = {} as TweenedOptions<T>
-): [T, (value: Kaioken.StateSetter<T>) => void] => {
+): [T, (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => void] => {
   if (!shouldExecHook()) {
     return [initial instanceof Function ? initial() : initial, noop]
   }

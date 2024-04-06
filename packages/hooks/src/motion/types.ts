@@ -3,23 +3,22 @@ export interface Task {
 	promise: Promise<void>;
 }
 
-/* export interface TickContext<T> {
-	inv_mass: number;
-	dt: number;
-  // TODO: add this later
-	//  opts: Spring<T>;
-	settled: boolean;
-} */
-
-export interface SpringOpts {
-	stiffness?: number;
-	damping?: number;
-	precision?: number;
-}
-
 export interface SpringUpdateOpts {
 	hard?: any;
 	soft?: string | number | boolean;
+}
+
+export interface SpringOpts extends SpringUpdateOpts {
+	stiffness: number;
+	damping: number;
+	precision: number;
+}
+
+export interface TickContext {
+	inv_mass: number;
+	dt: number;
+	opts: SpringOpts;
+	settled: boolean;
 }
 
 export type Updater<T> = (target_value: T, value: T) => T;

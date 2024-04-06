@@ -23,6 +23,7 @@ import { useCurrentElement } from "../src/useCurrentElement"
 import { useRootNode } from "../src/useRootNode"
 import { useElementVisibility } from '../src/useElementVisibility'
 import { useTween } from "../src/useTween"
+import { useSpring } from "../src/useSpring"
 
 export {
   useMouse,
@@ -52,4 +53,5 @@ export {
   useRootNode,
   useElementVisibility,
   useTween,
+  useSpring,
 }
