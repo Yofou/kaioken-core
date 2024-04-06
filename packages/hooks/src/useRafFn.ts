@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "kaioken"
+import { useEffect, useRef } from "kaioken"
 
 type RefFnArg = {
   delta: number
@@ -11,38 +11,41 @@ type RefFnOptions = {
 }
 
 const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
-  const [isActive, setIsActive] = useState(false)
+  const isActive = useRef(false);
   const refId = useRef<null | number>(null)
   const intervalLimit = options?.fpsLimit ? 1000 / options.fpsLimit : null
   let previousFrameTimestamp = 0
 
-  function loop(timestamp: DOMHighResTimeStamp) {
-    if (!isActive || !window) return
-
+  const rafLoop = (timestamp: DOMHighResTimeStamp) => {
+    if (!isActive.current || !window) return
     if (!previousFrameTimestamp) previousFrameTimestamp = timestamp
 
     const delta = timestamp - previousFrameTimestamp
 
     if (intervalLimit && delta < intervalLimit) {
-      refId.current = window.requestAnimationFrame(loop)
+      refId.current = window.requestAnimationFrame(rafLoop)
       return
     }
 
     previousFrameTimestamp = timestamp
     callback({ delta, timestamp })
-    refId.current = window.requestAnimationFrame(loop)
+    refId.current = window.requestAnimationFrame(rafLoop)
   }
 
   const start = () => {
-    if (!isActive && window) {
-      setIsActive(true)
+    if (!isActive.current && window) {
+      isActive.current = true;
       previousFrameTimestamp = 0
-      refId.current = window.requestAnimationFrame(loop)
+      if (refId.current != null) {
+        window.cancelAnimationFrame(refId.current)
+        refId.current = null;
+      }
+      refId.current = window.requestAnimationFrame(rafLoop)
     }
   }
 
   const stop = () => {
-    setIsActive(false)
+    isActive.current = false;
     if (refId.current != null && window) {
       window.cancelAnimationFrame(refId.current)
       refId.current = null
@@ -50,27 +53,19 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
   }
 
   useEffect(() => {
-    if (isActive && !refId.current) {
-      start()
-    } else {
-      stop
-    }
-
-    return () => stop()
-  }, [isActive])
-
-  useEffect(() => {
-    if (options.immediate && !refId.current) {
+    if (options.immediate) {
       start()
     }
 
-    return () => stop()
-  }, [])
+    return () => {
+      stop();
+    }
+  }, [options.immediate, callback])
 
   return {
     start,
     stop,
-    isActive,
+    isActive: isActive.current,
   }
 }
 
