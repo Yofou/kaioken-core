@@ -5,12 +5,12 @@ import {
 
 const Page = () => {
   const [value, setValue] = useSpring(100, {
-    damping: .2,
-    stiffness: 0.1
+    damping: 0.1,
+    stiffness: 0.3,
   })
 
   const onClick = () => {
-    setValue(300)
+    setValue(x => x + 100, { hard: true }).then(() => console.log('finish'))
   }
 
   return (

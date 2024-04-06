@@ -4,19 +4,24 @@ import { getInterpolator, linear } from "./motion/utils"
 import { Task, TweenedOptions } from "./motion/types"
 import { loop, raf } from "./motion/loop"
 
+/*
+  Adapted from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion
+  Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
+*/
+
 export const useTween = <T,>(
   initial: T | (() => T),
   defaults = {} as TweenedOptions<T>
-): [T, (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => void] => {
+): [T, (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>] => {
   if (!shouldExecHook()) {
-    return [initial instanceof Function ? initial() : initial, noop]
+    return [initial instanceof Function ? initial() : initial, noop as () => Promise<void>]
   }
 
   return useHook(
     "useTween",
     {
       value: undefined as T,
-      dispatch: noop as (value: Kaioken.StateSetter<T>) => void,
+      dispatch: noop as any as (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>,
       task: undefined as Task | undefined,
       targetValue: undefined as T,
     },
@@ -30,7 +35,8 @@ export const useTween = <T,>(
 
           if (newState == null) {
             hook.value = newState
-            return update()
+            update()
+            return Promise.resolve();
           }
 
           let previousTask = hook.task
@@ -50,7 +56,8 @@ export const useTween = <T,>(
             }
 
             hook.value = newState
-            return update()
+            update()
+            return Promise.resolve();
           }
 
           const start = raf.now() + delay;
@@ -79,6 +86,8 @@ export const useTween = <T,>(
             update()
             return true;
           })
+
+          return hook.task.promise
         }
       }
 

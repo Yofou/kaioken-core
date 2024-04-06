@@ -4,13 +4,18 @@ import { SpringOpts, TickContext, type Task } from './motion/types'
 import { loop, raf } from "./motion/loop"
 import { tickSpring } from "./motion/spring"
 
+/*
+  Adapted from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion
+  Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
+*/
+
 export const useSpring = <T,>(
   initial: T | (() => T),
-  opts = {} as SpringOpts
-): [T, (value: Kaioken.StateSetter<T>) => void] => {
+  opts = {} as Partial<SpringOpts>
+): [T, (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>] => {
   const value = initial instanceof Function ? initial() : initial
   if (!shouldExecHook()) {
-    return [value, noop]
+    return [value, noop as any as (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>]
   }
 
   const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = opts;
@@ -24,7 +29,7 @@ export const useSpring = <T,>(
     "useSpring",
     {
       value: undefined as T,
-      dispatch: noop as (value: Kaioken.StateSetter<T>) => void,
+      dispatch: noop as any as (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>,
       lastTime: undefined as number | undefined,
       task: undefined as Task | undefined,
       currentToken : undefined as object | undefined,
@@ -37,7 +42,7 @@ export const useSpring = <T,>(
     ({ hook, oldHook, update }) => {
       if (!oldHook) {
         hook.value = initial instanceof Function ? initial() : initial
-        hook.dispatch = (setter: Kaioken.StateSetter<T>) => {
+        hook.dispatch = (setter: Kaioken.StateSetter<T>, opts = {} as SpringOpts) => {
           const newValue =
             setter instanceof Function ? setter(hook.value) : setter;
 

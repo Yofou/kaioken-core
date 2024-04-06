@@ -1,6 +1,9 @@
 import { noop } from 'kaioken/utils.js';
 import { Task } from './types';
 
+/**
+*/ 
+
 const is_client = typeof window !== 'undefined';
 
 const request_animation_frame = is_client ? requestAnimationFrame : noop;
@@ -17,7 +20,6 @@ export type Raf = {
 	/** A set of tasks that will run to completion, unless aborted */
 	tasks: Set<TaskEntry>;
 };
-
 
 export const raf: Raf = {
   tick: (_: any) => request_animation_frame(_),

@@ -72,6 +72,7 @@ export const useRootNode = () => {
     return
   }
 
+  // TODO: Having predefined hooks inside of usHook can be problematic, it's wise to not use them inside
   return useHook("useRootNode", { hasMounted: false }, ({ vNode }) => {
     const globalCtx = getNodeGlobalContext(vNode)
     const [state, setState] = useState<any | null>(null);
