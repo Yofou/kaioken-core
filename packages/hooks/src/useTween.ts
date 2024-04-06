@@ -1,8 +1,9 @@
 import { shouldExecHook, useHook } from "kaioken"
 import { noop } from "kaioken/utils.js"
-import { getInterpolator, linear } from "./motion/utils"
+import { getInterpolator } from "./motion/utils"
 import { Task, TweenedOptions } from "./motion/types"
 import { loop, raf } from "./motion/loop"
+import { linear } from '../lib/easing'
 
 /*
   Adapted from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion

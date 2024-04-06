@@ -3,8 +3,6 @@ export function isDate(obj: any): obj is Date {
 	return Object.prototype.toString.call(obj) === '[object Date]';
 }
 
-export const linear = (t: number) => t;
-
 // returns the interpolator function for tweening
 export function getInterpolator<T>(a: T, b: T): (t: number) => T {
 	if (a === b || a !== a) return () => a;

@@ -1,6 +1,11 @@
 import { TickContext } from "./types";
 import { isDate } from "./utils";
 
+/*
+  Copied from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion
+  Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
+*/
+
 export const tickSpring = <T,>(
   ctx: TickContext, 
   lastValue: T, 

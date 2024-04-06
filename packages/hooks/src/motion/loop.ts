@@ -1,8 +1,10 @@
 import { noop } from 'kaioken/utils.js';
 import { Task } from './types';
 
-/**
-*/ 
+/*
+  Copied from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion
+  Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
+*/
 
 const is_client = typeof window !== 'undefined';
 

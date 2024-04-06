@@ -1,3 +1,9 @@
+
+/*
+  Adapted from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion
+  Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
+*/
+
 export interface Task {
 	abort(): void;
 	promise: Promise<void>;
@@ -20,8 +26,6 @@ export interface TickContext {
 	opts: SpringOpts;
 	settled: boolean;
 }
-
-export type Updater<T> = (target_value: T, value: T) => T;
 
 export interface TweenedOptions<T> {
 	delay?: number;

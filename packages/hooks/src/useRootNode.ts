@@ -1,5 +1,5 @@
 import { shouldExecHook, useEffect, useHook, useState } from "kaioken"
-import { getNodeGlobalContext } from "kaioken/dist/utils.js"
+import { getNodeGlobalContext } from "kaioken/utils.js"
 
 type ComponentTree = {
   name: string
