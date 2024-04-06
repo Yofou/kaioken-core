@@ -1,48 +1,26 @@
 import { PageTitle } from "$/components/PageTitle"
 import {
-  useElementBounding,
-  useElementVisibility,
-  useEventListener,
-  useMutationObserver,
-  useRootNode,
-  useTextareaAutoSize,
+  useSpring
 } from "@kaioken-core/hooks"
-import { useCallback, useRef, useState } from "kaioken"
 
 const Page = () => {
-  const [opacity, setOpacity] = useState(1)
-
-  const mouseMove = () => {
-    console.log(opacity)
-  }
-
-  const click = () => {
-    setOpacity(opacity + 1)
-  }
-  
-  //  useEventListener('mousemove', mouseMove, {}, [opacity])
-  useEventListener('click', click, {}, [opacity])
-
-  const ref = useRef<HTMLTextAreaElement>(null);
-  const test = useCallback(() => {
-      console.log(opacity)
-  }, [opacity])
-
-  useTextareaAutoSize(ref)
-
-  useMutationObserver(ref, test, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      characterData: true,
+  const [value, setValue] = useSpring(100, {
+    damping: 0.1,
+    stiffness: 0.3,
   })
+
+  const onClick = () => {
+    setValue(x => x + 100, { hard: true }).then(() => console.log('finish'))
+  }
 
   return (
     <div className="findMe h-[200vh]">
       <PageTitle />
       <PageTitle />
       <div>1123</div>
-      <textarea ref={ref} />
+      <button onclick={onClick}>Boop</button>
+
+      <div className="w-[var(--dim)] h-[var(--dim)] bg-red-500" style={`--dim: ${value}px`}></div>
     </div>
   )
 }

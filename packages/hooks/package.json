@@ -1,7 +1,7 @@
 {
   "name": "@kaioken-core/hooks",
   "public": true,
-  "version": "0.0.1-51",
+  "version": "0.0.1-56",
   "type": "module",
   "files": [
     "dist"
@@ -9,12 +9,27 @@
   "main": "./dist/main.js",
   "module": "./dist/main.js",
   "types": "./dist/lib/main.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/main.js"
+    },
+    "./easing": {
+      "import": "./dist/easing.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "easing": [
+        "./dist/lib/easing.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "dev": "tsc && vite build --watch",
     "build": "tsc && vite build"
   },
   "devDependencies": {
-    "kaioken": "^0.13.1",
+    "kaioken": "^0.13.4",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.7.3",

@@ -6,13 +6,13 @@ export default defineConfig({
   build: {
     minify: false,
     lib: {
-      entry: './lib/main.ts',
+      entry: ['./lib/main.ts', './lib/easing.ts'],
       name: 'KaiokenCore',
-      fileName: 'main',
+      fileName: (extension, name) => extension === 'es'  ? `${name}.js` : `${name}.${extension}.js`,
     },
 
     rollupOptions: {
-      external: ['kaioken', 'kaioken/dist/utils.js'],
+      external: ['kaioken', 'kaioken/utils.js'],
       output: {
         globals: {
           "kaioken": 'Kaioken',
