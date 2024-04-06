@@ -2,7 +2,6 @@ import { Router, Route, Link } from "kaioken"
 import { Counter } from "./Counter"
 
 export function App() {
-  //  console.log(useRootNode())
   return (
     <div className="text-center">
       <nav className="flex gap-2 justify-center">
