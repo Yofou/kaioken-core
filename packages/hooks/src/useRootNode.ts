@@ -1,4 +1,4 @@
-import { shouldExecHook, useEffect, useHook, useState } from "kaioken"
+import { shouldExecHook, useHook } from "kaioken"
 import { getNodeGlobalContext } from "kaioken/utils.js"
 
 type ComponentTree = {
@@ -72,14 +72,28 @@ export const useRootNode = () => {
     return
   }
 
-  // TODO: Having predefined hooks inside of usHook can be problematic, it's wise to not use them inside
-  return useHook("useRootNode", { hasMounted: false }, ({ vNode }) => {
-    const globalCtx = getNodeGlobalContext(vNode)
-    const [state, setState] = useState<any | null>(null);
-    useEffect(() => {
-      setState(crawlDownAndGetComponents(globalCtx.rootNode))
-    }, [])
+  // TODO: Figure out how to recrawl on node updates
+  return useHook(
+    "useRootNode", 
+    { 
+      hasMounted: false, 
+      value: undefined as ComponentTree | undefined,
+    }, 
+    ({ vNode, hook, oldHook, queueEffect, update }) => {
+      const ctx = getNodeGlobalContext(vNode)
+      if (!oldHook && ctx) {
+        hook.value = crawlDownAndGetComponents(ctx.rootNode) as ComponentTree 
+      }
 
-    return state
-  })
+      queueEffect(() => {
+        if (!hook.hasMounted && ctx) {
+          hook.hasMounted = true
+          hook.value = crawlDownAndGetComponents(ctx.rootNode) as ComponentTree
+          update();
+        }
+      })
+
+      return hook.value
+    }
+  )
 }
