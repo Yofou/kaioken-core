@@ -26,6 +26,7 @@ import { useTween } from "../src/useTween"
 import { useSpring } from "../src/useSpring"
 import { useElementByPoint } from "../src/useElementByPoint"
 import { useWindowPosition } from "../src/useWindowPosition"
+import { useMouseInElement } from "../src/useMouseInElement"
 
 
 export {
@@ -59,4 +60,5 @@ export {
   useSpring,
   useElementByPoint,
   useWindowPosition,
+  useMouseInElement,
 }
