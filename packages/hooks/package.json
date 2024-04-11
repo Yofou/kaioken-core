@@ -29,10 +29,10 @@
     "build": "tsc && vite build"
   },
   "devDependencies": {
-    "kaioken": "^0.14.0",
+    "kaioken": "0.14.1-1",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.7.3",
-    "vite-plugin-kaioken": "^0.2.2"
+    "vite-plugin-kaioken": "^0.2.3"
   }
 }
