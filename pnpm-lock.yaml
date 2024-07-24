@@ -59,10 +59,14 @@ importers:
         version: 0.7.1(kaioken@0.23.6)
 
   packages/hooks:
-    devDependencies:
+    dependencies:
       kaioken:
-        specifier: 0.23.6
+        specifier: ^0.23.6
         version: 0.23.6
+      vite-plugin-kaioken:
+        specifier: ^0.7.1
+        version: 0.7.1(kaioken@0.23.6)
+    devDependencies:
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
@@ -72,9 +76,6 @@ importers:
       vite-plugin-dts:
         specifier: ^3.7.3
         version: 3.9.1(@types/node@20.14.12)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.4(@types/node@20.14.12))
-      vite-plugin-kaioken:
-        specifier: ^0.7.1
-        version: 0.7.1(kaioken@0.23.6)
 
 packages:
 

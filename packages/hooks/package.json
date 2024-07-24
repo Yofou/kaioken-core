@@ -28,11 +28,13 @@
     "dev": "tsc && vite build --watch",
     "build": "tsc && vite build"
   },
+	"peerDependencies": {
+		"kaioken": "^0.23.6",
+		"vite-plugin-kaioken": "^0.7.1"
+  },
   "devDependencies": {
-    "kaioken": "0.23.6",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
-    "vite-plugin-dts": "^3.7.3",
-    "vite-plugin-kaioken": "^0.7.1"
+    "vite-plugin-dts": "^3.7.3"
   }
 }
