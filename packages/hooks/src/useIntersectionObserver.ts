@@ -1,7 +1,7 @@
 import { useEffect, useState } from "kaioken"
 
 export const useIntersectionObserver = (
-  ref: Kaioken.Ref<Element>,
+  ref: Kaioken.Ref<Element | null>,
   callback: IntersectionObserverCallback,
   options: IntersectionObserverInit | undefined = undefined
 ) => {

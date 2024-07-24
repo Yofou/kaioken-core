@@ -3,7 +3,7 @@ import { useIntersectionObserver } from "./useIntersectionObserver"
 
 export const useElementVisibility = () => {
   const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<Element>(null)
+  const ref = useRef<Element | null>(null)
 
   useIntersectionObserver(ref, (items) => {
     let latestTime = 0

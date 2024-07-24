@@ -25,6 +25,7 @@ export const useSpring = <T,>(
 		precision
 	};
 
+	// @ts-ignore
   return useHook(
     "useSpring",
     {

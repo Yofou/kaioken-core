@@ -18,6 +18,7 @@ export const useTween = <T,>(
     return [initial instanceof Function ? initial() : initial, noop as () => Promise<void>]
   }
 
+	// @ts-ignore
   return useHook(
     "useTween",
     {
