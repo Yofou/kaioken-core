@@ -1,4 +1,4 @@
-import { shouldExecHook, useHook } from "kaioken"
+import { sideEffectsEnabled, useHook } from "kaioken"
 import { getNodeAppContext } from "kaioken/utils.js"
 
 type ComponentTree = {
@@ -68,7 +68,7 @@ export const crawlDownAndGetComponents = (vNode?: Kaioken.VNode) => {
 }
 
 export const useRootNode = () => {
-  if (!shouldExecHook()) {
+  if (!sideEffectsEnabled()) {
     return
   }
 

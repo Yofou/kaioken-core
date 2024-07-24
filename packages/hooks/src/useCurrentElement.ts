@@ -1,4 +1,4 @@
-import { shouldExecHook, useHook, useState } from "kaioken"
+import { sideEffectsEnabled, useHook, useState } from "kaioken"
 
 export const  findMountedDomRecursive = <T extends Element>(
   vNode?: Kaioken.VNode
@@ -15,7 +15,7 @@ export const  findMountedDomRecursive = <T extends Element>(
 }
 
 export const useCurrentElement = <T extends Element>() => {
-  if (!shouldExecHook()) return
+  if (!sideEffectsEnabled()) return
 
   const [elm, setElm] = useState<T | undefined>(undefined)
 

@@ -1,4 +1,4 @@
-import { shouldExecHook, useHook } from "kaioken"
+import { sideEffectsEnabled, useHook } from "kaioken"
 import { noop } from "kaioken/utils.js"
 import { getInterpolator } from "./motion/utils"
 import { Task, TweenedOptions } from "./motion/types"
@@ -14,11 +14,10 @@ export const useTween = <T,>(
   initial: T | (() => T),
   defaults = {} as TweenedOptions<T>
 ): [T, (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>] => {
-  if (!shouldExecHook()) {
+  if (!sideEffectsEnabled()) {
     return [initial instanceof Function ? initial() : initial, noop as () => Promise<void>]
   }
 
-	// @ts-ignore
   return useHook(
     "useTween",
     {
@@ -93,7 +92,7 @@ export const useTween = <T,>(
         }
       }
 
-      return [hook.value, hook.dispatch]
+      return [hook.value, hook.dispatch] as [T, (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>]
     }
   )
 }

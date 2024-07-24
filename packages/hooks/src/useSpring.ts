@@ -1,4 +1,4 @@
-import { shouldExecHook, useHook } from "kaioken"
+import { sideEffectsEnabled, useHook } from "kaioken"
 import { noop } from "kaioken/utils.js"
 import { SpringOpts, TickContext, type Task } from './motion/types'
 import { loop, raf } from "./motion/loop"
@@ -14,7 +14,7 @@ export const useSpring = <T,>(
   opts = {} as Partial<SpringOpts>
 ): [T, (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>] => {
   const value = initial instanceof Function ? initial() : initial
-  if (!shouldExecHook()) {
+  if (!sideEffectsEnabled()) {
     return [value, noop as any as (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>]
   }
 
@@ -25,7 +25,6 @@ export const useSpring = <T,>(
 		precision
 	};
 
-	// @ts-ignore
   return useHook(
     "useSpring",
     {
@@ -100,7 +99,7 @@ export const useSpring = <T,>(
         }
       }
 
-      return [hook.value, hook.dispatch]
+      return [hook.value, hook.dispatch] as [T, (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>]
     }
   )
 }

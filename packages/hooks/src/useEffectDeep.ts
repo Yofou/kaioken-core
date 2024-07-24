@@ -1,4 +1,4 @@
-import { useHook, cleanupHook, shouldExecHook } from "kaioken"
+import { useHook, cleanupHook, sideEffectsEnabled } from "kaioken"
 
 export const deepEqual = (a: any, b: any) => {
   if (a === b) {
@@ -32,7 +32,7 @@ export const useEffectDeep = (
   callback: () => void | (() => void),
   deps: unknown[]
 ) => {
-  if (!shouldExecHook()) return
+  if (!sideEffectsEnabled()) return
 
   useHook(
     "useEffectDeep",
