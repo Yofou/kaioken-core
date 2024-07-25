@@ -1,13 +1,12 @@
 {
   "name": "@kaioken-core/hooks",
   "public": true,
-  "version": "0.0.1-64",
+  "version": "0.0.1-65",
   "type": "module",
   "files": [
     "dist"
   ],
   "main": "./dist/main.js",
-  "module": "./dist/main.js",
   "types": "./dist/lib/main.d.ts",
   "exports": {
     ".": "./dist/main.js",
