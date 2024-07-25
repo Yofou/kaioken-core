@@ -1,7 +1,7 @@
 {
   "name": "@kaioken-core/hooks",
   "public": true,
-  "version": "0.0.1-68",
+  "version": "0.0.1-69",
   "type": "module",
   "files": [
     "dist"
@@ -11,17 +11,12 @@
   "types": "./dist/lib/main.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/main.js"
+      "types": "./dist/lib/main.d.ts",
+      "default": "./dist/main.js"
     },
     "./easing": {
+      "types": "./dist/lib/easing.d.ts",
       "import": "./dist/easing.js"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "easing": [
-        "./dist/lib/easing.d.ts"
-      ]
     }
   },
   "scripts": {
