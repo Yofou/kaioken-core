@@ -3,7 +3,7 @@ import { useMouse } from "./useMouse";
 import { useEventListener } from "./useEventListener";
 
 export const useMouseInElement = (
-  target: Kaioken.Ref<HTMLElement>,
+  target: Kaioken.Ref<HTMLElement | null>,
 ) => {
   const { mouse } = useMouse()
   const [elementX, setElementX] = useState(0);

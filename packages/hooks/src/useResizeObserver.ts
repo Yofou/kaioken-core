@@ -1,7 +1,7 @@
 import { useEffect, useState } from "kaioken"
 
 export const useResizeObserver = (
-  ref: Kaioken.Ref<Element>,
+  ref: Kaioken.Ref<Element | null>,
   callback: ResizeObserverCallback,
   options: ResizeObserverOptions | undefined = undefined
 ) => {

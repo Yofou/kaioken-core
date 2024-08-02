@@ -21,7 +21,7 @@ const getDefault = () => ({
 })
 
 export const useElementBounding = (
-  ref: Kaioken.Ref<Element>,
+  ref: Kaioken.Ref<Element | null>,
   options: UseElementBoundingOptions = {
     windowScroll: true,
     windowResize: true,

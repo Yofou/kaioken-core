@@ -4,7 +4,7 @@ import { useEventListener } from "./useEventListener"
 const noop = () => {}
 
 export type ClickOutsideOptions = {
-  ignore?: (Kaioken.Ref<Element> | string)[]
+  ignore?: (Kaioken.Ref<Element | null> | string)[]
   capture?: boolean
   detectIframe?: boolean
 }
@@ -20,7 +20,7 @@ export type ClickOutsideHandler<
 ) => void
 
 export const useClickOutside = <T extends ClickOutsideOptions>(
-  ref: Kaioken.Ref<Element>,
+  ref: Kaioken.Ref<Element | null>,
   handler: ClickOutsideHandler<{ detectIframe: T["detectIframe"] }>,
   options: T = {} as T
 ) => {

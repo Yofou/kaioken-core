@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "kaioken"
 
 
 export const useMutationObserver = (
-  ref: Kaioken.Ref<Element>,
+  ref: Kaioken.Ref<Element | null>,
   callback: MutationCallback,
   options: MutationObserverInit | undefined = undefined
 ) => {
