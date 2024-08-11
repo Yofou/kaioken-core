@@ -6,11 +6,15 @@ same as useEffect but the dependencies array will recursively look down objects
 
 ## Demo
 
-<UseEffectDeepExample></UseEffectDeepExample>
+<UseEffectDeepExample />
 
 ## Usage
 
 ```tsx
+import { useCurrentNode, useState } from "kaioken"
+import { useEffectDeep } from '@kaioken-core/hooks'
+
+const node = useCurrentNode()
 const [context, setContext] = useState({
   count: 0,
   name: ''
@@ -25,6 +29,8 @@ const onClick = () => {
     $context.count += 1
     return $context
   })
+
+  node.ctx.requestUpdate(node)
 }
 
 const onInput = (e: InputEvent) => {
@@ -34,5 +40,11 @@ const onInput = (e: InputEvent) => {
     }
     return $context
   })
+  node.ctx.requestUpdate(node)
 }
+```
+
+## Type Declaration
+```tsx twoslash
+import { useEffectDeep } from '@kaioken-core/hooks'
 ```

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "kaioken"
+import { signal, useEffect, useRef } from "kaioken"
 
 type RefFnArg = {
   delta: number
@@ -11,17 +11,16 @@ type RefFnOptions = {
 }
 
 const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
-  const isActive = useRef(false);
+  const isActive = signal(false);
   const refId = useRef<null | number>(null)
   const intervalLimit = options?.fpsLimit ? 1000 / options.fpsLimit : null
   let previousFrameTimestamp = 0
 
   const rafLoop = (timestamp: DOMHighResTimeStamp) => {
-    if (!isActive.current || !window) return
+    if (!isActive.value || !window) return
     if (!previousFrameTimestamp) previousFrameTimestamp = timestamp
 
     const delta = timestamp - previousFrameTimestamp
-
     if (intervalLimit && delta < intervalLimit) {
       refId.current = window.requestAnimationFrame(rafLoop)
       return
@@ -33,8 +32,8 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
   }
 
   const start = () => {
-    if (!isActive.current && window) {
-      isActive.current = true;
+    if (!isActive.value && window) {
+      isActive.value = true
       previousFrameTimestamp = 0
       if (refId.current != null) {
         window.cancelAnimationFrame(refId.current)
@@ -45,7 +44,7 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
   }
 
   const stop = () => {
-    isActive.current = false;
+    isActive.value = false
     if (refId.current != null && window) {
       window.cancelAnimationFrame(refId.current)
       refId.current = null
@@ -58,14 +57,14 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
     }
 
     return () => {
-      stop();
+      stop()
     }
-  }, [options.immediate, callback])
+  }, [])
 
   return {
     start,
     stop,
-    isActive: isActive.current,
+    isActive: isActive.value,
   }
 }
 

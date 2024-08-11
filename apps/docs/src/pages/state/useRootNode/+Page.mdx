@@ -1,6 +1,14 @@
-# Title goes here
-description goes here
+import { UseRootNodeExample } from '$/examples/useRootNode'
 
-# Demo
+# useRootNode
+Grabs the kaioken Root node and only filters for components in the tree
 
-# Usage
+## Demo
+<UseRootNodeExample />
+
+## Usage
+```tsx twoslash
+import { useRootNode } from '@kaioken-core/hooks'
+// ---cut---
+const node = useRootNode()
+```

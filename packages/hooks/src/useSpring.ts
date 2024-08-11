@@ -1,5 +1,5 @@
 import { sideEffectsEnabled, useHook } from "kaioken"
-import { noop } from "kaioken/utils.js"
+import { noop } from "kaioken/utils"
 import { SpringOpts, TickContext, type Task } from './motion/types'
 import { loop, raf } from "./motion/loop"
 import { tickSpring } from "./motion/spring"
@@ -19,11 +19,7 @@ export const useSpring = <T,>(
   }
 
   const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = opts;
-  const spring: SpringOpts = {
-		stiffness,
-		damping,
-		precision
-	};
+
 
   return useHook(
     "useSpring",
@@ -43,6 +39,13 @@ export const useSpring = <T,>(
       if (!oldHook) {
         hook.value = initial instanceof Function ? initial() : initial
         hook.dispatch = (setter: Kaioken.StateSetter<T>, opts = {} as SpringOpts) => {
+          const spring: SpringOpts = {
+            stiffness,
+            damping,
+            precision,
+            ...opts
+          };
+
           const newValue =
             setter instanceof Function ? setter(hook.value) : setter;
 

@@ -28,7 +28,7 @@
     "vite-plugin-kaioken": "^0.7.1"
   },
   "devDependencies": {
-    "kaioken": "^0.24.5",
+    "kaioken": "^0.24.6",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.7.3",

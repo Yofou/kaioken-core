@@ -4,6 +4,9 @@ import ssr from "vike/plugin"
 import kaioken from "vite-plugin-kaioken"
 import mdx from "@mdx-js/rollup"
 import shiki, { type RehypeShikiOptions } from "@shikijs/rehype";
+import {
+  transformerTwoslash,
+} from '@shikijs/twoslash'
 
 export default defineConfig({
   resolve: {
@@ -23,7 +26,9 @@ export default defineConfig({
             shiki,
             {
               theme: "github-dark",
-              transformers: [],
+              transformers: [transformerTwoslash({
+                explicitTrigger: true
+              })],
             } as RehypeShikiOptions,
           ],
         ],

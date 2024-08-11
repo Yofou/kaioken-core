@@ -23,6 +23,14 @@ export const useActiveElement = (options: ActiveElementOptions = {}) => {
 
   useEventListener(
     "focus",
+    update,
+    {
+      capture: true,
+    }
+  )
+
+  useEventListener(
+    "blur", 
     (event) => {
       if (event.relatedTarget === null) {
         update()
@@ -33,11 +41,6 @@ export const useActiveElement = (options: ActiveElementOptions = {}) => {
     }
   )
 
-  useEventListener("blur", update, {
-    capture: true,
-  })
-
   useEffect(update, [])
-
-  return [activeElement]
+  return activeElement
 }

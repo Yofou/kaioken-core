@@ -36,7 +36,7 @@ export const useMouseInElement = (
     const elX = mouse.x - tempElementPositionX
     const elY = mouse.y - tempElementPositionY
 
-    const tempIsOutside = width === 0 || height === 0 ||elX < 0 || elY < 0 || elX > width || elY > height
+    const tempIsOutside = width === 0 || height === 0 || elX < 0 || elY < 0 || elX > width || elY > height
     setIsOutside(
       tempIsOutside
     )

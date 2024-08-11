@@ -19,7 +19,11 @@ pre.shiki {
   font-size: 0.7rem;
   line-height: 1.7142857;
   border-radius: .35rem;
-  background-color: #0a0a0a !important;
+  background: rgba( 25, 18, 18, 1 ) !important;
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
   padding: 1rem;
 }
 
@@ -91,4 +95,26 @@ pre.shiki span.line.diff.add:before {
   padding-inline-end: 1.1428571em;
   padding-bottom: 0.8571429em;
   padding-inline-start: 1.1428571em;
+}
+
+.twoslash-popup-code, .twoslash-popup-docs {
+  display: none;
+
+  position: absolute;
+  top: 0rem;
+  left: 0;
+
+  padding: 1rem;
+  background: black;
+  z-index: 9999;
+  transform: translateY(calc(-100% - 1rem));
+}
+
+.twoslash-hover  {
+  position: relative;
+  text-decoration: underline;
+}
+
+.twoslash-hover:hover .twoslash-popup-code {
+  display: block;
 }

@@ -1,6 +1,18 @@
-# Title goes here
-description goes here
+import { UseActiveElementExample } from '$/examples/useActiveElement'
 
-# Demo
+# useActiveElement
+reactive document.activeElement
 
-# Usage
+## Demo
+<UseActiveElementExample />
+
+## Usage
+```tsx twoslash
+import { useActiveElement } from '@kaioken-core/hooks'
+// ---cut---
+const node = useActiveElement()
+
+type ActiveElementOptions = {
+    deep?: boolean;
+};
+```

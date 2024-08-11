@@ -12,7 +12,7 @@ export default defineConfig({
     },
 
     rollupOptions: {
-      external: ['kaioken', 'kaioken/utils.js'],
+      external: ['kaioken', 'kaioken/utils'],
       output: {
         globals: {
           "kaioken": 'Kaioken',
@@ -21,8 +21,12 @@ export default defineConfig({
       },
     },
   },
-  plugins: [kaioken(), dts({
-    rollupTypes: false,
-    exclude: ['vite.config.ts']
-  })]
+  plugins: [
+    // @ts-ignore this is type fucked rn
+    kaioken(), 
+    dts({
+      rollupTypes: false,
+      exclude: ['vite.config.ts']
+    })
+  ]
 })

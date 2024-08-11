@@ -1,6 +1,15 @@
-# Title goes here
-description goes here
+import { UseCurrentElementExample } from '$/examples/useCurrentElement'
 
-# Demo
+# useCurrentElement
+grabs the nearest descendent element of what ever the current element is
 
-# Usage
+## Demo
+
+<UseCurrentElementExample />
+
+## Usage
+```tsx twoslash
+import { useCurrentElement } from '@kaioken-core/hooks'
+// ---cut---
+const current = useCurrentElement()
+```

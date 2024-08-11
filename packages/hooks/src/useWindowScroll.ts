@@ -16,12 +16,12 @@ export const useWindowScroll = (behavior: ScrollBehavior = "auto") => {
     passive: true,
   })
 
-	const setX = useCallback((value: any) => {
-    scrollTo({ left: value, behavior })
+  const setX = useCallback((value: number, behaviourOverride?: ScrollBehavior) => {
+    scrollTo({ left: value, behavior: behaviourOverride ?? behavior })
   }, [])
 
-	const setY = useCallback((value: any) => {
-    scrollTo({ top: value, behavior })
+	const setY = useCallback((value: number, behaviourOverride?: ScrollBehavior) => {
+    scrollTo({ top: value, behavior: behaviourOverride ?? behavior })
   }, [])
 
   return { x, y, setX, setY }

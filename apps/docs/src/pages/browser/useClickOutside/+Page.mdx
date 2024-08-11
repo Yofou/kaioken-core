@@ -1,6 +1,20 @@
-# Title goes here
-description goes here
+import { UseClickOutsideExample } from '$/examples/useClickOutside'
 
-# Demo
+# useClickOutside
+triggers a callback when you click outside of an element
 
-# Usage
+## Demo
+<UseClickOutsideExample />
+
+
+## Usage
+```tsx twoslash
+import { useClickOutside } from '@kaioken-core/hooks'
+import { useRef, useState } from 'kaioken'
+// ---cut---
+const [isOpen, setIsOpen] = useState(false)
+const ref = useRef<HTMLElement | null>(null)
+useClickOutside(ref, () => {
+  setIsOpen(false)
+})
+```

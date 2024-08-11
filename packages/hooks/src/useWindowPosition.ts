@@ -13,7 +13,7 @@ export const useWindowPosition = () => {
     if (window.screenY !== screenY) {
       setScreenY(window.screenY)
     }
-  }, { immediate: true })
+  }, { immediate: true  })
 
   return {
     screenX,

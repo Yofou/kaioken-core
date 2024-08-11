@@ -1,6 +1,15 @@
-# Title goes here
-description goes here
+import { UseParentElementExample } from '$/examples/useParentElement'
 
-# Demo
+# useParentElement
+grabs the above element of what ever the current element is
 
-# Usage
+## Demo
+
+<UseParentElementExample />
+
+## Usage
+```tsx twoslash
+import { useParentElement } from '@kaioken-core/hooks'
+// ---cut---
+const parent = useParentElement()
+```

@@ -1,5 +1,5 @@
 import { sideEffectsEnabled, useHook } from "kaioken"
-import { getNodeAppContext } from "kaioken/utils.js"
+import { getNodeAppContext } from "kaioken/utils"
 
 type ComponentTree = {
   name: string

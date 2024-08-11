@@ -1,7 +1,7 @@
-import { useEffect, useState } from "kaioken"
+import { signal, useEffect, useState } from "kaioken"
 
 export const useMediaQuery = (query: string) => {
-  const [isSupported, setIsSupported] = useState(false)
+  const isSupported = signal(false)
   const [matches, setMatches] = useState(false)
   let mediaQuery: MediaQueryList | undefined
 
@@ -18,8 +18,12 @@ export const useMediaQuery = (query: string) => {
   }
 
   useEffect(() => {
+    isSupported.value = window && "ResizeObserver" in window
+  }, [])
+
+  useEffect(() => {
     cleanup()
-    if (!isSupported) return
+    if (!isSupported.value) return
 
     mediaQuery = window.matchMedia(query)
 
@@ -30,10 +34,6 @@ export const useMediaQuery = (query: string) => {
 
     setMatches(mediaQuery.matches)
   }, [query])
-
-  useEffect(() => {
-    setIsSupported(window && "ResizeObserver" in window)
-  }, [])
 
   return [matches]
 }
