@@ -21,7 +21,7 @@ export default {
     plugins(({ addUtilities }) => {
       addUtilities({
         '.bg-glass': {
-          'background': `rgba( 255, 255, 255, 0.05 )`,
+          'background': `rgba( 0, 0, 0, 0.05 )`,
           'backdrop-filter': 'blur( 20px )',
           '-webkit-backdrop-filter': 'blur( 20px )',
           'border': '1px solid rgba( 255, 255, 255, 0.18 )',

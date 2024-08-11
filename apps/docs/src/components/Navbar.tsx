@@ -13,10 +13,10 @@ export const Discord = () => {
 }
 
 export function Navbar() {
-  return <nav className="col-span-full relative bg-glass rounded-xl">
-    <GlowBg duration={2000} />
+  return <nav className="col-span-full relative bg-glass  rounded-xl">
+    {/*  <GlowBg duration={2000} />  */}
 
-    <div className="flex justify-between items-center w-full gap-4 rounded-xl p-4 isolate border-b border-black/50">
+    <div className="flex justify-between items-center w-full gap-4 rounded-xl p-4  border-b border-black/50">
       <a className="flex items-center font-cabin font-semibold text-[1.2rem]" href="/">
         <img className="w-[64px] h-[64px]" src="/kaioken-hook.svg" />
         Kaioken-Core/Hooks

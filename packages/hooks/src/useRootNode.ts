@@ -1,5 +1,4 @@
-import { sideEffectsEnabled, useHook } from "kaioken"
-import { getNodeAppContext } from "kaioken/utils"
+import { sideEffectsEnabled, useHook, useAppContext } from "kaioken"
 
 type ComponentTree = {
   name: string
@@ -80,7 +79,7 @@ export const useRootNode = () => {
       value: undefined as ComponentTree | undefined,
     }, 
     ({ vNode, hook, oldHook, queueEffect, update }) => {
-      const ctx = getNodeAppContext(vNode)
+      const ctx = useAppContext(vNode)
       if (!oldHook && ctx) {
         hook.value = crawlDownAndGetComponents(ctx.rootNode) as ComponentTree 
       }

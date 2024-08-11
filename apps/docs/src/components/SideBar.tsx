@@ -35,11 +35,17 @@ export const Link: Kaioken.FC<LinkProps> = (props) => {
 }
 
 export const SideBar = () => {
-
-  return <nav className="w-[300px] self-start sticky top-4 bg-glass  rounded-xl">
-    <GlowBg />
+  const isFullGlow = signal(false)
+  return <nav className="w-[300px] self-start sticky top-4 rounded-xl">
+    <GlowBg isFullGlow={isFullGlow.value} />
     <aside 
-      className="isolate flex flex-col gap-2 relative inset-0 py-4 px-4 rounded-xl"
+      className="bg-glass flex flex-col gap-2 relative inset-0 py-4 px-4 rounded-xl"
+      onmouseover={() => {
+        isFullGlow.value = true
+      }}
+      onmouseout={() => {
+        isFullGlow.value = false
+      }}
     >
       <Group title="State">
         <Link href="/state/useEffectDeep">useEffectDeep</Link>

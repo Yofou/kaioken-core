@@ -21,13 +21,13 @@
     "shiki": "^1.12.1",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.5.3",
-    "vite-plugin-kaioken": "^0.7.2"
+    "vite-plugin-kaioken": "^0.8.0"
   },
   "dependencies": {
     "@fontsource-variable/cabin": "^5.0.19",
     "@mdx-js/rollup": "^3.0.1",
     "express": "^4.19.2",
-    "kaioken": "^0.24.6",
+    "kaioken": "^0.25.2",
     "tailwind-merge": "^2.4.0",
     "tsx": "^4.16.2",
     "vike": "^0.4.180",

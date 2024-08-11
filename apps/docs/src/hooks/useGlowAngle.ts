@@ -29,8 +29,8 @@ export const useGlowAngle = (duration = 500) => {
       mouse.x - asideX,
     ) * (180 / Math.PI)
 
-    setAngle(_angle + 90)
+    setAngle(_angle + 70)
   }, [mouse.x, mouse.y, asideX, asideY])
 
-  return [ref, `${Math.round(angle)}deg`] as const
+  return [ref, `${Math.round(angle) % 360}deg`] as const
 }

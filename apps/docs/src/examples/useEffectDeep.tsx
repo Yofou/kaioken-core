@@ -1,8 +1,9 @@
-import { ElementProps, useCurrentNode, useState } from "kaioken"
+import { ElementProps, useAppContext, useCurrentNode, useState, useVNode } from "kaioken"
 import { useEffectDeep } from '@kaioken-core/hooks'
 
 export const UseEffectDeepExample: Kaioken.FC = () => {
-  const node = useCurrentNode()
+  const node = useVNode()
+  const ctx = useAppContext()
   const [context, setContext] = useState({
     count: 0,
     name: ''
@@ -18,7 +19,7 @@ export const UseEffectDeepExample: Kaioken.FC = () => {
       return $context
     })
 
-    node.ctx.requestUpdate(node)
+    ctx.requestUpdate(node)
   }
 
   const onInput: ElementProps<'input'>['oninput'] = (e) => {
@@ -27,7 +28,7 @@ export const UseEffectDeepExample: Kaioken.FC = () => {
       return $context
     })
 
-    node.ctx.requestUpdate(node)
+    ctx.requestUpdate(node)
   }
 
   return <div className="p-4 font-cabin flex gap-4 flex-col bg-[#0a0a0a]">
