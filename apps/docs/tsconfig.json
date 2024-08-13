@@ -17,6 +17,7 @@
     "jsx": "preserve",
     "paths": {
       "$/*": ["./src/*"]
-    }
+    },
+    "checkMdx": true
   }
 }

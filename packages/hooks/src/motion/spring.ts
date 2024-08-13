@@ -35,7 +35,7 @@ export const tickSpring = <T,>(
 			nextValue[k] = tickSpring(ctx, lastValue[k], currentValue[k], targetValue[k]);
 		}
 		// @ts-ignore
-		return next_value;
+		return nextValue;
   } else {
     throw new Error(`Cannot spring ${typeof currentValue} values`);
   }

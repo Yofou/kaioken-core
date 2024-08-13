@@ -1,5 +1,8 @@
-import { ElementProps, useAppContext, useCurrentNode, useState, useVNode } from "kaioken"
+import { ElementProps, useAppContext, useState, useVNode } from "kaioken"
 import { useEffectDeep } from '@kaioken-core/hooks'
+import { DemoContainer } from "$/components/DemoContainer"
+import { Button } from "$/components/Button"
+import { Input } from "$/components/Input"
 
 export const UseEffectDeepExample: Kaioken.FC = () => {
   const node = useVNode()
@@ -31,11 +34,11 @@ export const UseEffectDeepExample: Kaioken.FC = () => {
     ctx.requestUpdate(node)
   }
 
-  return <div className="p-4 font-cabin flex gap-4 flex-col bg-[#0a0a0a]">
+  return <DemoContainer className="p-4 font-cabin flex gap-4 flex-col">
     <p>Open console to see logs</p>
     <div className="flex gap-4 rounded-lg">
-    <button className="bg-red p-1" onclick={onClick}>Click me!</button>
-    <input type="text" placeholder="Type name" className="p-1 rounded-lg" value={context.name} oninput={onInput} />
+      <Button className="w-[100px]" onclick={onClick}>Click me!</Button>
+      <Input type="text" placeholder="Type name" className="grow-0 w-[250px]" value={context.name} oninput={onInput} />
     </div>
-  </div>
+  </DemoContainer>
 }

@@ -84,7 +84,9 @@ export const SideBar = () => {
 
       <Group title="Animations">
         <Link href="/animations/useTween">useTween</Link>
+        <Link href="/animations/useTweenMemo">useTweenMemo</Link>
         <Link href="/animations/useSpring">useSpring</Link>
+        <Link href="/animations/useSpringMemo">useSpringMemo</Link>
         <Link href="/animations/useRafFn">useRafFn</Link>
       </Group>
   </aside>

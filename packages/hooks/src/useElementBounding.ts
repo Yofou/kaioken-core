@@ -46,9 +46,10 @@ export const useElementBounding = (
   }
 
   useResizeObserver(ref, update)
-  useMutationObserver(ref, update, {
+  // TODO: Add this back in
+  /* useMutationObserver(ref, update, {
     attributeFilter: ["style", "class"],
-  })
+  }) */
 
   if (windowScroll) {
     useEventListener("scroll", update, { capture: true, passive: true })

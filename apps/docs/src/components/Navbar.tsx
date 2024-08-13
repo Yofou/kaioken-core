@@ -13,7 +13,7 @@ export const Discord = () => {
 }
 
 export function Navbar() {
-  return <nav className="col-span-full relative bg-glass  rounded-xl">
+  return <nav className="col-span-full relative bg-glass-red rounded-xl">
     {/*  <GlowBg duration={2000} />  */}
 
     <div className="flex justify-between items-center w-full gap-4 rounded-xl p-4  border-b border-black/50">

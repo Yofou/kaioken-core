@@ -23,7 +23,9 @@ import { useCurrentElement } from "../src/useCurrentElement"
 import { useRootNode } from "../src/useRootNode"
 import { useElementVisibility } from '../src/useElementVisibility'
 import { useTween } from "../src/useTween"
+import { useTweenMemo } from '../src/useTweenMemo'
 import { useSpring } from "../src/useSpring"
+import { useSpringMemo } from "../src/useSpringMemo"
 import { useElementByPoint } from "../src/useElementByPoint"
 import { useWindowPosition } from "../src/useWindowPosition"
 import { useMouseInElement } from "../src/useMouseInElement"
@@ -57,7 +59,9 @@ export {
   useRootNode,
   useElementVisibility,
   useTween,
+  useTweenMemo,
   useSpring,
+  useSpringMemo,
   useElementByPoint,
   useWindowPosition,
   useMouseInElement,

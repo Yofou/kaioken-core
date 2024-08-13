@@ -19,7 +19,7 @@ pre.shiki {
   font-size: 0.7rem;
   line-height: 1.7142857;
   border-radius: .35rem;
-  background: rgba( 25, 18, 18, 1 ) !important;
+  background: rgba( 25, 18, 18, 0.8 ) !important;
   backdrop-filter: blur( 4px );
   -webkit-backdrop-filter: blur( 4px );
   border-radius: 10px;

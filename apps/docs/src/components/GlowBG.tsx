@@ -1,6 +1,6 @@
 import { useGlowAngle } from "$/hooks/useGlowAngle"
-import { useTween } from "@kaioken-core/hooks"
-import { useEffect, useMemo } from "kaioken"
+import { useTweenMemo } from "@kaioken-core/hooks"
+import { useMemo } from "kaioken"
 import { sineInOut } from "@kaioken-core/hooks/easing"
 
 type GlowBgProps = {
@@ -10,33 +10,26 @@ type GlowBgProps = {
 export const GlowBg: Kaioken.FC<GlowBgProps> = (props) => {
   const [glowRef, angle] = useGlowAngle(props.duration) 
   
-  const [glow, setGlow] = useTween({
-    start1: 0,
-    start2: 60,
-    finish1: 60,
-    finish2: 100
-  }, {
-    duration: 250,
-    easing: sineInOut
-  })
-
-  useEffect(() => {
+  const glow = useTweenMemo(() => {
     if (props.isFullGlow) {
-      setGlow({
+      return {
         start1: 0,
         start2: 0,
         finish1: 0,
         finish2: 100
-      })
-    } else {
-      setGlow({
-        start1: 0,
-        start2: 60,
-        finish1: 60,
-        finish2: 100
-      })
+      }
     }
-  }, [props.isFullGlow])
+
+    return {
+      start1: 0,
+      start2: 60,
+      finish1: 60,
+      finish2: 100
+    }
+  }, [props.isFullGlow], {
+    duration: 250,
+    easing: sineInOut
+  })
 
   const glowGrad = useMemo(() => {
     return `linear-gradient(var(--angle), #070707 ${glow.start1}% ${glow.finish1}%, #DC143C ${glow.start2}% ${glow.finish2}%)`

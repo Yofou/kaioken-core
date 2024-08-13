@@ -13,5 +13,5 @@ export const useDocumentVisibility = () => {
     ref: () => document,
   })
 
-  return [isVisible]
+  return isVisible
 }

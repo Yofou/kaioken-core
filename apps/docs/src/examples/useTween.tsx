@@ -1,6 +1,9 @@
 import { useTween } from "@kaioken-core/hooks"
 import { useMemo, useState } from "kaioken"
 import * as easingFunctions from '@kaioken-core/hooks/easing'
+import { DemoContainer } from "$/components/DemoContainer"
+import { Input } from "$/components/Input"
+import { Button } from "$/components/Button"
 
 export const UseTweenExample: Kaioken.FC = () => {
   const [duration, setDuration] = useState(500)
@@ -30,21 +33,21 @@ export const UseTweenExample: Kaioken.FC = () => {
     setHasFinished(true)
   }
 
-  return <div className="p-4 font-cabin flex gap-2 flex-col bg-[#0a0a0a]">
+  return <DemoContainer className="flex gap-2 flex-col">
     <p>Current value: {currentValue}</p>
     <p>Has finished: {`${hasFinished}`}</p>
     <label className="flex flex-col w-[200px]">
       Duration:
-      <input type="number" value={duration} oninput={(e) => setDuration(e.target.valueAsNumber)} />
+      <Input type="number" value={duration} oninput={(e) => setDuration(e.target.valueAsNumber)} />
     </label>
     <label className="flex flex-col w-[200px]">
       Next Value:
-      <input type="number" value={nextValue} oninput={(e) => setNextValue(e.target.valueAsNumber)} />
+      <Input type="number" value={nextValue} oninput={(e) => setNextValue(e.target.valueAsNumber)} />
     </label>
 
     <label className="flex flex-col w-[200px]">
       Next Value:
-      <select onchange={(e) => setEasing(e.target.value)}>
+      <select className="h-12 w-full cursor-default rounded-md border border-gray-800 bg-[#121212] p-3.5 text-gray-100 transition-colors duration-500 placeholder:select-none placeholder:text-gray-500 focus:border-red focus:outline-none appearance-none" onchange={(e) => setEasing(e.target.value)}>
         <option value="linear">Linear</option>
         <option value="backInOut">Back in out</option>
         <option value="backIn">Back in</option>
@@ -81,12 +84,12 @@ export const UseTweenExample: Kaioken.FC = () => {
     
 
     <div className="flex gap-2 mt-2">
-    <button className="bg-red p-1 rounded-lg" onclick={onUpdateValue}>
-      Update Current Value
-    </button>
-    <button className="bg-red p-1 rounded-lg"  onclick={onCancel}>
-      Cancel
-    </button>
+      <Button className="bg-red p-1 rounded-lg" onclick={onUpdateValue}>
+        Update Current Value
+      </Button>
+      <Button className="bg-red p-1 rounded-lg"  onclick={onCancel}>
+        Cancel
+      </Button>
     </div>
-  </div>
+  </DemoContainer>
 }

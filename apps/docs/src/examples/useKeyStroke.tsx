@@ -1,3 +1,5 @@
+import { Button } from "$/components/Button"
+import { DemoContainer } from "$/components/DemoContainer"
 import { useKeyStroke } from "@kaioken-core/hooks"
 import { signal } from "kaioken"
 
@@ -19,9 +21,9 @@ export const UseKeyStrokeExample = () => {
     keysPressed.notify()
   })
 
-  return <div className="p-4 font-cabin h-[350px] flex items-start content-start gap-4 overflow-y-scroll flex-wrap bg-[#0a0a0a]">
+  return <DemoContainer className="p-4 font-cabin h-[350px] flex items-start content-start gap-4 overflow-y-scroll flex-wrap">
     {keysPressed.value.map((key) => {
-      return <button className="px-4 py-2 bg-red text-white rounded-lg capitalize">{key}</button>
+      return <Button className="text-white rounded-lg capitalize">{key}</Button>
     })}
-  </div>
+  </DemoContainer>
 }

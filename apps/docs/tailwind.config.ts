@@ -15,6 +15,19 @@ export default {
     },
     fontFamily: {
       cabin: ["'Cabin Variable'", 'sans-serif']
+    },
+    animation: {
+      "background-shine": "background-shine 2s linear infinite"
+    },
+    keyframes: {
+      "background-shine": {
+        "from": {
+          backgroundPosition: "0 0"
+        },
+        "to": {
+          backgroundPosition: "-200% 0"
+        }
+      }
     }
   },
   plugins: [
@@ -22,6 +35,12 @@ export default {
       addUtilities({
         '.bg-glass': {
           'background': `rgba( 0, 0, 0, 0.05 )`,
+          'backdrop-filter': 'blur( 20px )',
+          '-webkit-backdrop-filter': 'blur( 20px )',
+          'border': '1px solid rgba( 255, 255, 255, 0.18 )',
+        },
+        '.bg-glass-red': {
+          'background': `rgba( 25, 18, 18, 0.8 )`,
           'backdrop-filter': 'blur( 20px )',
           '-webkit-backdrop-filter': 'blur( 20px )',
           'border': '1px solid rgba( 255, 255, 255, 0.18 )',

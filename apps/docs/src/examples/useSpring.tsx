@@ -1,4 +1,6 @@
-import { GlowBg } from "$/components/GlowBG"
+import { Button } from "$/components/Button"
+import { DemoContainer } from "$/components/DemoContainer"
+import { Input } from "$/components/Input"
 import { useSpring } from "@kaioken-core/hooks"
 import { useRef, useState } from "kaioken"
 
@@ -25,34 +27,31 @@ export const UseSpringExample: Kaioken.FC = () => {
     })
   }
 
-
-  return <div className="p-4 w-full font-cabin grid grid-cols-2 gap-2 bg-glass rounded-xl relative min-h-[380px]">
-    <GlowBg />
-    <div className="flex flex-col gap-2 isolate">
-      <label className="flex flex-col w-[200px]">
-        Damping:
-        <input type="number" value={damping} oninput={(e) => setDamping(e.target.valueAsNumber)} />
-      </label>
-      <label className="flex flex-col w-[200px]">
-        Stiffness:
-        <input type="number" value={stiffness} oninput={(e) => setStiffness(e.target.valueAsNumber)} />
-      </label>
-      <label className="flex flex-col w-[200px]">
-        precision:
-        <input type="number" value={precision} oninput={(e) => setPrecision(e.target.valueAsNumber)} />
-      </label>
-      <div className="flex gap-2 mt-2">
-        <button className="bg-red p-1 rounded-lg" onclick={onUpdateValue}>
-          Change
-        </button>
-        <button className="bg-red p-1 rounded-lg" onclick={onCancel}>
-          Cancel
-        </button>
+  return <div className="relative">
+    <div className="w-[var(--dim)] h-[var(--dim)] bg-red rounded-full absolute left-[calc(100%-250px)] top-1/2 -translate-x-1/2 -translate-y-1/2 origin-center" style={`--dim: ${currentValue}px`} />
+    <DemoContainer className="[background:rgba(25,18,18,0.3)] grid grid-cols-2 gap-2 min-h-[380px]">
+      <div className="flex flex-col gap-2">
+        <label className="flex flex-col w-[200px]">
+          Damping:
+          <Input type="number" value={damping} oninput={(e) => setDamping(e.target.valueAsNumber)} />
+        </label>
+        <label className="flex flex-col w-[200px]">
+          Stiffness:
+          <Input type="number" value={stiffness} oninput={(e) => setStiffness(e.target.valueAsNumber)} />
+        </label>
+        <label className="flex flex-col w-[200px]">
+          Precision:
+          <Input type="number" value={precision} oninput={(e) => setPrecision(e.target.valueAsNumber)} />
+        </label>
+        <div className="flex gap-2 mt-2">
+          <Button onclick={onUpdateValue}>
+            Change
+          </Button>
+          <Button onclick={onCancel}>
+            Cancel
+          </Button>
+        </div>
       </div>
-    </div>
-
-    <div className="w-full h-full grid place-content-center isolate">
-      <div className="w-[var(--dim)] h-[var(--dim)] bg-red rounded-full" style={`--dim: ${currentValue}px`} />
-    </div>
+    </DemoContainer>
   </div>
 }

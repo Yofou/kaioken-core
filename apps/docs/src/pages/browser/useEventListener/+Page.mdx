@@ -1,6 +1,14 @@
-# Title goes here
-description goes here
+# useEventListener
+Safely applies events when the component mounts and cleans it up when it gets unmounted.
+Also allows you to supply a function to apply the events to a Element, Window or Document.
 
-# Demo
-
-# Usage
+## Usage
+```tsx twoslash
+import { useEventListener } from '@kaioken-core/hooks'
+// ---cut---
+useEventListener('scroll', (e) => {
+  // code goes here
+}, {
+  ref: () => document
+})
+```
