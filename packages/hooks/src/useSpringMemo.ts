@@ -15,7 +15,7 @@ export const useSpringMemo = <T,>(
 ): T => {
   if (!sideEffectsEnabled()) return factory()
   return useHook(
-    "useMemo",
+    "useSpringMemo",
     { 
       deps, 
       value: undefined as T,

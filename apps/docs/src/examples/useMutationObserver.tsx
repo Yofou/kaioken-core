@@ -8,39 +8,62 @@ export const UseMutationObserverExample: Kaioken.FC = () => {
   const style = signal({})
   const className = signal('')
   const changes = signal<(string | null)[]>([])
-
-  useMutationObserver(el, (mutation) => {
-    if (mutation[0]) {
-      changes.value.push(mutation[0].attributeName)
-      changes.notify()
-    }
-  }, {
-    attributes: true
-  })
+  const count = signal(0)
 
   useEffect(() => {
-    let shouldClear = [true, true]
+    const styleTimeoutId = setTimeout(() => {
+      style.value = { color: 'red' } 
+    }, 1000)
+
     const classNameTimeoutId = setTimeout(() => {
       className.value = 'test'
-      shouldClear[1] = false
-    }, 1000)
+    }, 2000)
+
+    return () => {
+      clearTimeout(styleTimeoutId)
+      clearTimeout(classNameTimeoutId)
+    }
+  }, [])
+
+  const reset = () => {
+    changes.value = []
+    changes.notify()
+    style.value = {}
+    className.value = ''
 
     const styleTimeoutId = setTimeout(() => {
       style.value = { color: 'red' } 
-      shouldClear[0] = false
-    }, 500)
+    }, 2000)
 
-    return () => {
-      if (shouldClear[0]) clearTimeout(styleTimeoutId)
-      if (shouldClear[1]) clearTimeout(classNameTimeoutId)
-    }
-  }, [])
+    const classNameTimeoutId = setTimeout(() => {
+      className.value = 'test'
+    }, 3000)
+  }
+
+  const controls = useMutationObserver(el, (mutation) => {
+    mutation.forEach(el => {
+      if (el) {
+        changes.value.push(el.attributeName)
+      }
+    })
+    changes.notify()
+  }, {
+    attributes: true
+  })
 
   return <DemoContainer>
     <div ref={el} className={twMerge("w-full p-4 bg-grey-700 rounded-lg flex flex-col", className.value)} style={style.value}>
       {changes.value.map(attr => {
         return <p>Mutation Attribute: {attr}</p>
       })}
+      <button onclick={() => count.value += 1}>increment {count.value}</button>
+      <button onclick={reset}>reset</button>
+      <button onclick={() => {
+        controls.stop()
+      }}>stop</button>
+      <button onclick={() => {
+        controls.start()
+      }}>start</button>
     </div>
   </DemoContainer>
 }

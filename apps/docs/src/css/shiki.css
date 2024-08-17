@@ -103,11 +103,20 @@ pre.shiki span.line.diff.add:before {
   position: absolute;
   top: 0rem;
   left: 0;
+  width: 100vw;
+  max-width: 600px;
+  text-wrap: wrap;
 
   padding: 1rem;
   background: black;
   z-index: 9999;
   transform: translateY(calc(-100% - 1rem));
+}
+
+
+
+.twoslash-popup-code *, .twoslash-popup-docs * {
+  text-wrap: wrap;
 }
 
 .twoslash-hover  {

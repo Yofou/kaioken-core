@@ -5,6 +5,7 @@ import kaioken from "vite-plugin-kaioken"
 import mdx from "@mdx-js/rollup"
 import shiki, { type RehypeShikiOptions } from "@shikijs/rehype";
 import {
+    rendererClassic,
   transformerTwoslash,
 } from '@shikijs/twoslash'
 
@@ -27,7 +28,7 @@ export default defineConfig({
             {
               theme: "github-dark",
               transformers: [transformerTwoslash({
-                explicitTrigger: true
+                explicitTrigger: true,
               })],
             } as RehypeShikiOptions,
           ],

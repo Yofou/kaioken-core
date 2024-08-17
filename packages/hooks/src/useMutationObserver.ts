@@ -1,46 +1,73 @@
-import { useEffect, useRef, signal } from "kaioken"
+import {cleanupHook, depsRequireChange, sideEffectsEnabled, useHook  } from "kaioken"
 
-
+const isSupported = "window" in globalThis && "MutationObserver" in globalThis.window
 export const useMutationObserver = (
   ref: Kaioken.Ref<Element | null>,
   callback: MutationCallback,
   options: MutationObserverInit | undefined = undefined
 ) => {
+  if (!sideEffectsEnabled()) return {
+      isSupported,
+      start: () => {},
+      stop: () => {},
+  }
 
-  const isSupported = signal(false)
-  const isListening = signal(true)
-  const observer = useRef<MutationObserver | undefined>(undefined)
-  const cleanup = () => {
-    if (observer.current) {
-      observer.current?.disconnect?.()
-      observer.current = undefined
+  if (!isSupported) {
+    return {
+      isSupported,
+      start: () => {},
+      stop: () => {},
     }
   }
 
-  useEffect(() => {
-    isSupported.value = (window && "MutationObserver" in window)
-  }, [callback])
+  return useHook(
+    'useMutationObserver',
+    {
+      mutationObserver: null as MutationObserver | null,
+      deps: [ref.current],
+    },
+    ({ oldHook, hook, queueEffect }) => {
+      if (!oldHook) {
+        queueEffect(() => {
+          hook.deps = [ref.current]
+          hook.mutationObserver = new MutationObserver(callback)
+          if (ref.current) {
+            hook.mutationObserver.observe(ref.current, options)
+          }
+        })
 
-  useEffect(() => {
-    if (isSupported.value && ref.current && isListening.value) {
-      observer.current = new MutationObserver(callback)
-      observer.current.observe(ref.current, options)
+        hook.cleanup = () => {
+          hook.mutationObserver?.disconnect?.()
+          hook.mutationObserver = null
+        }
+      } else if (depsRequireChange([ref.current], oldHook?.deps)) {
+        hook.deps = [ref.current]
+        hook.mutationObserver?.disconnect?.()
+        if (ref.current) {
+          hook.mutationObserver?.observe(ref.current, options)
+        }
+      }
+
+      return {
+        isSupported,
+        start: () => {
+          if (hook.mutationObserver != null) {
+            return
+          }
+          hook.mutationObserver = new MutationObserver(callback)
+          if (ref.current) {
+            hook.mutationObserver.observe(ref.current, options)
+          }
+
+          hook.cleanup = () => {
+            hook.mutationObserver?.disconnect?.()
+            hook.mutationObserver = null
+          }
+        },
+        stop: () => {
+          cleanupHook(hook)
+        },
+      }
     }
-
-    return cleanup
-  }, [ref.current, isListening.value, isSupported.value])
-
-  const start = () => {
-    isListening.value = true
-  }
-
-  const stop = () => {
-    isListening.value = false
-  }
-
-  return {
-    isSupported,
-    start,
-    stop,
-  }
+  )
 }

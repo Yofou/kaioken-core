@@ -9,40 +9,54 @@ export const UseTweenExample: Kaioken.FC = () => {
   const [duration, setDuration] = useState(500)
   const [currentValue, setCurrentValue] = useTween(0)
   const [nextValue, setNextValue] = useState(0)
-  const [hasFinished, setHasFinished] = useState(false)
   const [easing, setEasing] = useState('linear')
   const easingFunc = useMemo(() => {
     return easingFunctions[easing]
   }, [easing])
 
   const onUpdateValue = async () => {
-    setHasFinished(false)
-
     await setCurrentValue(nextValue, {
       duration,
       easing: easingFunc
     })
-
-    setHasFinished(true)
   }
 
   const onCancel = () => {
     setCurrentValue(nextValue, {
       duration: 0,
     })
-    setHasFinished(true)
   }
 
-  return <DemoContainer className="flex gap-2 flex-col">
-    <p>Current value: {currentValue}</p>
-    <p>Has finished: {`${hasFinished}`}</p>
+  const deg = useMemo(() => {
+    return `-${180 - ((currentValue / 5000) * 180)}deg`
+  }, [currentValue])
+
+  return <div className="relative">
+  <p className="absolute top-[250px] left-[700px] text-white text-center -translate-x-1/2 font-cabin text-[2rem] z-10">
+    {Math.round( ((currentValue + Number.EPSILON) * 100)) / 100}
+  </p>
+  <div className="absolute top-1/2 -translate-y-1/2 left-[500px] scale-150">
+    <div className="wrapper overflow-hidden">
+      <div className="circle-out w-[400px] h-[200px] bg-black rounded-t-[380px] border-[100px] border-[#ededed] border-b-[0] relative">
+        <div 
+          className="circle w-[400px] h-[200px] bg-black rounded-t-[380px] border-[100px] border-b-0 border-red origin-bottom absolute z-[1] bottom-0 left-[-100px]"
+          style={{
+            rotate: deg
+          }}
+        />
+      </div>
+    </div>
+  </div>
+
+
+  <DemoContainer className="flex gap-2 flex-col">
     <label className="flex flex-col w-[200px]">
       Duration:
       <Input type="number" value={duration} oninput={(e) => setDuration(e.target.valueAsNumber)} />
     </label>
     <label className="flex flex-col w-[200px]">
       Next Value:
-      <Input type="number" value={nextValue} oninput={(e) => setNextValue(e.target.valueAsNumber)} />
+      <Input type="number" min={0} max={5000} value={nextValue} oninput={(e) => setNextValue(e.target.valueAsNumber)} />
     </label>
 
     <label className="flex flex-col w-[200px]">
@@ -92,4 +106,5 @@ export const UseTweenExample: Kaioken.FC = () => {
       </Button>
     </div>
   </DemoContainer>
+  </div>
 }

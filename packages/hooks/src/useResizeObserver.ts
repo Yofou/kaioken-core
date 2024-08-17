@@ -1,44 +1,71 @@
-import { useEffect, useState } from "kaioken"
+import { cleanupHook, depsRequireChange, sideEffectsEnabled, useHook } from "kaioken"
+
+const isSupported = "window" in globalThis && "ResizeObserver" in globalThis.window
 
 export const useResizeObserver = (
   ref: Kaioken.Ref<Element | null>,
   callback: ResizeObserverCallback,
   options: ResizeObserverOptions | undefined = undefined
 ) => {
-  const [isSupported, setIsSupported] = useState(false)
-  const [isListening, setIsListening] = useState(true)
-  let observer: ResizeObserver | undefined
+  if (!sideEffectsEnabled()) return {
+      isSupported,
+      start: () => {},
+      stop: () => {},
+  }
 
-  const cleanup = () => {
-    if (observer) {
-      observer.disconnect()
-      observer = undefined
+  if (!isSupported) {
+    return {
+      isSupported,
+      start: () => {},
+      stop: () => {},
     }
   }
 
-  useEffect(() => {
-    cleanup()
-    if (isSupported && ref.current && isListening) {
-      observer = new ResizeObserver(callback)
-      observer.observe(ref.current, options)
+  return useHook(
+    'useResizeObserver',
+    {
+      resizeObserver: null as ResizeObserver | null,
+      deps: [ref.current],
+    },
+    ({ oldHook, hook, queueEffect }) => {
+      if (!oldHook) {
+        hook.resizeObserver = new ResizeObserver(callback)
+        hook.cleanup = () => {
+          hook.resizeObserver?.disconnect?.()
+          hook.resizeObserver = null
+        }
+      }
+
+      queueEffect(() => {
+        if (depsRequireChange([ref.current], oldHook?.deps)) {
+          hook.deps = [ref.current]
+          hook.resizeObserver?.disconnect?.()
+          if (ref.current) {
+            hook.resizeObserver?.observe(ref.current, options)
+          }
+        }
+      })
+
+      return {
+        isSupported,
+        start: () => {
+          if (hook.resizeObserver != null) {
+            return
+          }
+          hook.resizeObserver = new ResizeObserver(callback)
+          if (ref.current) {
+            hook.resizeObserver.observe(ref.current, options)
+          }
+
+          hook.cleanup = () => {
+            hook.resizeObserver?.disconnect?.()
+            hook.resizeObserver = null
+          }
+        },
+        stop: () => {
+          cleanupHook(hook)
+        },
+      }
     }
-  }, [ref.current, isListening])
-
-  useEffect(() => {
-    setIsSupported(window && "ResizeObserver" in window)
-  }, [])
-
-  const start = () => {
-    setIsListening(true)
-  }
-
-  const stop = () => {
-    setIsListening(true)
-  }
-
-  return {
-    isSupported,
-    start,
-    stop,
-  }
+  )
 }

@@ -6,7 +6,12 @@ type InputProps<T extends string | number | undefined> = {
   value?: T,
   type?: ElementProps<'input'>['type'],
   oninput?: ElementProps<'input'>['oninput'],
-  ref?: ElementProps<'input'>['ref']
+  onfocus?: ElementProps<'input'>['onfocus'],
+  ref?: ElementProps<'input'>['ref'],
+  min?: ElementProps<'input'>['min'],
+  max?: ElementProps<'input'>['max'],
+  pattern?: ElementProps<'input'>['pattern'],
+  inputmode?: ElementProps<'input'>['inputmode'],
   placeholder?: string
 }
 
@@ -25,7 +30,8 @@ export const Input = <T extends string | number | undefined, >(props: InputProps
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
-  const handleFocus = () => {
+  const handleFocus: ElementProps<'input'>['onfocus'] = (e) => {
+    props?.onfocus?.(e)
     setIsFocused(true);
     setOpacity(1);
   };
@@ -58,6 +64,10 @@ export const Input = <T extends string | number | undefined, >(props: InputProps
           type={props.type}
           value={props.value ?? ''}
           oninput={props.oninput}
+          min={props.min}
+          max={props.max}
+          pattern={props.pattern}
+          inputmode={props.inputmode}
           className='h-12 w-full cursor-default rounded-md border border-gray-800 bg-[#121212] p-3.5 text-gray-100 transition-colors duration-500 placeholder:select-none placeholder:text-gray-500 focus:border-red focus:outline-none'
         />
         <input

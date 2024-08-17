@@ -22,8 +22,8 @@ export const GlowBg: Kaioken.FC<GlowBgProps> = (props) => {
 
     return {
       start1: 0,
-      start2: 60,
-      finish1: 60,
+      start2: 50,
+      finish1: 50,
       finish2: 100
     }
   }, [props.isFullGlow], {
@@ -32,7 +32,7 @@ export const GlowBg: Kaioken.FC<GlowBgProps> = (props) => {
   })
 
   const glowGrad = useMemo(() => {
-    return `linear-gradient(var(--angle), #070707 ${glow.start1}% ${glow.finish1}%, #DC143C ${glow.start2}% ${glow.finish2}%)`
+    return `linear-gradient(calc(var(--angle) + 90deg), #070707 ${glow.start1}% ${glow.finish1}%, #DC143C ${glow.start2}% ${glow.finish2}%)`
   }, Object.values(glow))
   
   return <div 

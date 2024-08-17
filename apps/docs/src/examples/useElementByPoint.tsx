@@ -9,12 +9,13 @@ export const UseElementByPointExample: Kaioken.FC = () => {
     multiple: false,
     immediate: true,
   })
+
   const boundRef = useRef<null | Element>(null)
   const bounding = useElementBounding(boundRef)
-
   useEffect(() => {
     boundRef.current = element
   }, [element])
+
 
   return <>
     <div 

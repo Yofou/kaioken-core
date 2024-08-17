@@ -9,16 +9,16 @@ import { loop, raf } from "./motion/loop"
   Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
 */
 
-export const useTweenMemo = <T,>(factory: () => T, deps: unknown[], options: TweenedOptions<T> = {}): T => {
+export function useTweenMemo <T>(factory: () => T, deps: unknown[], options: TweenedOptions<T> = {}): T {
   if (!sideEffectsEnabled()) return factory()
   return useHook(
     "useTweenMemo",
-    { 
+    () => ({ 
       deps, 
       value: undefined as T,
       task: undefined as Task | undefined,
       targetValue: undefined as T,
-    },
+    }),
     ({ hook, oldHook, update }) => {
       if (!oldHook) {
         hook.value = factory()

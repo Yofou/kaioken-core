@@ -1,44 +1,70 @@
-import { useEffect, useState } from "kaioken"
+import { cleanupHook, depsRequireChange, sideEffectsEnabled, useHook } from "kaioken"
 
+const isSupported = "window" in globalThis && "IntersectionObserver" in globalThis.window
 export const useIntersectionObserver = (
   ref: Kaioken.Ref<Element | null>,
   callback: IntersectionObserverCallback,
   options: IntersectionObserverInit | undefined = undefined
 ) => {
-  const [isSupported, setIsSupported] = useState(false)
-  const [isListening, setIsListening] = useState(true)
-  let observer: IntersectionObserver | undefined
+  if (!sideEffectsEnabled()) return {
+      isSupported,
+      start: () => {},
+      stop: () => {},
+  }
 
-  const cleanup = () => {
-    if (observer) {
-      observer.disconnect()
-      observer = undefined
+  if (!isSupported) {
+    return {
+      isSupported,
+      start: () => {},
+      stop: () => {},
     }
   }
 
-  useEffect(() => {
-    cleanup()
-    if (isSupported && ref.current && isListening) {
-      observer = new IntersectionObserver(callback, options)
-      observer.observe(ref.current)
+  return useHook(
+    'useIntersectionObserver',
+    {
+      intersectionObserver: null as IntersectionObserver | null,
+      deps: [ref.current],
+    },
+    ({ oldHook, hook, queueEffect }) => {
+      if (!oldHook) {
+        hook.intersectionObserver = new IntersectionObserver(callback, options)
+        hook.cleanup = () => {
+          hook.intersectionObserver?.disconnect?.()
+          hook.intersectionObserver = null
+        }
+      }
+
+      queueEffect(() => {
+        if (depsRequireChange([ref.current], oldHook?.deps)) {
+          hook.deps = [ref.current]
+          hook.intersectionObserver?.disconnect?.()
+          if (ref.current) {
+            hook.intersectionObserver?.observe(ref.current)
+          }
+        }
+      })
+
+      return {
+        isSupported,
+        start: () => {
+          if (hook.intersectionObserver != null) {
+            return
+          }
+          hook.intersectionObserver = new IntersectionObserver(callback, options)
+          if (ref.current) {
+            hook.intersectionObserver.observe(ref.current)
+          }
+
+          hook.cleanup = () => {
+            hook.intersectionObserver?.disconnect?.()
+            hook.intersectionObserver = null
+          }
+        },
+        stop: () => {
+          cleanupHook(hook)
+        },
+      }
     }
-  }, [ref.current, isListening, isSupported])
-
-  useEffect(() => {
-    setIsSupported(window && "IntersectionObserver" in window)
-  }, [])
-
-  const start = () => {
-    setIsListening(true)
-  }
-
-  const stop = () => {
-    setIsListening(true)
-  }
-
-  return {
-    isSupported,
-    start,
-    stop,
-  }
+  )
 }

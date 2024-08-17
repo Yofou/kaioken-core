@@ -9,7 +9,6 @@ import { useWindowFocus } from "../src/useWindowFocus"
 import { useWindowScroll } from "../src/useWindowScroll"
 import { useWindowSize } from "../src/useWindowSize"
 import { useKeyStroke, useKeyDown, useKeyUp } from "../src/useKeyStroke"
-import { useDocumentVisibility } from "../src/useDocumentVisibility"
 import { useStartTyping } from "../src/useStartTyping"
 import { useTextareaAutoSize } from "../src/useTextareaAutoSize"
 import { useRafFn } from "../src/useRafFn"
@@ -45,7 +44,6 @@ export {
   useKeyStroke,
   useKeyUp,
   useKeyDown,
-  useDocumentVisibility,
   useStartTyping,
   useTextareaAutoSize,
   useRafFn,

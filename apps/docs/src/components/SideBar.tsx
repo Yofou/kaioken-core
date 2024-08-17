@@ -56,7 +56,6 @@ export const SideBar = () => {
 
       <Group title="Browser">
         <Link href="/browser/useClickOutside">useClickOutside</Link>
-        <Link href="/browser/useDocumentVisibility">useDocumentVisibility</Link>
         <Link href="/browser/useEventListener">useEventListener</Link>
         <Link href="/browser/useIntersectionObserver">useIntersectionObserver</Link>
         <Link href="/browser/useMutationObserver">useMutationObserver</Link>
