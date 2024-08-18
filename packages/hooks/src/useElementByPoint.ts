@@ -1,4 +1,4 @@
-import { signal, useEffect, useState } from "kaioken"
+import { useState } from "kaioken"
 import { useRafFn } from "./useRafFn"
 
 type useElementByPointOptions<M extends boolean = false> = {
@@ -27,22 +27,15 @@ export const useElementByPoint = <M extends boolean = false,>(
 
 
   const [element, setElement] = useState<any>(null)
-  const _x = signal(x)
-  const _y = signal(y)
   const cb = () => {
     setElement(
       multiple 
-        ? document.elementsFromPoint(_x.value, _y.value) ?? []
-        : document.elementFromPoint(_x.value, _y.value) ?? null
+        ? document.elementsFromPoint(x, y) ?? []
+        : document.elementFromPoint(x, y) ?? null
     )
   }
 
   const controls = useRafFn(cb, { immediate })
-
-  useEffect(() => {
-    _x.value = x
-    _y.value = y
-  }, [x, y])
 
   return {
     element,

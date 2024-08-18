@@ -28,7 +28,7 @@
     "@mdx-js/rollup": "^3.0.1",
     "express": "^4.19.2",
     "fuse.js": "^7.0.0",
-    "kaioken": "^0.25.3",
+    "kaioken": "0.26.0-0",
     "tailwind-merge": "^2.4.0",
     "tsx": "^4.16.2",
     "vike": "^0.4.180",

@@ -1,4 +1,4 @@
-import { signal, useEffect, useRef } from "kaioken"
+import { cleanupHook, sideEffectsEnabled, useHook } from "kaioken"
 
 type RefFnArg = {
   delta: number
@@ -11,61 +11,73 @@ type RefFnOptions = {
 }
 
 const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
-  const isActive = signal(false);
-  const refId = useRef<null | number>(null)
+  if (!sideEffectsEnabled()) return {
+    isActive: options.immediate ?? false,
+    start: () => null,
+    stop: () => null,
+  }
+
   const intervalLimit = options?.fpsLimit ? 1000 / options.fpsLimit : null
-  let previousFrameTimestamp = 0
+  return useHook(
+    'useRafFn', 
+    () => ({
+      callback,
+      refId: null as number | null,
+      previousFrameTimestamp: 0,
+      isActive: options.immediate ?? false
+    }), 
+    ({ oldHook, hook, update }) => {
+      hook.callback = callback
+      const rafLoop: FrameRequestCallback = (timestamp) => {
+        if (hook.isActive === false) return
+        if (!hook.previousFrameTimestamp) hook.previousFrameTimestamp = timestamp
 
-  const rafLoop = (timestamp: DOMHighResTimeStamp) => {
-    if (!isActive.value || !window) return
-    if (!previousFrameTimestamp) previousFrameTimestamp = timestamp
+        const delta = timestamp - hook.previousFrameTimestamp
+        if (intervalLimit && delta < intervalLimit) {
+          hook.refId = window.requestAnimationFrame(rafLoop)
+          return
+        }
 
-    const delta = timestamp - previousFrameTimestamp
-    if (intervalLimit && delta < intervalLimit) {
-      refId.current = window.requestAnimationFrame(rafLoop)
-      return
-    }
-
-    previousFrameTimestamp = timestamp
-    callback({ delta, timestamp })
-    refId.current = window.requestAnimationFrame(rafLoop)
-  }
-
-  const start = () => {
-    if (!isActive.value && window) {
-      isActive.value = true
-      previousFrameTimestamp = 0
-      if (refId.current != null) {
-        window.cancelAnimationFrame(refId.current)
-        refId.current = null;
+        hook.previousFrameTimestamp = timestamp
+        hook.callback({ delta, timestamp })
+        hook.refId = window.requestAnimationFrame(rafLoop)
       }
-      refId.current = window.requestAnimationFrame(rafLoop)
-    }
-  }
 
-  const stop = () => {
-    isActive.value = false
-    if (refId.current != null && window) {
-      window.cancelAnimationFrame(refId.current)
-      refId.current = null
-    }
-  }
+      if (!oldHook && options.immediate) {
+        hook.isActive = true
+        hook.refId = window.requestAnimationFrame(rafLoop)
+        hook.cleanup = () => {
+          if (hook.refId != null) {
+            window.cancelAnimationFrame(hook.refId)
+          }
+          hook.isActive = false
+        }
 
-  useEffect(() => {
-    if (options.immediate) {
-      start()
-    }
+        update()
+      }
 
-    return () => {
-      stop()
-    }
-  }, [])
+      return {
+        isActive: hook.isActive,
+        start: () => {
+          if (hook.isActive === true) return;
 
-  return {
-    start,
-    stop,
-    isActive: isActive.value,
-  }
+          hook.isActive = true
+          hook.refId = window.requestAnimationFrame(rafLoop)
+          hook.cleanup = () => {
+            if (hook.refId != null) {
+              window.cancelAnimationFrame(hook.refId)
+            }
+            hook.isActive = false
+          }
+          update()
+        },
+        stop: () => {
+          cleanupHook(hook)
+          update()
+        }
+      }
+    }
+  )
 }
 
 export {
