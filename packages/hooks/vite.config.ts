@@ -16,7 +16,7 @@ export default defineConfig({
       output: {
         globals: {
           "kaioken": 'Kaioken',
-          "kaioken/utils": 'Kaioken',
+          "kaioken/utils.js": 'Kaioken',
         },
       },
     },
