@@ -1,5 +1,5 @@
 import { sideEffectsEnabled, useHook } from "kaioken"
-import { noop } from "kaioken/utils"
+import { noop } from "kaioken/utils.js"
 import { getInterpolator } from "./motion/utils"
 import { Task, TweenedOptions } from "./motion/types"
 import { loop, raf } from "./motion/loop"
