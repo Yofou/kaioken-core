@@ -26,8 +26,8 @@ export const useTween = <T,>(
       task: undefined as Task | undefined,
       targetValue: undefined as T,
     },
-    ({ hook, oldHook, update }) => {
-      if (!oldHook) {
+    ({ hook, isInit, update }) => {
+      if (isInit) {
         hook.value = initial instanceof Function ? initial() : initial
         hook.dispatch = (setter: Kaioken.StateSetter<T>, options = {} as TweenedOptions<T>) => {
           const newState =

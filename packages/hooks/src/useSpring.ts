@@ -35,8 +35,8 @@ export const useSpring = <T,>(
       invMassRecoveryRate: 0,
       cancelTask: false,
     },
-    ({ hook, oldHook, update }) => {
-      if (!oldHook) {
+    ({ hook, isInit, update }) => {
+      if (isInit) {
         hook.value = initial instanceof Function ? initial() : initial
         hook.dispatch = (setter: Kaioken.StateSetter<T>, opts = {} as SpringOpts) => {
           const spring: SpringOpts = {

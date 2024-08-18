@@ -20,14 +20,15 @@ export const useMutationObserver = (
     }
   }
 
+  // TODO: get rid of deps array
   return useHook(
     'useMutationObserver',
     {
       mutationObserver: null as MutationObserver | null,
       deps: [ref.current],
     },
-    ({ oldHook, hook, queueEffect }) => {
-      if (!oldHook) {
+    ({ isInit, hook, queueEffect }) => {
+      if (isInit) {
         queueEffect(() => {
           hook.deps = [ref.current]
           hook.mutationObserver = new MutationObserver(callback)
@@ -40,7 +41,7 @@ export const useMutationObserver = (
           hook.mutationObserver?.disconnect?.()
           hook.mutationObserver = null
         }
-      } else if (depsRequireChange([ref.current], oldHook?.deps)) {
+      } else if (depsRequireChange([ref.current], hook.deps)) {
         hook.deps = [ref.current]
         hook.mutationObserver?.disconnect?.()
         if (ref.current) {

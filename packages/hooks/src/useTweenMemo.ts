@@ -19,11 +19,11 @@ export function useTweenMemo <T>(factory: () => T, deps: unknown[], options: Twe
       task: undefined as Task | undefined,
       targetValue: undefined as T,
     }),
-    ({ hook, oldHook, update }) => {
-      if (!oldHook) {
+    ({ hook, isInit, update }) => {
+      if (isInit) {
         hook.value = factory()
         hook.deps = deps
-      } else if (depsRequireChange(deps, oldHook?.deps)) {
+      } else if (depsRequireChange(deps, hook.deps)) {
         hook.deps = deps
         const newState = factory()
         hook.targetValue = newState

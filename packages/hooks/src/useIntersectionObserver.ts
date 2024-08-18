@@ -20,14 +20,15 @@ export const useIntersectionObserver = (
     }
   }
 
+  // TODO: get rid of deps array
   return useHook(
     'useIntersectionObserver',
     {
       intersectionObserver: null as IntersectionObserver | null,
       deps: [ref.current],
     },
-    ({ oldHook, hook, queueEffect }) => {
-      if (!oldHook) {
+    ({ isInit, hook, queueEffect }) => {
+      if (isInit) {
         hook.intersectionObserver = new IntersectionObserver(callback, options)
         hook.cleanup = () => {
           hook.intersectionObserver?.disconnect?.()
@@ -36,7 +37,7 @@ export const useIntersectionObserver = (
       }
 
       queueEffect(() => {
-        if (depsRequireChange([ref.current], oldHook?.deps)) {
+        if (depsRequireChange([ref.current], hook.deps)) {
           hook.deps = [ref.current]
           hook.intersectionObserver?.disconnect?.()
           if (ref.current) {

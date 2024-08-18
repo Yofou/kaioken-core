@@ -78,9 +78,9 @@ export const useRootNode = () => {
       hasMounted: false, 
       value: undefined as ComponentTree | undefined,
     }, 
-    ({ vNode, hook, oldHook, queueEffect, update }) => {
+    ({ vNode, hook, isInit, queueEffect, update }) => {
       const ctx = useAppContext(vNode)
-      if (!oldHook && ctx) {
+      if (isInit && ctx) {
         hook.value = crawlDownAndGetComponents(ctx.rootNode) as ComponentTree 
       }
 

@@ -21,14 +21,15 @@ export const useResizeObserver = (
     }
   }
 
+  // TODO: get rid of the deps array
   return useHook(
     'useResizeObserver',
     {
       resizeObserver: null as ResizeObserver | null,
       deps: [ref.current],
     },
-    ({ oldHook, hook, queueEffect }) => {
-      if (!oldHook) {
+    ({ isInit, hook, queueEffect }) => {
+      if (isInit) {
         hook.resizeObserver = new ResizeObserver(callback)
         hook.cleanup = () => {
           hook.resizeObserver?.disconnect?.()
@@ -37,7 +38,7 @@ export const useResizeObserver = (
       }
 
       queueEffect(() => {
-        if (depsRequireChange([ref.current], oldHook?.deps)) {
+        if (depsRequireChange([ref.current], hook.deps)) {
           hook.deps = [ref.current]
           hook.resizeObserver?.disconnect?.()
           if (ref.current) {

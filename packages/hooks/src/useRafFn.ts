@@ -26,7 +26,7 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
       previousFrameTimestamp: 0,
       isActive: options.immediate ?? false
     }), 
-    ({ oldHook, hook, update }) => {
+    ({ isInit, hook, update }) => {
       hook.callback = callback
       const rafLoop: FrameRequestCallback = (timestamp) => {
         if (hook.isActive === false) return
@@ -43,7 +43,7 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
         hook.refId = window.requestAnimationFrame(rafLoop)
       }
 
-      if (!oldHook && options.immediate) {
+      if (isInit && options.immediate) {
         hook.isActive = true
         hook.refId = window.requestAnimationFrame(rafLoop)
         hook.cleanup = () => {

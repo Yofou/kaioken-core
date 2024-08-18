@@ -27,11 +27,11 @@ export const useSpringMemo = <T,>(
       invMassRecoveryRate: 0,
       cancelTask: false,
     },
-    ({ hook, oldHook, update }) => {
-      if (!oldHook) {
+    ({ hook, isInit, update }) => {
+      if (isInit) {
         hook.deps = deps
         hook.value = factory()
-      } else if (depsRequireChange(deps, oldHook?.deps)) {
+      } else if (depsRequireChange(deps, hook?.deps)) {
         hook.deps = deps
         const spring: SpringOpts = {
           ...opts,

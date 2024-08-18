@@ -12,7 +12,6 @@ export const useEventListener = <E extends keyof EventMap>(
     ref?: (() => EventTarget | null) | null
   } = {},
 ) => {
-  debugger
   useEffect(() => {
     let pointer: EventTarget = window
 

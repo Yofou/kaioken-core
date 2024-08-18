@@ -37,12 +37,10 @@ export const useEffectDeep = (
   useHook(
     "useEffectDeep",
     { callback, deps },
-    ({ hook, oldHook, queueEffect }) => {
-      if (depsRequireChange(deps, oldHook?.deps)) {
+    ({ hook, isInit, queueEffect }) => {
+      if (isInit || depsRequireChange(deps, hook.deps)) {
         hook.deps = structuredClone(deps)
-        if (oldHook) {
-          cleanupHook(oldHook)
-        }
+        cleanupHook(hook)
         queueEffect(() => {
           const cleanup = callback()
           if (cleanup && typeof cleanup === "function") {
