@@ -24,7 +24,7 @@
     "build": "tsc && vite build"
   },
   "peerDependencies": {
-    "kaioken": "^0.25.3",
+    "kaioken": "^0.26.0",
     "vite-plugin-kaioken": "^0.8.0"
   },
   "devDependencies": {
