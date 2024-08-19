@@ -1,4 +1,4 @@
-import { useEffect, useState } from "kaioken"
+import { useLayoutEffect, useState } from "kaioken"
 import { useEventListener } from "./useEventListener"
 import { useResizeObserver } from "./useResizeObserver"
 import { useMutationObserver } from "./useMutationObserver"
@@ -58,7 +58,7 @@ export const useElementBounding = (
     useEventListener("resize", update, { passive: true })
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (immediate) {
       update()
     }
