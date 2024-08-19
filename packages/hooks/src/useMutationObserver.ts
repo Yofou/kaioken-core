@@ -42,6 +42,7 @@ export const useMutationObserver = (
           hook.mutationObserver = null
         }
       } else if (depsRequireChange([ref.current], hook.deps)) {
+        console.log('deps change')
         hook.deps = [ref.current]
         hook.mutationObserver?.disconnect?.()
         if (ref.current) {
