@@ -41,6 +41,7 @@ export const useElementBounding = (
       return
     }
 
+    console.log('element bound update')
     const bounding = el.getBoundingClientRect()
     setBounding(bounding.toJSON())
   }
