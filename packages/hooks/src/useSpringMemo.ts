@@ -34,7 +34,6 @@ export const useSpringMemo = <T,>(
         hook.value = factory()
         hook.lastValue = structuredClone(hook.value)
         hook.targetValue = structuredClone(hook.value)
-        console.log('isInit')
       } else if (depsRequireChange(deps, hook?.deps)) {
         hook.deps = deps
         const spring: SpringOpts = {
@@ -80,9 +79,7 @@ export const useSpringMemo = <T,>(
             hook.lastTime = now
             hook.lastValue = hook.value;
             hook.value = nextValue
-            console.log('update')
             update();
-            console.log('settled',ctx.settled)
             if (ctx.settled) {
               hook.task = undefined;
             }
