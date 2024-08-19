@@ -23,18 +23,18 @@ export const useSpring = <T,>(
 
   return useHook(
     "useSpring",
-    {
+    () => ({
       value: undefined as T,
       dispatch: noop as any as (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>,
       lastTime: undefined as number | undefined,
       task: undefined as Task | undefined,
       currentToken : undefined as object | undefined,
-      lastValue: value,
-      targetValue: value,
+      lastValue: structuredClone(value),
+      targetValue: structuredClone(value),
       invMass: 1,
       invMassRecoveryRate: 0,
       cancelTask: false,
-    },
+    }),
     ({ hook, isInit, update }) => {
       if (isInit) {
         hook.value = initial instanceof Function ? initial() : initial

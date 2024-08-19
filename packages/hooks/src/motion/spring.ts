@@ -19,6 +19,7 @@ export const tickSpring = <T,>(
     const damper = ctx.opts.damping * velocity
     const acceleration = (spring - damper) * ctx.inv_mass;
     const d = (velocity + acceleration) * ctx.dt;
+    console.log(d, delta)
     if (Math.abs(d) < ctx.opts.precision && Math.abs(delta) < ctx.opts.precision) {
       return targetValue; // settled
     } else {
@@ -29,6 +30,7 @@ export const tickSpring = <T,>(
     // @ts-ignore
     return currentValue.map((_, i) => tickSpring(ctx, lastValue[i], currentValue[i], targetValue[i]))
   } else if (typeof currentValue === 'object') {
+    console.log('boop')
     const nextValue = {};
     for (const k in currentValue) {
 			// @ts-ignore
