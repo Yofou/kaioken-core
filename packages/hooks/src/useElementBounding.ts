@@ -41,19 +41,12 @@ export const useElementBounding = (
       return
     }
 
-    console.log('element bound update')
     const bounding = el.getBoundingClientRect()
     setBounding(bounding.toJSON())
   }
 
-  useResizeObserver(ref, () => {
-    console.log('resize observer')
-    update()
-  })
-  useMutationObserver(ref, () => {
-    console.log('mutation observer')
-    update()
-  }, {
+  useResizeObserver(ref, update)
+  useMutationObserver(ref, update, {
     attributeFilter: ["style", "class"],
   })
 
