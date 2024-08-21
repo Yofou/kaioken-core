@@ -10,9 +10,9 @@ type RefFnOptions = {
   immediate?: boolean
 }
 
-const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
+const useRafFn = (callback: (arg: RefFnArg) => void, options?: RefFnOptions) => {
   if (!sideEffectsEnabled()) return {
-    isActive: options.immediate ?? false,
+    isActive: options?.immediate ?? false,
     start: () => null,
     stop: () => null,
   }
@@ -24,7 +24,7 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options: RefFnOptions) => {
       callback,
       refId: null as number | null,
       previousFrameTimestamp: 0,
-      isActive: options.immediate ?? false
+      isActive: options?.immediate ?? false
     }), 
     ({ isInit, hook, update }) => {
       hook.callback = callback
