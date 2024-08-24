@@ -48,7 +48,7 @@ export const useKeyStroke = (
 export const useKeyDown = (
   key: KeyFilter,
   handler: (event: KeyboardEvent) => void,
-  options: Omit<KeyOptions, "eventName"> = {}
+  options: Omit<KeyOptions, "eventName"> = {},
 ) => {
   return useKeyStroke(key, handler, {
     ...options,
@@ -59,7 +59,7 @@ export const useKeyDown = (
 export const useKeyUp = (
   key: KeyFilter,
   handler: (event: KeyboardEvent) => void,
-  options: Omit<KeyOptions, "eventName"> = {}
+  options: Omit<KeyOptions, "eventName"> = {},
 ) => {
   return useKeyStroke(key, handler, {
     ...options,
