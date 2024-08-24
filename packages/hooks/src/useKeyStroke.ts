@@ -13,7 +13,7 @@ export type KeyOptions = {
    * @default false
    * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/repeat
    */
-  includeRepeat?: boolean
+  repeat?: boolean
 }
 
 function createKeyPredicate(keyFilter: KeyFilter): KeyPredicate {
@@ -34,7 +34,7 @@ export const useKeyStroke = (
   const { ref, eventName = "keydown", passive = false } = options
   const predicate = createKeyPredicate(key)
   const listener = (e: KeyboardEvent) => {
-    if (e.repeat && !options.includeRepeat) return
+    if (e.repeat && !options.repeat) return
 
     if (predicate(e)) handler(e)
   }
@@ -48,7 +48,7 @@ export const useKeyStroke = (
 export const useKeyDown = (
   key: KeyFilter,
   handler: (event: KeyboardEvent) => void,
-  options: Omit<KeyOptions, "eventName"> = {},
+  options: Omit<KeyOptions, "eventName"> = {}
 ) => {
   return useKeyStroke(key, handler, {
     ...options,
@@ -59,7 +59,7 @@ export const useKeyDown = (
 export const useKeyUp = (
   key: KeyFilter,
   handler: (event: KeyboardEvent) => void,
-  options: Omit<KeyOptions, "eventName"> = {},
+  options: Omit<KeyOptions, "eventName"> = {}
 ) => {
   return useKeyStroke(key, handler, {
     ...options,
