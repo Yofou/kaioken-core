@@ -1,5 +1,5 @@
 import { sideEffectsEnabled, useHook } from "kaioken"
-import { noop } from "kaioken/utils.js"
+import { noop } from "kaioken/utils"
 import { SpringOpts, TickContext, type Task } from './motion/types'
 import { loop, raf } from "./motion/loop"
 import { tickSpring } from "./motion/spring"

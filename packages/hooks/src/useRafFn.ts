@@ -43,7 +43,7 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options?: RefFnOptions) => 
         hook.refId = window.requestAnimationFrame(rafLoop)
       }
 
-      if (isInit && options.immediate) {
+      if (isInit && options?.immediate) {
         hook.isActive = true
         hook.refId = window.requestAnimationFrame(rafLoop)
         hook.cleanup = () => {

@@ -1,4 +1,4 @@
-import { noop } from 'kaioken/utils.js';
+import { noop } from 'kaioken/utils';
 import { Task } from './types';
 
 /*
