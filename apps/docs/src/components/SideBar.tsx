@@ -51,7 +51,6 @@ export const SideBar = () => {
         <Link href="/state/useEffectDeep">useEffectDeep</Link>
         <Link href="/state/useEffectDebounce">useEffectDebounce</Link>
         <Link href="/state/useEffectThrottle">useEffectThrottle</Link>
-        <Link href="/state/useRootNode">useRootNode</Link>
       </Group>
 
       <Group title="Browser">

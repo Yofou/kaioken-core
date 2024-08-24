@@ -16,11 +16,6 @@ export const Pages = new Map([
     },
   ],
   [
-    '/state/useRootNode', {
-      name: 'useRootNode'
-    },
-  ],
-  [
     '/browser/useClickOutside', {
       name: 'useClickOutside'
     },

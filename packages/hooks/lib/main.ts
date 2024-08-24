@@ -19,7 +19,6 @@ import { useEffectDeep } from "../src/useEffectDeep"
 import { useParentElement } from "../src/useParentElement"
 import { useActiveElement } from "../src/useActiveElement"
 import { useCurrentElement } from "../src/useCurrentElement"
-import { useRootNode } from "../src/useRootNode"
 import { useElementVisibility } from '../src/useElementVisibility'
 import { useTween } from "../src/useTween"
 import { useTweenMemo } from '../src/useTweenMemo'
@@ -28,7 +27,6 @@ import { useSpringMemo } from "../src/useSpringMemo"
 import { useElementByPoint } from "../src/useElementByPoint"
 import { useWindowPosition } from "../src/useWindowPosition"
 import { useMouseInElement } from "../src/useMouseInElement"
-
 
 export {
   useMouse,
@@ -54,7 +52,6 @@ export {
   useParentElement,
   useActiveElement,
   useCurrentElement,
-  useRootNode,
   useElementVisibility,
   useTween,
   useTweenMemo,
