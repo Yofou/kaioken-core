@@ -8,6 +8,7 @@ type GroupProps = {
 }
 export const Group: Kaioken.FC<GroupProps> = (props) => {
   const show = signal(true)
+  show.displayName = 'groupShow'
 
   return <>
     <button className="text-[1.125rem] text-left font-semibold" onclick={() => show.value = !show.value}>{props.title}</button>
