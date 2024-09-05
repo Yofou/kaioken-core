@@ -13,7 +13,7 @@ const keyboardList = signal(new Map<string, {
 const keyboardIndex = signal<number | null>(null)
 
 export const CommandPaletteItem : Kaioken.FC<{ name: string, href: string }> = (props) => {
-  const elm = useRef<HTMLElement | null>(null)
+  const elm = useRef<HTMLAnchorElement | null>(null)
   const id = useMemo(() => crypto.randomUUID(), [])
 
   useEffect(() => {
@@ -46,10 +46,10 @@ export const MoveDown = () => {
   return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-move-down"><path d="M8 18L12 22L16 18"/><path d="M12 2V22"/></svg>
 }
 
-export const CommandPalette: Kaioken.FC<{ container: Kaioken.Ref<HTMLElement | null> }> = (props) => {
+export const CommandPalette: Kaioken.FC<{ container: Kaioken.Ref<HTMLDivElement | null> }> = (props) => {
   const { isClient } = usePageContext()
   const searchValue = signal('')
-  const inputRef = useRef<HTMLElement | null>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
   const pageList = useMemo(() => {
     const pages = [...Pages.entries()].map(([href, item]) => ({...item, href}))
     if (searchValue.value === '') {
@@ -118,13 +118,13 @@ export const CommandPalette: Kaioken.FC<{ container: Kaioken.Ref<HTMLElement | n
           onfocus={() => keyboardIndex.value = null}
           placeholder="Search to find hook" 
         />
-        <div className="w-full p-2 flex flex-col rounded-lg  mt-4 gap-4 h-[300px] overflow-y-auto mb-12">
+        <div className="w-full p-2 flex flex-col rounded-lg  mt-4 gap-4 h-[500px] md:h-[300px] overflow-y-auto mb-12">
           {pageList.map((item) => <CommandPaletteItem key={item.href} {...item} />)}
         </div>
-        <div className="w-full bg-black bottom-0 p-4 mt-2 absolute inset-x-0 border-t border-white/20 rounded-b-xl flex gap-4">
-          <span className="flex gap-2 items-center"><CornerDownLeft /> to select</span>
-          <span className="flex gap-2 items-center"><MoveUp /> <MoveDown /> to navigate</span>
-          <span className="flex gap-2 items-center"><span className="font-semibold text-[1.1rem] uppercase">esc</span> to close</span>
+        <div className="flex w-full h-[59px] bg-black bottom-0 p-4 mt-2 absolute inset-x-0 border-t border-white/20 rounded-b-xl  gap-4">
+        <span className="hidden md:flex gap-2 items-center"><CornerDownLeft /> to select</span>
+          <span className="hidden md:flex gap-2 items-center"><MoveUp /> <MoveDown /> to navigate</span>
+          <span className="hidden md:flex gap-2 items-center"><span className="font-semibold text-[1.1rem] uppercase">esc</span> to close</span>
         </div>
       </DemoContainer>
     </div>

@@ -16,7 +16,7 @@
 
 pre.shiki {
   font-weight: 400;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   line-height: 1.7142857;
   border-radius: .35rem;
   background: rgba( 25, 18, 18, 0.8 ) !important;
@@ -25,6 +25,8 @@ pre.shiki {
   border-radius: 10px;
   border: 1px solid rgba( 255, 255, 255, 0.18 );
   padding: 1rem;
+  width: 100%;
+  overflow-x: auto;
 }
 
 pre.shiki>code {
@@ -77,18 +79,6 @@ pre.shiki span.line.diff.add:before {
   border-radius: 0 0 .35rem .35rem;
 }
 
-@media screen and (min-width: 768px) {
-  pre.shiki {
-    font-size: 0.775rem;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  pre.shiki {
-    font-size: 0.85rem;
-  }
-}
-
 .not-prose pre.shiki {
   overflow-x: auto;
   padding-top: 0.8571429em;
@@ -99,28 +89,21 @@ pre.shiki span.line.diff.add:before {
 
 .twoslash-popup-code, .twoslash-popup-docs {
   display: none;
-
   position: absolute;
-  top: 0rem;
-  left: 0;
-  width: 100vw;
   max-width: 600px;
   text-wrap: wrap;
+  width: max-content;
 
   padding: 1rem;
   background: black;
-  z-index: 9999;
-  transform: translateY(calc(-100% - 1rem));
+  margin: 0;
 }
-
-
 
 .twoslash-popup-code *, .twoslash-popup-docs * {
   text-wrap: wrap;
 }
 
-.twoslash-hover  {
-  position: relative;
+.twoslash-hover {
   text-decoration: underline;
 }
 

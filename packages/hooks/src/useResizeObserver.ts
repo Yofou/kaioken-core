@@ -3,7 +3,7 @@ import { cleanupHook, depsRequireChange, sideEffectsEnabled, useHook } from "kai
 const isSupported = "window" in globalThis && "ResizeObserver" in globalThis.window
 
 export const useResizeObserver = (
-  ref: Kaioken.Ref<Element | null>,
+  ref: Kaioken.MutableRefObject<Element | null>,
   callback: ResizeObserverCallback,
   options: ResizeObserverOptions | undefined = undefined
 ) => {

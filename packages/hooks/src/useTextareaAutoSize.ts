@@ -3,12 +3,12 @@ import { useEffect } from "kaioken"
 
 type TextAreaResizeOptions = {
   onResize?: () => void
-  styleTarget?: Kaioken.Ref<HTMLElement | null>
+  styleTarget?: Kaioken.MutableRefObject<HTMLElement | null>
   styleProp?: "height" | "minHeight"
 }
 
 export const useTextareaAutoSize = (
-  ref: Kaioken.Ref<HTMLTextAreaElement | null>,
+  ref: Kaioken.MutableRefObject<HTMLTextAreaElement | null>,
   options: TextAreaResizeOptions = {}
 ) => {
   const styleProps = options.styleProp ?? "height"

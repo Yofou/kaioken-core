@@ -2,7 +2,7 @@ import { cleanupHook, depsRequireChange, sideEffectsEnabled, useHook } from "kai
 
 const isSupported = "window" in globalThis && "IntersectionObserver" in globalThis.window
 export const useIntersectionObserver = (
-  ref: Kaioken.Ref<Element | null>,
+  ref: Kaioken.MutableRefObject<Element | null>,
   callback: IntersectionObserverCallback,
   options: IntersectionObserverInit | undefined = undefined
 ) => {

@@ -24,28 +24,32 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options?: RefFnOptions) => 
       callback,
       refId: null as number | null,
       previousFrameTimestamp: 0,
-      isActive: options?.immediate ?? false
+      isActive: options?.immediate ?? false,
+      rafLoop: (() => {}) as FrameRequestCallback
     }), 
     ({ isInit, hook, update }) => {
       hook.callback = callback
-      const rafLoop: FrameRequestCallback = (timestamp) => {
-        if (hook.isActive === false) return
-        if (!hook.previousFrameTimestamp) hook.previousFrameTimestamp = timestamp
 
-        const delta = timestamp - hook.previousFrameTimestamp
-        if (intervalLimit && delta < intervalLimit) {
-          hook.refId = window.requestAnimationFrame(rafLoop)
-          return
+      if (isInit) {
+        hook.rafLoop = (timestamp) => {
+          if (hook.isActive === false) return
+            if (!hook.previousFrameTimestamp) hook.previousFrameTimestamp = timestamp
+
+            const delta = timestamp - hook.previousFrameTimestamp
+            if (intervalLimit && delta < intervalLimit) {
+              hook.refId = window.requestAnimationFrame(hook.rafLoop)
+              return
+            }
+
+            hook.previousFrameTimestamp = timestamp
+            hook.callback({ delta, timestamp })
+            hook.refId = window.requestAnimationFrame(hook.rafLoop)
         }
-
-        hook.previousFrameTimestamp = timestamp
-        hook.callback({ delta, timestamp })
-        hook.refId = window.requestAnimationFrame(rafLoop)
       }
 
       if (isInit && options?.immediate) {
         hook.isActive = true
-        hook.refId = window.requestAnimationFrame(rafLoop)
+        hook.refId = window.requestAnimationFrame(hook.rafLoop)
         hook.cleanup = () => {
           if (hook.refId != null) {
             window.cancelAnimationFrame(hook.refId)
@@ -62,7 +66,7 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options?: RefFnOptions) => 
           if (hook.isActive === true) return;
 
           hook.isActive = true
-          hook.refId = window.requestAnimationFrame(rafLoop)
+          hook.refId = window.requestAnimationFrame(hook.rafLoop)
           hook.cleanup = () => {
             if (hook.refId != null) {
               window.cancelAnimationFrame(hook.refId)

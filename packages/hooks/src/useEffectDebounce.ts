@@ -11,6 +11,7 @@ export const useEffectDebounce = (
   options: UseEffectDebounceOptions = {}
 ) => {
   const timeoutId = useRef<number | null>(null)
+  timeoutId.current = 123
   useEffect(() => {
     if (timeoutId.current != null) {
       clearTimeout(timeoutId.current)

@@ -1,9 +1,9 @@
 import { useRef, useState } from "kaioken"
 import { useIntersectionObserver } from "./useIntersectionObserver"
 
-export const useElementVisibility = () => {
+export const useElementVisibility = <T extends Element = Element>() => {
   const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<Element | null>(null)
+  const ref = useRef<T | null>(null)
 
   useIntersectionObserver(ref, (items) => {
     let latestTime = 0

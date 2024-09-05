@@ -10,7 +10,7 @@ type ButtonNavLinkProps = {
   className: string
 }
 const BottomNavLink: Kaioken.FC<ButtonNavLinkProps> = (props) => {
-  const [ref, angle] = useGlowAngle()
+  const [ref, angle] = useGlowAngle<HTMLDivElement>()
   const isFullGlow = signal(false)
   isFullGlow.displayName = 'isFullGlow'
   const glow = useTweenMemo(() => {
@@ -63,7 +63,7 @@ type ButtonNavProps = {
 }
 export const BottomNav: Kaioken.FC<ButtonNavProps> = (props) => {
   const [prev, next] = useMemo(() => getPrevAndNextRoute(props.currRoute), [props.currRoute])
-  return <nav className="flex gap-4 mt-8" aria-label="next and before">
+  return <nav className="flex flex-col md:flex-row gap-4 mt-8" aria-label="next and before">
     {prev && <BottomNavLink className="" route={prev}>Previous</BottomNavLink>}
     {next && <BottomNavLink className="items-end" route={next}>Next</BottomNavLink>}
   </nav>

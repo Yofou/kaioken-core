@@ -4,8 +4,8 @@ import { useAppContext, useMemo, useRef, useVNode } from "kaioken"
 
 function minAbs(x: number,y: number, old: number) { return Math.abs(x-old) < Math.abs(y-old) ? x : y; }
 
-export const useGlowAngle = (duration = 500) => {
-  const ref = useRef<HTMLElement | null>(null)
+export const useGlowAngle = <T extends HTMLElement>(duration = 500) => {
+  const ref = useRef<T | null>(null)
   const asideBounding = useElementBounding(ref)
   const [asideX, asideY] = useMemo(() => {
     return [

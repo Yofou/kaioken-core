@@ -5,7 +5,7 @@ import { Portal } from "kaioken"
 import { twMerge } from "tailwind-merge"
 
 export const UseElementVisibilityExample: Kaioken.FC = () => {
-  const [ref, isVisible] = useElementVisibility()
+  const [ref, isVisible] = useElementVisibility<HTMLParagraphElement>()
   const { isClient } = usePageContext()
 
   return <>

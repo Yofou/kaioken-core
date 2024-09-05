@@ -2,7 +2,7 @@ import {cleanupHook, depsRequireChange, sideEffectsEnabled, useHook  } from "kai
 
 const isSupported = "window" in globalThis && "MutationObserver" in globalThis.window
 export const useMutationObserver = (
-  ref: Kaioken.Ref<Element | null>,
+  ref: Kaioken.MutableRefObject<Element | null>,
   callback: MutationCallback,
   options: MutationObserverInit | undefined = undefined
 ) => {

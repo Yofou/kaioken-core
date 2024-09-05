@@ -5,7 +5,7 @@ import { useRef, useState } from "kaioken"
 
 export const UseClickOutsideExample = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const ref = useRef<HTMLElement | null>(null)
+  const ref = useRef<HTMLDivElement | null>(null)
   useClickOutside(ref, () => {
     setIsOpen(false)
   })

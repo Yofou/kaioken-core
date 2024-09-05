@@ -5,9 +5,19 @@ import kaioken from "vite-plugin-kaioken"
 import mdx from "@mdx-js/rollup"
 import shiki, { type RehypeShikiOptions } from "@shikijs/rehype";
 import {
-    rendererClassic,
   transformerTwoslash,
+  rendererRich
 } from '@shikijs/twoslash'
+
+const hoverHighlight = rendererRich({
+  hast: {
+    popupTypes: {
+      properties: {
+        popover: 'manual',
+      }
+    }
+  },
+})
 
 export default defineConfig({
   resolve: {
@@ -27,9 +37,12 @@ export default defineConfig({
             shiki,
             {
               theme: "github-dark",
-              transformers: [transformerTwoslash({
-                explicitTrigger: true,
-              })],
+              transformers: [
+                transformerTwoslash({
+                  explicitTrigger: true,
+                  renderer: hoverHighlight
+                })
+              ],
             } as RehypeShikiOptions,
           ],
         ],
