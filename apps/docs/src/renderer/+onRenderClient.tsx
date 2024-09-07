@@ -7,6 +7,7 @@ import { App } from "./App"
 
 let appContext: AppContext<{ pageContext: PageContextClient }> | undefined
 
+let lastPage: string | null = null
 export const onRenderClient: OnRenderClientAsync = async (pageContext) => {
   const container = document.getElementById("page-root")!
 
@@ -16,5 +17,12 @@ export const onRenderClient: OnRenderClientAsync = async (pageContext) => {
   }
 
   document.title = getTitle(pageContext)
-  await appContext.setProps(() => ({ pageContext }))
+  console.log('new', pageContext.urlPathname, 'last', lastPage)
+  try {
+    await appContext.setProps(() => ({ pageContext }))
+  } catch (e) {
+    console.log('catched setProp error', e)
+  }
+  console.log('new', pageContext.urlPathname, 'last', lastPage)
+  lastPage = pageContext.urlPathname
 }

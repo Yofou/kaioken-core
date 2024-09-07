@@ -11,7 +11,7 @@ import { autoUpdate, computePosition, offset, shift } from "@floating-ui/dom";
 export function LayoutDefault({ children }: { children: JSX.Children }) {
   const context = usePageContext()
 
-  {/* useEffect(() => {
+  useEffect(() => {
     const codeNodes = document.querySelectorAll('.twoslash-popup-code')
     const cleanupFns: (() => void)[] = []
 
@@ -51,7 +51,7 @@ export function LayoutDefault({ children }: { children: JSX.Children }) {
         cleanup()
       })
     }
-  }) */}
+  })
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px,minmax(0,1fr)] gap-8 grid-rows-[max-content,1fr] items-center m-auto w-full min-h-screen">
