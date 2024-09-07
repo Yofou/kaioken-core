@@ -32,10 +32,10 @@ export const UseTweenExample: Kaioken.FC = () => {
   }, [currentValue])
 
   return <div className="relative">
-  <p className="absolute top-[250px] left-[700px] text-white text-center -translate-x-1/2 font-cabin text-[2rem] z-10">
+  <p className="absolute top-[12.5rem] left-1/2 md:top-[250px] md:left-[700px] text-white text-center -translate-x-1/2 font-cabin text-[2rem] z-10">
     {Math.round( ((currentValue + Number.EPSILON) * 100)) / 100}
   </p>
-  <div className="absolute top-1/2 -translate-y-1/2 left-[500px] scale-150">
+  <div className="absolute top-[10rem] scale-[0.9] left-1/2 md:top-1/2 -translate-x-1/2 -translate-y-1/2 md:translate-x-0 md:left-[500px] md:scale-150">
     <div className="wrapper overflow-hidden">
       <div className="circle-out w-[400px] h-[200px] bg-black rounded-t-[380px] border-[100px] border-[#ededed] border-b-[0] relative">
         <div 
@@ -49,17 +49,17 @@ export const UseTweenExample: Kaioken.FC = () => {
   </div>
 
 
-  <DemoContainer className="flex gap-2 flex-col">
-    <label className="flex flex-col w-[200px]">
+  <DemoContainer className="flex gap-2 pt-[20rem] md:p-4 flex-col">
+    <label className="flex flex-col w-full md:w-[200px]">
       Duration:
       <Input type="number" value={duration} oninput={(e) => setDuration(e.target.valueAsNumber)} />
     </label>
-    <label className="flex flex-col w-[200px]">
+    <label className="flex flex-col w-full md:w-[200px]">
       Next Value:
       <Input type="number" min={0} max={5000} value={nextValue} oninput={(e) => setNextValue(e.target.valueAsNumber)} />
     </label>
 
-    <label className="flex flex-col w-[200px]">
+    <label className="flex flex-col w-full md:w-[200px]">
       Next Value:
       <select className="h-12 w-full cursor-default rounded-md border border-gray-800 bg-[#121212] p-3.5 text-gray-100 transition-colors duration-500 placeholder:select-none placeholder:text-gray-500 focus:border-red focus:outline-none appearance-none" onchange={(e) => setEasing(e.target.value)}>
         <option value="linear">Linear</option>

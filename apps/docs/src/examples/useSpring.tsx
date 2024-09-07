@@ -28,22 +28,22 @@ export const UseSpringExample: Kaioken.FC = () => {
   }
 
   return <div className="relative">
-    <div className="w-[var(--dim)] h-[var(--dim)] bg-red rounded-full absolute left-[calc(100%-250px)] top-1/2 -translate-x-1/2 -translate-y-1/2 origin-center" style={`--dim: ${currentValue}px`} />
-    <DemoContainer className="[background:rgba(25,18,18,0.3)] grid grid-cols-2 gap-2 min-h-[380px]">
-      <div className="flex flex-col gap-2">
-        <label className="flex flex-col w-[200px]">
+  <div className="w-[var(--dim)] h-[var(--dim)] bg-red scale-75 md:scale-100 rounded-full absolute top-[12rem] left-1/2 md:left-[calc(100%-250px)] md:top-1/2 -translate-x-1/2 -translate-y-1/2 origin-center" style={`--dim: ${currentValue}px`} />
+    <DemoContainer className="[background:rgba(25,18,18,0.3)] pt-[24rem] md:pt-4 grid grid-cols-1 md:grid-cols-2 gap-2 min-h-[380px]">
+      <div className="flex flex-col w-full md:w-[210px] gap-2 items-start">
+        <label className="flex flex-col w-full">
           Damping:
           <Input type="number" value={damping} oninput={(e) => setDamping(e.target.valueAsNumber)} />
         </label>
-        <label className="flex flex-col w-[200px]">
+        <label className="flex flex-col w-full">
           Stiffness:
           <Input type="number" value={stiffness} oninput={(e) => setStiffness(e.target.valueAsNumber)} />
         </label>
-        <label className="flex flex-col w-[200px]">
+        <label className="flex flex-col w-full">
           Precision:
           <Input type="number" value={precision} oninput={(e) => setPrecision(e.target.valueAsNumber)} />
         </label>
-        <div className="flex gap-2 mt-2">
+        <div className="flex w-full flex-wrap gap-2 mt-2">
           <Button onclick={onUpdateValue}>
             Change
           </Button>

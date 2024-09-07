@@ -16,6 +16,7 @@ declare global {
         Page: Kaioken.FC
         Layout?: Kaioken.FC
       }
+      urlPathname: string
 
       routeParams: Record<string, string>
 

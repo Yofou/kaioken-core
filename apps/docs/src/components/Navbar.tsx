@@ -48,7 +48,7 @@ export function Navbar() {
     <div className="flex justify-between items-center w-full gap-4 rounded-xl p-4 border-b border-black/50">
       <a className="flex items-center font-cabin font-semibold text-[1.2rem]" href="/">
       <img className="w-[48px] h-[48px] md:w-[64px] md:h-[64px]" src="/kaioken-hook.svg" />
-        <span className="hidden md:block">Kaioken-Core/Hooks</span>
+        <span className="">Kaioken-Core/Hooks</span>
       </a>
 
       <button onclick={() => showCommandPalette.value = true} className="bg-grey-900 p-2 w-full max-w-[500px] items-center text-left hidden md:flex justify-between font-cabin border border-white/30 h-max rounded-md">
