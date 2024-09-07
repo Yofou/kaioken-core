@@ -14,7 +14,7 @@ const BottomNavLink: Kaioken.FC<ButtonNavLinkProps> = (props) => {
   const isFullGlow = signal(false)
   isFullGlow.displayName = 'isFullGlow'
   const glow = useTweenMemo(() => {
-    if (isFullGlow.value) {BottomNav
+    if (isFullGlow.value) {
       return {
         start1: 0,
         start2: 0,
