@@ -49,7 +49,9 @@ export default defineConfig({
       }),
     },
     ssr({
-      prerender: true,
+      prerender: {
+        noExtraDir: true,
+      },
     }), 
 		kaioken()
 	],
