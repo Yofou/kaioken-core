@@ -23,6 +23,11 @@ export function useTweenMemo <T>(factory: () => T, deps: unknown[], options: Twe
       if (isInit) {
         hook.value = factory()
         hook.deps = deps
+        hook.cleanup = () => {
+          if (hook.task) {
+            hook.task.abort()
+          }
+        }
       } else if (depsRequireChange(deps, hook.deps)) {
         hook.deps = deps
         const newState = factory()

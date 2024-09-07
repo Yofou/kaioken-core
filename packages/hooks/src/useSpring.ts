@@ -100,6 +100,11 @@ export const useSpring = <T,>(
             })
           })
         }
+        hook.cleanup = () => {
+          if (hook.task) {
+            hook.task.abort()
+          }
+        }
       }
 
       return [hook.value, hook.dispatch] as [T, (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>]

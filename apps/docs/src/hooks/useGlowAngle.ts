@@ -1,6 +1,6 @@
 import { disableAnimation } from "$/utils/disableAnimation";
 import { useElementBounding, useMouse, useTweenMemo } from "@kaioken-core/hooks"
-import { useAppContext, useMemo, useRef, useVNode } from "kaioken"
+import { useMemo, useRef } from "kaioken"
 
 function minAbs(x: number,y: number, old: number) { return Math.abs(x-old) < Math.abs(y-old) ? x : y; }
 

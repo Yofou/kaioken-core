@@ -34,6 +34,12 @@ export const useSpringMemo = <T,>(
         hook.value = factory()
         hook.lastValue = structuredClone(hook.value)
         hook.targetValue = structuredClone(hook.value)
+
+        hook.cleanup = () => {
+          if (hook.task) {
+            hook.task.abort()
+          }
+        }
       } else if (depsRequireChange(deps, hook?.deps)) {
         hook.deps = deps
         const spring: SpringOpts = {

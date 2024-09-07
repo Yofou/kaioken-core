@@ -90,6 +90,12 @@ export const useTween = <T,>(
 
           return hook.task.promise
         }
+
+        hook.cleanup = () => {
+          if (hook.task) {
+            hook.task.abort()
+          }
+        }
       }
 
       return [hook.value, hook.dispatch] as [T, (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>]
