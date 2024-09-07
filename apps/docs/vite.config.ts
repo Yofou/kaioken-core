@@ -48,7 +48,9 @@ export default defineConfig({
         ],
       }),
     },
-		ssr(), 
+    ssr({
+      prerender: true,
+    }), 
 		kaioken()
 	],
 })
