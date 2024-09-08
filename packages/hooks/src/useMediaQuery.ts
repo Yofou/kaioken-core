@@ -9,21 +9,20 @@ export const useMediaQuery = (query: string) => {
     setMatches(event.matches)
   }
 
-  const cleanup = () => {
-    if (!mediaQuery) return
-    if ("removeEventListener" in mediaQuery)
-      mediaQuery.removeEventListener("change", handler)
-    // @ts-expect-error deprecated API
-    else mediaQuery.removeListener(handler)
-  }
-
   useEffect(() => {
     isSupported.value = window && "ResizeObserver" in window
   }, [])
 
   useEffect(() => {
-    cleanup()
-    if (!isSupported.value) return
+    const cleanup = () => {
+      if (!mediaQuery) return
+        if ("removeEventListener" in mediaQuery)
+          mediaQuery.removeEventListener("change", handler)
+      // @ts-expect-error deprecated API
+      else mediaQuery.removeListener(handler)
+    }
+
+    if (!isSupported.value) return cleanup
 
     mediaQuery = window.matchMedia(query)
 
@@ -33,6 +32,8 @@ export const useMediaQuery = (query: string) => {
     else mediaQuery.addListener(handler)
 
     setMatches(mediaQuery.matches)
+
+    return cleanup
   }, [query])
 
   return [matches]
