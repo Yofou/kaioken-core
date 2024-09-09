@@ -20,6 +20,7 @@ export function Navbar() {
   })
 
   useKeyDown(['k'], (e) => {
+    e.preventDefault()
     if (e.ctrlKey && !showCommandPalette.value) {
       showCommandPalette.value = true
     }
