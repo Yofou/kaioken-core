@@ -78,7 +78,7 @@ export const Input = <T extends string | number | undefined, >(props: InputProps
             opacity: `${opacity}`,
             maskImage: `radial-gradient(30% 30px at ${position.x}px ${position.y}px, black 45%, transparent)`,
           }}
-          aria-hidden='true'
+          ariaHidden='true'
           className='pointer-events-none absolute left-0 top-0 z-10 h-12 w-full cursor-default rounded-md border border-red bg-[transparent] p-3.5 opacity-0 transition-opacity duration-500 placeholder:select-none'
         />
       </div>
