@@ -10,13 +10,13 @@ export const onRenderHtml: OnRenderHtmlAsync = async (
 ): ReturnType<OnRenderHtmlAsync> => {
   const pageHtml = renderToString(App, { pageContext })
   return escapeInject`<!DOCTYPE html>
-    <html>
-      <head lang="en">
+    <html lang="en">
+      <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="icon" href="/kaioken-hook.svg">
-        <meta property="description" content="All the hooks you need to build an interactive application">
+        <meta name="description" content="All the hooks you need to build an interactive application">
         <meta property="og:title" content="${getTitle(pageContext)}">
         <meta property="og:description" content="All the hooks you need to build an interactive application">
         <meta property="og:type" content="article">
