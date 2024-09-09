@@ -1,6 +1,6 @@
 import { signal, useEffect, useRef } from "kaioken"
 import { CommandPalette } from "./CommandPallete"
-import { useClickOutside, useKeyUp } from "@kaioken-core/hooks"
+import { useClickOutside, useKeyDown } from "@kaioken-core/hooks"
 import { usePageContext } from "$/context/pageContext"
 import { CMD } from "$/icons/Cmd"
 import { Github } from "$/icons/Github"
@@ -8,19 +8,18 @@ import { Discord } from "$/icons/Discord"
 import { Hamburger } from "$/icons/Hamburger"
 
 
-
 export function Navbar() {
   const pageCtx = usePageContext() as any
   const container = useRef<HTMLDivElement>(null)
   const showCommandPalette = signal(false)
 
-  useKeyUp(['Escape'], () => {
+  useKeyDown(['Escape'], () => {
     if (showCommandPalette.value) {
       showCommandPalette.value = false
     }
   })
 
-  useKeyUp(['k'], (e) => {
+  useKeyDown(['k'], (e) => {
     if (e.ctrlKey && !showCommandPalette.value) {
       showCommandPalette.value = true
     }
