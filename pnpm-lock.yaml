@@ -50,6 +50,9 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.5(@types/node@20.14.12)
+      vite-plugin-sitemap:
+        specifier: ^0.7.1
+        version: 0.7.1
     devDependencies:
       '@kaioken-core/hooks':
         specifier: workspace:*
@@ -1964,6 +1967,9 @@ packages:
     resolution: {integrity: sha512-ORtUEhVVTt8/pi5xjKBQKqLf0Rzcf+x3GhkKgDZYDxWtPuT+JR5y9As0Fzntxr4ibr7vgTUex8/h0xvkbzqn4w==}
     peerDependencies:
       kaioken: '>=0.28.1-0'
+
+  vite-plugin-sitemap@0.7.1:
+    resolution: {integrity: sha512-4NRTkiWytLuAmcikckrLcLl9iYA20+5v6l8XshcOrzxH1WR8H0O3S6sTQYfjMrE8su/LG6Y0cTodvOdcOIxaLw==}
 
   vite@5.3.4:
     resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
@@ -4147,6 +4153,8 @@ snapshots:
   vite-plugin-kaioken@0.10.4(kaioken@0.28.4):
     dependencies:
       kaioken: 0.28.4
+
+  vite-plugin-sitemap@0.7.1: {}
 
   vite@5.3.4(@types/node@20.14.12):
     dependencies:

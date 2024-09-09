@@ -63,7 +63,7 @@ type ButtonNavProps = {
 }
 export const BottomNav: Kaioken.FC<ButtonNavProps> = (props) => {
   const [prev, next] = getPrevAndNextRoute(props.currRoute)
-  return <nav className="flex flex-col md:flex-row gap-4 mt-8" aria-label="next and before">
+  return <nav className="flex flex-col md:flex-row gap-4 mt-8" ariaLabel="next and before">
     {prev && <BottomNavLink className="" route={prev}>Previous</BottomNavLink>}
     {next && <BottomNavLink className="items-end" route={next}>Next</BottomNavLink>}
   </nav>

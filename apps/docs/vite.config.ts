@@ -8,6 +8,8 @@ import {
   transformerTwoslash,
   rendererRich
 } from '@shikijs/twoslash'
+import sitemapPlugin from "vite-plugin-sitemap"
+import { Pages } from "./src/utils/meta"
 
 const hoverHighlight = rendererRich({
   hast: {
@@ -53,6 +55,14 @@ export default defineConfig({
         noExtraDir: true,
       },
     }), 
-		kaioken()
+    kaioken(),
+    {
+      enforce: 'post',
+      ...sitemapPlugin({
+        hostname: 'https://hooks.kaioken-core.dev/',
+        outDir: 'dist/client',
+        dynamicRoutes: ['/', ...[...Pages.keys()]]
+      })
+    }
 	],
 })

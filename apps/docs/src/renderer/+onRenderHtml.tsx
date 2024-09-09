@@ -11,7 +11,7 @@ export const onRenderHtml: OnRenderHtmlAsync = async (
   const pageHtml = renderToString(App, { pageContext })
   return escapeInject`<!DOCTYPE html>
     <html>
-      <head>
+      <head lang="en">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
