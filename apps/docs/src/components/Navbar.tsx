@@ -58,6 +58,7 @@ export function Navbar() {
         </a>
       </div>
       <button onclick={() => showCommandPalette.value = true} className="block md:hidden">
+        <span className="sr-only">See all routes</span>
         <Hamburger />
       </button>
     </div>
