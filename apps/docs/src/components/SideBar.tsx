@@ -37,7 +37,7 @@ export const Link: Kaioken.FC<LinkProps> = (props) => {
 
 export const SideBar = () => {
   const isFullGlow = signal(false)
-  return <nav className="w-[300px] hidden md:block self-start sticky top-4 rounded-xl">
+  return <nav className="w-[300px] text-white hidden md:block self-start sticky top-4 rounded-xl">
     <GlowBg isFullGlow={isFullGlow.value} />
     <aside 
       className="bg-glass flex flex-col gap-2 relative inset-0 py-4 px-4 rounded-xl"

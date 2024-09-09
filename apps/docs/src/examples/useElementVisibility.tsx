@@ -17,7 +17,7 @@ export const UseElementVisibilityExample: Kaioken.FC = () => {
     </DemoContainer>
 
     {isClient && <Portal container={document.body}>
-      <DemoContainer className="w-max fixed bottom-4  right-4 z-10">
+      <DemoContainer className="w-max text-white fixed bottom-4  right-4 z-10">
         <p className="text-center">
           Text no longer visible <span className={twMerge('text-red', isVisible && 'text-[lime]')}>{`${isVisible}`}</span>
         </p>

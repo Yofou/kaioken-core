@@ -100,7 +100,7 @@ export const CommandPalette: Kaioken.FC<{ container: Kaioken.Ref<HTMLDivElement>
   }, [keyboardIndex.value, ...keyboardList.value.keys()])
 
   return isClient && <Portal container={document.body}>
-    <div className="w-full h-screen fixed top-0 left-0 z-30 flex justify-center p-12 items-start bg-black/50" ariaLabel={"Escape to close"} ariaLive={"polite"}>
+    <div className="w-full h-screen fixed top-0 left-0 text-white z-30 flex justify-center p-12 items-start bg-black/50" ariaLabel={"Escape to close"} ariaLive={"polite"}>
       <DemoContainer ref={props.container} className="w-[750px] p-4">
         <Input 
           ref={inputRef} 
