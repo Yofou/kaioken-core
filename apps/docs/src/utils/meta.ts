@@ -169,3 +169,25 @@ export const getPrevAndNextRoute = (currentRoute: string) => {
 
   return [getObjWithRoute(routeIndex - 1), getObjWithRoute(routeIndex + 1)] as const
 }
+
+export const PagesByGroup = () => {
+  const groupedPages = new Map<string, {
+    name: string,
+    url: string,
+  }[]>()
+
+  for(let key of Pages.keys()) {
+    const group = key.split('/')[1]
+
+    if (!groupedPages.has(group)) {
+      groupedPages.set(group, [
+        { name: Pages.get(key)!.name, url: key }
+      ])
+    } else {
+      const arr = groupedPages.get(group)
+      arr!.push({ name: Pages.get(key)!.name, url: key })
+    }
+  }
+
+  return groupedPages
+}
