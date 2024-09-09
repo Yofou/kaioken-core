@@ -15,7 +15,11 @@ export const onRenderHtml: OnRenderHtmlAsync = async (
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="icon" href="/favicon.svg">
+        <link rel="icon" href="/kaioken-hook.svg">
+        <meta property="og:title" content="${getTitle(pageContext)}">
+        <meta property="og:description" content="All the hooks you need to build an interactive application">
+        <meta property="og:type" content="article">
+        <meta property="og:image" content="/ogimg.png">
         <title>${getTitle(pageContext)}</title>
       </head>
       <body>

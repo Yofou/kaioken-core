@@ -5,10 +5,13 @@ import { Input } from "./Input"
 import { useKeyDown, useStartTyping } from "@kaioken-core/hooks"
 import { Pages } from "$/utils/meta"
 import Fuse from 'fuse.js'
+import { MoveUp } from "$/icons/MoveUp"
+import { MoveDown } from "$/icons/MoveDown"
+import { CornerDownLeft } from "$/icons/CornerLeft"
 
 const keyboardList = signal(new Map<string, {
   name: string,
-  elm: Kaioken.Ref<HTMLElement | null>
+  elm: Kaioken.MutableRefObject<HTMLElement | null>
 }>())
 const keyboardIndex = signal<number | null>(null)
 
@@ -34,19 +37,7 @@ export const CommandPaletteItem : Kaioken.FC<{ name: string, href: string }> = (
   </a>
 }
 
-export const CornerDownLeft = () => {
-  return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-corner-down-left"><polyline points="9 10 4 15 9 20"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></svg>
-}
-
-export const MoveUp = () => {
-  return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-move-up"><path d="M8 6L12 2L16 6"/><path d="M12 2V22"/></svg>
-}
-
-export const MoveDown = () => {
-  return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-move-down"><path d="M8 18L12 22L16 18"/><path d="M12 2V22"/></svg>
-}
-
-export const CommandPalette: Kaioken.FC<{ container: Kaioken.Ref<HTMLDivElement | null> }> = (props) => {
+export const CommandPalette: Kaioken.FC<{ container: Kaioken.Ref<HTMLDivElement> }> = (props) => {
   const { isClient } = usePageContext()
   const searchValue = signal('')
   const inputRef = useRef<HTMLInputElement | null>(null)

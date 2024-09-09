@@ -8,7 +8,6 @@ export const UseMutationObserverExample: Kaioken.FC = () => {
   const style = signal({})
   const className = signal('')
   const changes = signal<(string | null)[]>([])
-  const count = signal(0)
 
   useEffect(() => {
     const styleTimeoutId = setTimeout(() => {
@@ -31,11 +30,11 @@ export const UseMutationObserverExample: Kaioken.FC = () => {
     style.value = {}
     className.value = ''
 
-    const styleTimeoutId = setTimeout(() => {
+    setTimeout(() => {
       style.value = { color: 'red' } 
     }, 2000)
 
-    const classNameTimeoutId = setTimeout(() => {
+    setTimeout(() => {
       className.value = 'test'
     }, 3000)
   }
@@ -56,7 +55,6 @@ export const UseMutationObserverExample: Kaioken.FC = () => {
       {changes.value.map(attr => {
         return <p>Mutation Attribute: {attr}</p>
       })}
-      <button onclick={() => count.value += 1}>increment {count.value}</button>
       <button onclick={reset}>reset</button>
       <button onclick={() => {
         controls.stop()
