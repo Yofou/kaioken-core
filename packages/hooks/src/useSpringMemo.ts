@@ -8,8 +8,8 @@ import { tickSpring } from "./motion/spring"
   Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
 */
 
-export const useSpringMemo = <T,>(
-  factory: () => T, 
+export const useSpringMemo = <T>(
+  factory: () => T,
   deps: unknown[],
   opts = {} as Partial<SpringOpts>
 ): T => {
@@ -17,8 +17,8 @@ export const useSpringMemo = <T,>(
 
   return useHook(
     "useSpringMemo",
-    { 
-      deps, 
+    {
+      deps,
       value: undefined as T,
       lastTime: undefined as number | undefined,
       task: undefined as Task | undefined,
@@ -51,28 +51,32 @@ export const useSpringMemo = <T,>(
         const newValue = factory()
         hook.targetValue = newValue
 
-        if (newValue == null || opts.hard || (spring.stiffness >= 1 && spring.damping >= 1)) {
-          hook.cancelTask = true;
-          hook.lastTime = raf.now();
-          hook.lastValue = newValue;
+        if (
+          newValue == null ||
+          opts.hard ||
+          (spring.stiffness >= 1 && spring.damping >= 1)
+        ) {
+          hook.cancelTask = true
+          hook.lastTime = raf.now()
+          hook.lastValue = newValue
           hook.value = hook.targetValue
-          update();
+          update()
           return hook.value
         } else if (opts.soft) {
           const rate = opts.soft === true ? 0.5 : +opts.soft
           hook.invMassRecoveryRate = 1 / (rate * 60)
-          hook.invMass = 0; // infinite mass, unaffected by spring forces
+          hook.invMass = 0 // infinite mass, unaffected by spring forces
         }
 
         if (!hook.task) {
-          hook.lastTime = raf.now();
-          hook.cancelTask = false;
+          hook.lastTime = raf.now()
+          hook.cancelTask = false
 
           hook.task = loop((now) => {
             if (hook.cancelTask) {
-              hook.cancelTask = false;
-              hook.task = undefined;
-              return false;
+              hook.cancelTask = false
+              hook.task = undefined
+              return false
             }
             hook.invMass = Math.min(hook.invMass + hook.invMassRecoveryRate, 1)
             const ctx: TickContext = {
@@ -81,13 +85,18 @@ export const useSpringMemo = <T,>(
               settled: true,
               dt: ((now - (hook.lastTime ?? raf.now())) * 60) / 1000,
             }
-            const nextValue = tickSpring(ctx, hook.lastValue, hook.value, hook.targetValue)
+            const nextValue = tickSpring(
+              ctx,
+              hook.lastValue,
+              hook.value,
+              hook.targetValue
+            )
             hook.lastTime = now
-            hook.lastValue = hook.value;
+            hook.lastValue = hook.value
             hook.value = nextValue
-            update();
+            update()
             if (ctx.settled) {
-              hook.task = undefined;
+              hook.task = undefined
             }
             return !ctx.settled
           })

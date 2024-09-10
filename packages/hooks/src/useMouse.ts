@@ -6,25 +6,22 @@ export const useMouse = () => {
   const [delta, setDelta] = useState({ x: 0, y: 0 })
   const [client, setClient] = useState({ x: 0, y: 0 })
 
-  useEventListener(
-    "mousemove",
-    (event) => {
-      setMouse({
-        x: event.x,
-        y: event.y,
-      })
+  useEventListener("mousemove", (event) => {
+    setMouse({
+      x: event.x,
+      y: event.y,
+    })
 
-      setDelta({
-        x: event.movementX,
-        y: event.movementY,
-      })
+    setDelta({
+      x: event.movementX,
+      y: event.movementY,
+    })
 
-      setClient({
-        x: event.clientX,
-        y: event.clientY,
-      })
-    },
-  )
+    setClient({
+      x: event.clientX,
+      y: event.clientY,
+    })
+  })
 
   return { mouse, delta, client }
 }

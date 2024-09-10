@@ -1,12 +1,15 @@
-import { UseTweenExample } from '$/examples/useTween'
+import { UseTweenExample } from "$/examples/useTween"
 
 # useTween
+
 behaves similarly to useState but instead will interpolate the value smoothly with the ability to cancel
 
 ## Demo
+
 <UseTweenExample />
 
 ## Usage
+
 ```tsx
 const [duration, setDuration] = useState(500)
 const [currentValue, setCurrentValue] = useTween(0)
@@ -29,15 +32,16 @@ const onCancel = () => {
 ```
 
 ## Type Declaration
+
 ```tsx twoslash
-import { useTween } from '@kaioken-core/hooks'
+import { useTween } from "@kaioken-core/hooks"
 // ---cut---
 const [currentValue, setCurrentValue] = useTween(0)
 
 interface TweenedOptions<T> {
-	delay?: number;
-	duration?: number | ((from: T, to: T) => number);
-	easing?: (t: number) => number;
-	interpolate?: (a: T, b: T) => (t: number) => T;
+  delay?: number
+  duration?: number | ((from: T, to: T) => number)
+  easing?: (t: number) => number
+  interpolate?: (a: T, b: T) => (t: number) => T
 }
 ```

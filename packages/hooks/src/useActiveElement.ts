@@ -21,16 +21,12 @@ export const useActiveElement = (options: ActiveElementOptions = {}) => {
     setActiveElement(getDeepActiveElement())
   }
 
-  useEventListener(
-    "focus",
-    update,
-    {
-      capture: true,
-    }
-  )
+  useEventListener("focus", update, {
+    capture: true,
+  })
 
   useEventListener(
-    "blur", 
+    "blur",
     (event) => {
       if (event.relatedTarget === null) {
         update()

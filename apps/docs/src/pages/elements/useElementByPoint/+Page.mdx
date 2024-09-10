@@ -1,13 +1,15 @@
-import { UseElementByPointExample } from '$/examples/useElementByPoint'
+import { UseElementByPointExample } from "$/examples/useElementByPoint"
 
 # useElementByPoint
+
 Reactive elementByPoint
 
 <UseElementByPointExample />
 
 ## Usage
+
 ```tsx twoslash
-import { useMouse, useElementByPoint } from '@kaioken-core/hooks'
+import { useMouse, useElementByPoint } from "@kaioken-core/hooks"
 const { mouse } = useMouse()
 // ---cut---
 const { element } = useElementByPoint({
@@ -18,9 +20,9 @@ const { element } = useElementByPoint({
 })
 
 type UseElementByPointReturn<M extends boolean = false> = {
-  element: M extends true ? HTMLElement[] : HTMLElement | null,
-  start: () => void,
-  stop: () => void,
-  isActive: boolean,
+  element: M extends true ? HTMLElement[] : HTMLElement | null
+  start: () => void
+  stop: () => void
+  isActive: boolean
 }
 ```

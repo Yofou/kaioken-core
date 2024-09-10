@@ -10,40 +10,45 @@ type RefFnOptions = {
   immediate?: boolean
 }
 
-const useRafFn = (callback: (arg: RefFnArg) => void, options?: RefFnOptions) => {
-  if (!sideEffectsEnabled()) return {
-    isActive: options?.immediate ?? false,
-    start: () => null,
-    stop: () => null,
-  }
+const useRafFn = (
+  callback: (arg: RefFnArg) => void,
+  options?: RefFnOptions
+) => {
+  if (!sideEffectsEnabled())
+    return {
+      isActive: options?.immediate ?? false,
+      start: () => null,
+      stop: () => null,
+    }
 
   const intervalLimit = options?.fpsLimit ? 1000 / options.fpsLimit : null
   return useHook(
-    'useRafFn', 
+    "useRafFn",
     () => ({
       callback,
       refId: null as number | null,
       previousFrameTimestamp: 0,
       isActive: options?.immediate ?? false,
-      rafLoop: (() => {}) as FrameRequestCallback
-    }), 
+      rafLoop: (() => {}) as FrameRequestCallback,
+    }),
     ({ isInit, hook, update }) => {
       hook.callback = callback
 
       if (isInit) {
         hook.rafLoop = (timestamp) => {
           if (hook.isActive === false) return
-            if (!hook.previousFrameTimestamp) hook.previousFrameTimestamp = timestamp
-
-            const delta = timestamp - hook.previousFrameTimestamp
-            if (intervalLimit && delta < intervalLimit) {
-              hook.refId = window.requestAnimationFrame(hook.rafLoop)
-              return
-            }
-
+          if (!hook.previousFrameTimestamp)
             hook.previousFrameTimestamp = timestamp
-            hook.callback({ delta, timestamp })
+
+          const delta = timestamp - hook.previousFrameTimestamp
+          if (intervalLimit && delta < intervalLimit) {
             hook.refId = window.requestAnimationFrame(hook.rafLoop)
+            return
+          }
+
+          hook.previousFrameTimestamp = timestamp
+          hook.callback({ delta, timestamp })
+          hook.refId = window.requestAnimationFrame(hook.rafLoop)
         }
       }
 
@@ -63,7 +68,7 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options?: RefFnOptions) => 
       return {
         isActive: hook.isActive,
         start: () => {
-          if (hook.isActive === true) return;
+          if (hook.isActive === true) return
 
           hook.isActive = true
           hook.refId = window.requestAnimationFrame(hook.rafLoop)
@@ -78,7 +83,7 @@ const useRafFn = (callback: (arg: RefFnArg) => void, options?: RefFnOptions) => 
         stop: () => {
           cleanupHook(hook)
           update()
-        }
+        },
       }
     }
   )

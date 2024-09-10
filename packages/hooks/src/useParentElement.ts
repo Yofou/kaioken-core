@@ -7,7 +7,7 @@ const findParentElm = <T extends Element>(
   return node.dom as T | undefined
 }
 
-export const  findMountedDomRecursive = <T extends Element>(
+export const findMountedDomRecursive = <T extends Element>(
   vNode?: Kaioken.VNode
 ): T | undefined => {
   if (!vNode) return undefined

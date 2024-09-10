@@ -1,4 +1,4 @@
-import { signal } from "kaioken";
+import { signal } from "kaioken"
 
 export const disableAnimation = signal(false)
-disableAnimation.displayName = 'disableAnimation'
+disableAnimation.displayName = "disableAnimation"

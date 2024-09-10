@@ -1,17 +1,24 @@
-import { cleanupHook, depsRequireChange, sideEffectsEnabled, useHook } from "kaioken"
+import {
+  cleanupHook,
+  depsRequireChange,
+  sideEffectsEnabled,
+  useHook,
+} from "kaioken"
 
-const isSupported = "window" in globalThis && "ResizeObserver" in globalThis.window
+const isSupported =
+  "window" in globalThis && "ResizeObserver" in globalThis.window
 
 export const useResizeObserver = (
   ref: Kaioken.MutableRefObject<Element | null>,
   callback: ResizeObserverCallback,
   options: ResizeObserverOptions | undefined = undefined
 ) => {
-  if (!sideEffectsEnabled()) return {
+  if (!sideEffectsEnabled())
+    return {
       isSupported,
       start: () => {},
       stop: () => {},
-  }
+    }
 
   if (!isSupported) {
     return {
@@ -23,7 +30,7 @@ export const useResizeObserver = (
 
   // TODO: get rid of the deps array
   return useHook(
-    'useResizeObserver',
+    "useResizeObserver",
     {
       resizeObserver: null as ResizeObserver | null,
       deps: [ref.current],

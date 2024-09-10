@@ -1,16 +1,23 @@
-import {cleanupHook, depsRequireChange, sideEffectsEnabled, useHook  } from "kaioken"
+import {
+  cleanupHook,
+  depsRequireChange,
+  sideEffectsEnabled,
+  useHook,
+} from "kaioken"
 
-const isSupported = "window" in globalThis && "MutationObserver" in globalThis.window
+const isSupported =
+  "window" in globalThis && "MutationObserver" in globalThis.window
 export const useMutationObserver = (
   ref: Kaioken.MutableRefObject<Element | null>,
   callback: MutationCallback,
   options: MutationObserverInit | undefined = undefined
 ) => {
-  if (!sideEffectsEnabled()) return {
+  if (!sideEffectsEnabled())
+    return {
       isSupported,
       start: () => {},
       stop: () => {},
-  }
+    }
 
   if (!isSupported) {
     return {
@@ -22,7 +29,7 @@ export const useMutationObserver = (
 
   // TODO: get rid of deps array
   return useHook(
-    'useMutationObserver',
+    "useMutationObserver",
     {
       mutationObserver: null as MutationObserver | null,
       deps: [ref.current],

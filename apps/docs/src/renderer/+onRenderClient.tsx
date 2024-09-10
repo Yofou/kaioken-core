@@ -19,6 +19,6 @@ export const onRenderClient: OnRenderClientAsync = async (pageContext) => {
   try {
     await appContext.setProps(() => ({ pageContext }))
   } catch (e) {
-    console.log('catched setProp error', e)
+    console.log("catched setProp error", e)
   }
 }

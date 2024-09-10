@@ -1,4 +1,4 @@
-import { UseEffectDeepExample } from '$/examples/useEffectDeep'
+import { UseEffectDeepExample } from "$/examples/useEffectDeep"
 
 # useEffectDeep
 
@@ -12,16 +12,18 @@ same as useEffect but the dependencies array will recursively look down objects
 
 ```tsx
 import { useCurrentNode, useState } from "kaioken"
-import { useEffectDeep } from '@kaioken-core/hooks'
+import { useEffectDeep } from "@kaioken-core/hooks"
 
 const node = useCurrentNode()
 const [context, setContext] = useState({
   count: 0,
-  name: ''
+  name: "",
 })
 
 useEffectDeep(() => {
-  console.log('I will trigger when count and name change despite context being the same object reference')
+  console.log(
+    "I will trigger when count and name change despite context being the same object reference"
+  )
 }, [context])
 
 const onClick = () => {
@@ -45,6 +47,7 @@ const onInput = (e: InputEvent) => {
 ```
 
 ## Type Declaration
+
 ```tsx twoslash
-import { useEffectDeep } from '@kaioken-core/hooks'
+import { useEffectDeep } from "@kaioken-core/hooks"
 ```

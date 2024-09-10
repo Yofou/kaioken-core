@@ -50,17 +50,25 @@ export const useElementBounding = (
     attributeFilter: ["style", "class"],
   })
 
-  useEventListener("scroll", () => {
-    if (windowScroll) {
-      update()
-    }
-  }, { capture: true, passive: true })
+  useEventListener(
+    "scroll",
+    () => {
+      if (windowScroll) {
+        update()
+      }
+    },
+    { capture: true, passive: true }
+  )
 
-  useEventListener("resize", () => {
-    if (windowResize) {
-      update()
-    }
-  }, { passive: true })
+  useEventListener(
+    "resize",
+    () => {
+      if (windowResize) {
+        update()
+      }
+    },
+    { passive: true }
+  )
 
   useLayoutEffect(() => {
     if (immediate) {

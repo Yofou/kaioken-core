@@ -1,6 +1,6 @@
 import { sideEffectsEnabled, useHook } from "kaioken"
 import { noop } from "kaioken/utils"
-import { SpringOpts, TickContext, type Task } from './motion/types'
+import { SpringOpts, TickContext, type Task } from "./motion/types"
 import { loop, raf } from "./motion/loop"
 import { tickSpring } from "./motion/spring"
 
@@ -9,26 +9,37 @@ import { tickSpring } from "./motion/spring"
   Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
 */
 
-export const useSpring = <T,>(
+export const useSpring = <T>(
   initial: T | (() => T),
   opts = {} as Partial<SpringOpts>
-): [T, (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>] => {
+): [
+  T,
+  (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>,
+] => {
   const value = initial instanceof Function ? initial() : initial
   if (!sideEffectsEnabled()) {
-    return [value, noop as any as (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>]
+    return [
+      value,
+      noop as any as (
+        value: Kaioken.StateSetter<T>,
+        opts?: Partial<SpringOpts>
+      ) => Promise<void>,
+    ]
   }
 
-  const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = opts;
-
+  const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = opts
 
   return useHook(
     "useSpring",
     () => ({
       value: undefined as T,
-      dispatch: noop as any as (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>,
+      dispatch: noop as any as (
+        value: Kaioken.StateSetter<T>,
+        opts?: Partial<SpringOpts>
+      ) => Promise<void>,
       lastTime: undefined as number | undefined,
       task: undefined as Task | undefined,
-      currentToken : undefined as object | undefined,
+      currentToken: undefined as object | undefined,
       lastValue: structuredClone(value),
       targetValue: structuredClone(value),
       invMass: 1,
@@ -38,57 +49,72 @@ export const useSpring = <T,>(
     ({ hook, isInit, update }) => {
       if (isInit) {
         hook.value = initial instanceof Function ? initial() : initial
-        hook.dispatch = (setter: Kaioken.StateSetter<T>, opts = {} as SpringOpts) => {
+        hook.dispatch = (
+          setter: Kaioken.StateSetter<T>,
+          opts = {} as SpringOpts
+        ) => {
           const spring: SpringOpts = {
             stiffness,
             damping,
             precision,
-            ...opts
-          };
+            ...opts,
+          }
 
           const newValue =
-            setter instanceof Function ? setter(hook.value) : setter;
+            setter instanceof Function ? setter(hook.value) : setter
 
           hook.targetValue = newValue
           hook.currentToken = {}
-          const token = hook.currentToken;
-          if (value == null || opts.hard || (spring.stiffness >= 1 && spring.damping >= 1)) {
-            hook.cancelTask = true;
-            hook.lastTime = raf.now();
-            hook.lastValue = newValue;
+          const token = hook.currentToken
+          if (
+            value == null ||
+            opts.hard ||
+            (spring.stiffness >= 1 && spring.damping >= 1)
+          ) {
+            hook.cancelTask = true
+            hook.lastTime = raf.now()
+            hook.lastValue = newValue
             hook.value = hook.targetValue
-            update();
-            return Promise.resolve();
+            update()
+            return Promise.resolve()
           } else if (opts.soft) {
             const rate = opts.soft === true ? 0.5 : +opts.soft
             hook.invMassRecoveryRate = 1 / (rate * 60)
-            hook.invMass = 0; // infinite mass, unaffected by spring forces
+            hook.invMass = 0 // infinite mass, unaffected by spring forces
           }
 
           if (!hook.task) {
-            hook.lastTime = raf.now();
-            hook.cancelTask = false;
+            hook.lastTime = raf.now()
+            hook.cancelTask = false
 
             hook.task = loop((now) => {
               if (hook.cancelTask) {
-                hook.cancelTask = false;
-                hook.task = undefined;
-                return false;
+                hook.cancelTask = false
+                hook.task = undefined
+                return false
               }
-              hook.invMass = Math.min(hook.invMass + hook.invMassRecoveryRate, 1)
+              hook.invMass = Math.min(
+                hook.invMass + hook.invMassRecoveryRate,
+                1
+              )
               const ctx: TickContext = {
                 inv_mass: hook.invMass,
                 opts: spring,
                 settled: true,
                 dt: ((now - (hook.lastTime ?? raf.now())) * 60) / 1000,
               }
-              const nextValue = tickSpring(ctx, hook.lastValue, hook.value, hook.targetValue)
+              const nextValue = tickSpring(
+                ctx,
+                hook.lastValue,
+                hook.value,
+                hook.targetValue
+              )
               hook.lastTime = now
-              hook.lastValue = hook.value;
+              hook.lastValue = hook.value
               hook.value = nextValue
-              update();
+              update()
               if (ctx.settled) {
-                hook.task = undefined;
+                hook.task = undefined
               }
               return !ctx.settled
             })
@@ -96,7 +122,7 @@ export const useSpring = <T,>(
 
           return new Promise((fulfil) => {
             hook.task?.promise.then(() => {
-              if (token === hook.currentToken) fulfil(undefined);
+              if (token === hook.currentToken) fulfil(undefined)
             })
           })
         }
@@ -107,7 +133,13 @@ export const useSpring = <T,>(
         }
       }
 
-      return [hook.value, hook.dispatch] as [T, (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>]
+      return [hook.value, hook.dispatch] as [
+        T,
+        (
+          value: Kaioken.StateSetter<T>,
+          opts?: Partial<SpringOpts>
+        ) => Promise<void>,
+      ]
     }
   )
 }

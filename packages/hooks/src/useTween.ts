@@ -3,33 +3,45 @@ import { noop } from "kaioken/utils"
 import { getInterpolator } from "./motion/utils"
 import { Task, TweenedOptions } from "./motion/types"
 import { loop, raf } from "./motion/loop"
-import { linear } from '../lib/easing'
+import { linear } from "../lib/easing"
 
 /*
   Adapted from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion
   Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
 */
 
-export const useTween = <T,>(
+export const useTween = <T>(
   initial: T | (() => T),
   defaults = {} as TweenedOptions<T>
-): [T, (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>] => {
+): [
+  T,
+  (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>,
+] => {
   if (!sideEffectsEnabled()) {
-    return [initial instanceof Function ? initial() : initial, noop as () => Promise<void>]
+    return [
+      initial instanceof Function ? initial() : initial,
+      noop as () => Promise<void>,
+    ]
   }
 
   return useHook(
     "useTween",
     {
       value: undefined as T,
-      dispatch: noop as any as (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>,
+      dispatch: noop as any as (
+        value: Kaioken.StateSetter<T>,
+        options?: TweenedOptions<T>
+      ) => Promise<void>,
       task: undefined as Task | undefined,
       targetValue: undefined as T,
     },
     ({ hook, isInit, update }) => {
       if (isInit) {
         hook.value = initial instanceof Function ? initial() : initial
-        hook.dispatch = (setter: Kaioken.StateSetter<T>, options = {} as TweenedOptions<T>) => {
+        hook.dispatch = (
+          setter: Kaioken.StateSetter<T>,
+          options = {} as TweenedOptions<T>
+        ) => {
           const newState =
             setter instanceof Function ? setter(hook.value) : setter
           hook.targetValue = newState
@@ -37,7 +49,7 @@ export const useTween = <T,>(
           if (newState == null) {
             hook.value = newState
             update()
-            return Promise.resolve();
+            return Promise.resolve()
           }
 
           let previousTask = hook.task
@@ -53,39 +65,39 @@ export const useTween = <T,>(
           if (duration === 0) {
             if (previousTask) {
               previousTask.abort()
-              previousTask = undefined;
+              previousTask = undefined
             }
 
             hook.value = newState
             update()
-            return Promise.resolve();
+            return Promise.resolve()
           }
 
-          const start = raf.now() + delay;
-          let fn: (t: number) => T;
+          const start = raf.now() + delay
+          let fn: (t: number) => T
           hook.task = loop((now) => {
-            if (now < start) return true;
+            if (now < start) return true
             if (!started) {
               fn = interpolate(hook.value, newState)
-              if (typeof duration === 'function') {
-                duration = duration(hook.value, newState);
+              if (typeof duration === "function") {
+                duration = duration(hook.value, newState)
               }
-              started = true;
+              started = true
             }
             if (previousTask) {
-              previousTask.abort();
-              previousTask = undefined;
+              previousTask.abort()
+              previousTask = undefined
             }
-            const elapsed = now - start;
+            const elapsed = now - start
             if (elapsed > (duration as number)) {
-              hook.value = newState;
-              update();
-              return false;
+              hook.value = newState
+              update()
+              return false
             }
 
             hook.value = fn(easing(elapsed / (duration as number)))
             update()
-            return true;
+            return true
           })
 
           return hook.task.promise
@@ -98,7 +110,13 @@ export const useTween = <T,>(
         }
       }
 
-      return [hook.value, hook.dispatch] as [T, (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>]
+      return [hook.value, hook.dispatch] as [
+        T,
+        (
+          value: Kaioken.StateSetter<T>,
+          options?: TweenedOptions<T>
+        ) => Promise<void>,
+      ]
     }
   )
 }

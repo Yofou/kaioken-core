@@ -3,11 +3,8 @@ import { defineConfig } from "vite"
 import ssr from "vike/plugin"
 import kaioken from "vite-plugin-kaioken"
 import mdx from "@mdx-js/rollup"
-import shiki, { type RehypeShikiOptions } from "@shikijs/rehype";
-import {
-  transformerTwoslash,
-  rendererRich
-} from '@shikijs/twoslash'
+import shiki, { type RehypeShikiOptions } from "@shikijs/rehype"
+import { transformerTwoslash, rendererRich } from "@shikijs/twoslash"
 import sitemapPlugin from "vite-plugin-sitemap"
 import { Pages } from "./src/utils/meta"
 
@@ -15,9 +12,9 @@ const hoverHighlight = rendererRich({
   hast: {
     popupTypes: {
       properties: {
-        popover: 'manual',
-      }
-    }
+        popover: "manual",
+      },
+    },
   },
 })
 
@@ -27,7 +24,7 @@ export default defineConfig({
       $: path.join(__dirname, "src"),
     },
   },
-	plugins: [
+  plugins: [
     {
       enforce: "pre",
       ...mdx({
@@ -42,8 +39,8 @@ export default defineConfig({
               transformers: [
                 transformerTwoslash({
                   explicitTrigger: true,
-                  renderer: hoverHighlight
-                })
+                  renderer: hoverHighlight,
+                }),
               ],
             } as RehypeShikiOptions,
           ],
@@ -54,15 +51,15 @@ export default defineConfig({
       prerender: {
         noExtraDir: true,
       },
-    }), 
+    }),
     kaioken(),
     {
-      enforce: 'post',
+      enforce: "post",
       ...sitemapPlugin({
-        hostname: 'https://hooks.kaioken-core.dev/',
-        outDir: 'dist/client',
-        dynamicRoutes: ['/', ...[...Pages.keys()]]
-      })
-    }
-	],
+        hostname: "https://hooks.kaioken-core.dev/",
+        outDir: "dist/client",
+        dynamicRoutes: ["/", ...[...Pages.keys()]],
+      }),
+    },
+  ],
 })

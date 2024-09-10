@@ -9,12 +9,16 @@ import { loop, raf } from "./motion/loop"
   Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
 */
 
-export function useTweenMemo <T>(factory: () => T, deps: unknown[], options: TweenedOptions<T> = {}): T {
+export function useTweenMemo<T>(
+  factory: () => T,
+  deps: unknown[],
+  options: TweenedOptions<T> = {}
+): T {
   if (!sideEffectsEnabled()) return factory()
   return useHook(
     "useTweenMemo",
-    () => ({ 
-      deps, 
+    () => ({
+      deps,
       value: undefined as T,
       task: undefined as Task | undefined,
       targetValue: undefined as T,
@@ -48,43 +52,42 @@ export function useTweenMemo <T>(factory: () => T, deps: unknown[], options: Twe
           interpolate = getInterpolator,
         } = options
 
-
         if (duration === 0) {
           if (previousTask) {
             previousTask.abort()
-            previousTask = undefined;
+            previousTask = undefined
           }
 
           hook.value = hook.targetValue
           update()
-          return hook.value;
+          return hook.value
         }
 
-        const start = raf.now() + delay;
-        let fn: (t: number) => T;
+        const start = raf.now() + delay
+        let fn: (t: number) => T
         hook.task = loop((now) => {
-          if (now < start) return true;
+          if (now < start) return true
           if (!started) {
             fn = interpolate(hook.value, newState)
-            if (typeof duration === 'function') {
-              duration = duration(hook.value, newState);
+            if (typeof duration === "function") {
+              duration = duration(hook.value, newState)
             }
-            started = true;
+            started = true
           }
           if (previousTask) {
-            previousTask.abort();
-            previousTask = undefined;
+            previousTask.abort()
+            previousTask = undefined
           }
-          const elapsed = now - start;
+          const elapsed = now - start
           if (elapsed > (duration as number)) {
-            hook.value = newState;
-            update();
-            return false;
+            hook.value = newState
+            update()
+            return false
           }
 
           hook.value = fn(easing(elapsed / (duration as number)))
           update()
-          return true;
+          return true
         })
       }
 

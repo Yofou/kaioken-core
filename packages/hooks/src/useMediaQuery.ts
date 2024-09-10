@@ -16,8 +16,8 @@ export const useMediaQuery = (query: string) => {
   useEffect(() => {
     const cleanup = () => {
       if (!mediaQuery) return
-        if ("removeEventListener" in mediaQuery)
-          mediaQuery.removeEventListener("change", handler)
+      if ("removeEventListener" in mediaQuery)
+        mediaQuery.removeEventListener("change", handler)
       // @ts-expect-error deprecated API
       else mediaQuery.removeListener(handler)
     }

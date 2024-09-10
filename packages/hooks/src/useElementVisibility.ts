@@ -9,7 +9,7 @@ export const useElementVisibility = <T extends Element = Element>() => {
     let latestTime = 0
     let isIntersecting = false
 
-    items.forEach(item => {
+    items.forEach((item) => {
       if (item.time >= latestTime) {
         latestTime = item.time
         isIntersecting = item.isIntersecting
