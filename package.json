@@ -6,8 +6,12 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "bump": "cd ./packages/hooks && pnpm build && pnpm version prerelease && git add . && git commit -a -m 'version bump' && git push && pnpm publish",
-		"release": "cd ./packages/hooks && pnpm build && pnpm version patch && git add . && git commit -a -m 'version bump' && git push && pnpm publish"
+    "release:__pre:hooks": "cd ./packages/hooks && pnpm build && pnpm version prerelease && git add . && git commit -a -m 'hooks version bump' && git push && pnpm publish",
+    "release:major:hooks": "cd ./packages/hooks && pnpm build && pnpm version major && git add . && git commit -a -m 'hooks version bump' && git push && pnpm publish",
+
+    "release:minor:hooks": "cd ./packages/hooks && pnpm build && pnpm version minor && git add . && git commit -a -m 'hooks version bump' && git push && pnpm publish",
+
+		"release:patch:hooks": "cd ./packages/hooks && pnpm build && pnpm version patch && git add . && git commit -a -m 'hooks version bump' && git push && pnpm publish"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
