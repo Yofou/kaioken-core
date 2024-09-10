@@ -16,7 +16,7 @@ the plan is currently in this order, but it may change!
 2. @kaioken-core/motion
    a kaioken animation library that lets you build fluid animation with intuitive gesture api
 3. @kaioken-core/sortable
-   a kaioken libraries allowing you sort a list of elements/data smoothly
+   a kaioken library allowing you sort a list of elements/data smoothly
 
 ## How working in kaioken-core works.
 
