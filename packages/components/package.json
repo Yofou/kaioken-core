@@ -1,5 +1,5 @@
 {
-  "name": "@kaioken-core/hooks",
+  "name": "@kaioken-core/components",
   "public": true,
   "version": "0.0.8",
   "type": "module",
@@ -13,10 +13,6 @@
     ".": {
       "types": "./dist/lib/main.d.ts",
       "default": "./dist/main.js"
-    },
-    "./easing": {
-      "types": "./dist/lib/easing.d.ts",
-      "import": "./dist/easing.js"
     }
   },
   "scripts": {

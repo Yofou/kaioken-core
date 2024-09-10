@@ -14,7 +14,7 @@ importers:
         specifier: latest
         version: 2.1.1
 
-  apps/docs:
+  apps/hooks-docs:
     dependencies:
       "@floating-ui/dom":
         specifier: ^1.6.10
@@ -87,11 +87,22 @@ importers:
         specifier: 0.10.4
         version: 0.10.4(kaioken@0.28.4)
 
+  packages/components:
+    devDependencies:
+      kaioken:
+        specifier: 0.28.4
+        version: 0.28.4
+      typescript:
+        specifier: ^5.3.3
+        version: 5.5.4
+      vite:
+        specifier: ^5.0.10
+        version: 5.3.5(@types/node@20.14.12)
+      vite-plugin-dts:
+        specifier: ^3.7.3
+        version: 3.9.1(@types/node@20.14.12)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12))
+
   packages/hooks:
-    dependencies:
-      vite-plugin-sleep:
-        specifier: 0.0.1-never.1
-        version: 0.0.1-never.1
     devDependencies:
       kaioken:
         specifier: 0.28.4
@@ -3389,12 +3400,6 @@ packages:
         integrity: sha512-4NRTkiWytLuAmcikckrLcLl9iYA20+5v6l8XshcOrzxH1WR8H0O3S6sTQYfjMrE8su/LG6Y0cTodvOdcOIxaLw==,
       }
 
-  vite-plugin-sleep@0.0.1-never.1:
-    resolution:
-      {
-        integrity: sha512-xiBwoKmRsfuNum0VQ4vFiOmlz8rIIrMx++kD970v72mpCHqDc8s3XOHkyAs+CEZ+Uc9Pyo/IA3/vj4nKcgjSTQ==,
-      }
-
   vite@5.3.4:
     resolution:
       {
@@ -5606,13 +5611,28 @@ snapshots:
       - rollup
       - supports-color
 
+  vite-plugin-dts@3.9.1(@types/node@20.14.12)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12)):
+    dependencies:
+      "@microsoft/api-extractor": 7.43.0(@types/node@20.14.12)
+      "@rollup/pluginutils": 5.1.0(rollup@4.19.0)
+      "@vue/language-core": 1.8.27(typescript@5.5.4)
+      debug: 4.3.5
+      kolorist: 1.8.0
+      magic-string: 0.30.10
+      typescript: 5.5.4
+      vue-tsc: 1.8.27(typescript@5.5.4)
+    optionalDependencies:
+      vite: 5.3.5(@types/node@20.14.12)
+    transitivePeerDependencies:
+      - "@types/node"
+      - rollup
+      - supports-color
+
   vite-plugin-kaioken@0.10.4(kaioken@0.28.4):
     dependencies:
       kaioken: 0.28.4
 
   vite-plugin-sitemap@0.7.1: {}
-
-  vite-plugin-sleep@0.0.1-never.1: {}
 
   vite@5.3.4(@types/node@20.14.12):
     dependencies:
