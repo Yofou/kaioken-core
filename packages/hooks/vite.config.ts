@@ -1,6 +1,5 @@
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
-import kaioken from "vite-plugin-kaioken"
 
 export default defineConfig({
   esbuild: {
@@ -25,8 +24,6 @@ export default defineConfig({
     },
   },
   plugins: [
-    // @ts-ignore this is type fucked rn
-    kaioken(),
     dts({
       rollupTypes: false,
       exclude: ["vite.config.ts"],

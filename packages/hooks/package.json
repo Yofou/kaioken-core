@@ -20,7 +20,7 @@
     }
   },
   "scripts": {
-    "dev": "tsc && vite build --watch",
+    "dev": "tsc && sleep 0.5 && vite build --watch",
     "build": "tsc && vite build"
   },
   "peerDependencies": {
@@ -30,7 +30,9 @@
     "kaioken": "0.28.4",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
-    "vite-plugin-dts": "^3.7.3",
-    "vite-plugin-kaioken": "0.10.4"
+    "vite-plugin-dts": "^3.7.3"
+  },
+  "dependencies": {
+    "vite-plugin-sleep": "0.0.1-never.1"
   }
 }
