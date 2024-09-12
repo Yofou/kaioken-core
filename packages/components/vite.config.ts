@@ -1,13 +1,11 @@
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
+import kaioken from "vite-plugin-kaioken"
 
 export default defineConfig({
-  esbuild: {
-    loader: "ts",
-  },
   build: {
     lib: {
-      entry: ["./lib/main.ts"],
+      entry: ["./lib/main.tsx"],
       name: "KaiokenCore",
       fileName: (extension, name) =>
         extension === "es" ? `${name}.js` : `${name}.${extension}.js`,
@@ -24,6 +22,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    kaioken(),
     dts({
       rollupTypes: false,
       exclude: ["vite.config.ts"],

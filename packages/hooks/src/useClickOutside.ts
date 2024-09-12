@@ -5,6 +5,7 @@ const noop = () => {}
 
 export type ClickOutsideOptions = {
   ignore?: (Kaioken.MutableRefObject<Element | null> | string)[]
+  passive?: boolean
   capture?: boolean
   detectIframe?: boolean
 }
@@ -26,6 +27,7 @@ export const useClickOutside = <T extends ClickOutsideOptions>(
 ) => {
   const ignore = options.ignore ?? []
   const capture = options.capture ?? true
+  const passive = options.passive ?? true
   const detectIframe = options.detectIframe ?? false
   const shouldListen = useRef(true)
   const isIOSWorkaround = useRef(false)
@@ -59,7 +61,7 @@ export const useClickOutside = <T extends ClickOutsideOptions>(
   }
 
   useEventListener("click", listener, {
-    passive: true,
+    passive,
     capture,
   })
 
