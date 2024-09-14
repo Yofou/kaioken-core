@@ -16,16 +16,21 @@
     }
   },
   "scripts": {
-    "dev": "tsc && sleep 0.5 && vite build --watch",
+    "dev": "tsc && sleep 2 && vite build --watch",
     "build": "tsc && vite build"
   },
   "peerDependencies": {
     "kaioken": "^0.26.0"
   },
   "devDependencies": {
+    "@kaioken-core/hooks": "workspace:^",
     "kaioken": "0.28.4",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.7.3"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.6.10",
+    "vite-plugin-kaioken": "^0.10.6"
   }
 }

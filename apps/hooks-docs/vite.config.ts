@@ -7,6 +7,10 @@ import shiki, { type RehypeShikiOptions } from "@shikijs/rehype"
 import { transformerTwoslash, rendererRich } from "@shikijs/twoslash"
 import sitemapPlugin from "vite-plugin-sitemap"
 import { Pages } from "./src/utils/meta"
+import rehypeAutolinkHeadings, {
+  Options as AutoLinkOptions,
+} from "rehype-autolink-headings"
+import rehypeSlug from "rehype-slug"
 
 const hoverHighlight = rendererRich({
   hast: {
@@ -43,6 +47,13 @@ export default defineConfig({
                 }),
               ],
             } as RehypeShikiOptions,
+          ],
+          rehypeSlug,
+          [
+            rehypeAutolinkHeadings,
+            {
+              behavior: "wrap",
+            } as AutoLinkOptions,
           ],
         ],
       }),
