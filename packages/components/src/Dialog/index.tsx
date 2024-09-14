@@ -52,7 +52,7 @@ export const Root: Kaioken.FC<RootProps> = (props) => {
 }
 Root.displayName = "Dialog.Root"
 
-///////////////////
+//////////////////
 // Dialog Trigger
 //////////////////
 

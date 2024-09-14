@@ -1,28 +1,20 @@
-import { Dialog } from "@kaioken-core/components"
-import { signal } from "kaioken"
+import { Floating } from "@kaioken-core/components"
+import { Portal, useRef } from "kaioken"
 
 export { Page }
 
 function Page() {
-  const isOpen = signal(false)
   return (
-    <Dialog.Root
-      open={isOpen}
-      onInteractOutside={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <Dialog.Trigger asChild>
-        <label>span</label>
-      </Dialog.Trigger>
+    <div className="">
+      <Floating.Root sideGap={5} side="bottom">
+        <Floating.Anchor>
+          <p className="mt-12 w-max">Boop</p>
+        </Floating.Anchor>
 
-      <Dialog.Container>
-        <Dialog.Content>
-          <Dialog.Title>This is a title</Dialog.Title>
-
-          <Dialog.Description>Boop</Dialog.Description>
-        </Dialog.Content>
-      </Dialog.Container>
-    </Dialog.Root>
+        <Floating.Content>
+          <p className="">This will float now</p>
+        </Floating.Content>
+      </Floating.Root>
+    </div>
   )
 }
