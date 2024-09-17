@@ -1,5 +1,6 @@
 import { isVNode } from "kaioken/utils"
 import { mergeEventProps } from "./utils"
+import { cloneVNode } from "kaioken"
 
 export const Slottable: Kaioken.FC = (props) => {
   return props.children
@@ -8,12 +9,13 @@ Slottable.displayName = "Slottable"
 
 export const Slot: Kaioken.FC<any> = ({ children, ...props }) => {
   if (isVNode(children)) {
-    children.props = {
+    const childClone = cloneVNode(children)
+    childClone.props = {
       ...children.props,
       ...mergeEventProps(props, children.props),
       children: children.props.children,
     }
-    return children
+    return childClone
   } else if (typeof children === "object" && Array.isArray(children)) {
     const slottable: Kaioken.VNode = children.find((child) => {
       if (isVNode(child)) {
@@ -22,16 +24,17 @@ export const Slot: Kaioken.FC<any> = ({ children, ...props }) => {
       return false
     })
     if (isVNode(slottable?.props?.children)) {
-      slottable.props.children.props = {
+      const slottableChildClone = cloneVNode(slottable.props.children)
+      slottableChildClone.props = {
         ...slottable.props.children.props,
         ...mergeEventProps(props, slottable.props.children.props),
         children: slottable.props.children.props.children,
       }
+
+      slottable.props.children = slottableChildClone
       return children
     } else if (typeof slottable === "object" && Array.isArray(slottable)) {
-      console.warn(
-        "2 dimensional plus children structure, need to handle this case somehow"
-      )
+      console.warn("Slottable should only contain one child")
       return children
     }
   }

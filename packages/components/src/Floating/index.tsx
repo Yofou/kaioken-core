@@ -1,4 +1,12 @@
-import { createContext, useContext, useEffect, useMemo, useRef } from "kaioken"
+import {
+  createContext,
+  Signal,
+  signal,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "kaioken"
 import { Slot } from "../Slot"
 import {
   autoUpdate,
@@ -9,7 +17,11 @@ import {
   Placement,
 } from "@floating-ui/dom"
 
-type RootProps = {
+//////////////////
+// Floating Root
+//////////////////
+
+export type RootProps = {
   side?: Placement
   sideGap?: number
   avoidCollisions?: boolean
@@ -32,7 +44,7 @@ const accessCollisionBoundary = (
   return value.current
 }
 
-const FloatingContext = createContext<{
+export const FloatingContext = createContext<{
   anchorRef: Kaioken.RefObject<HTMLElement>
   popoverRef: Kaioken.RefObject<HTMLElement>
   side: Placement
@@ -70,6 +82,11 @@ export const Root: Kaioken.FC<RootProps> = (props) => {
     </FloatingContext.Provider>
   )
 }
+Root.displayName = "Floating.Root"
+
+///////////////////
+// Floating Anchor
+///////////////////
 
 export const Anchor: Kaioken.FC = (props) => {
   const floatingContext = useContext(FloatingContext)
@@ -81,18 +98,20 @@ export const Anchor: Kaioken.FC = (props) => {
 
   return <Slot ref={floatingContext.anchorRef}>{props.children}</Slot>
 }
+Anchor.displayName = "Floating.Anchor"
 
-export const Content: Kaioken.FC = (props) => {
+///////////////////
+// Floating Content
+///////////////////
+
+type ContentProps = {
+  placement?: Signal<Placement>
+}
+
+export const Content: Kaioken.FC<ContentProps> = (props) => {
   const floatingContext = useContext(FloatingContext)
-
-  useEffect(() => {
-    if (
-      floatingContext?.popoverRef.current &&
-      floatingContext.disablePopover === false
-    ) {
-      floatingContext?.popoverRef.current.showPopover()
-    }
-  }, [floatingContext?.popoverRef.current, floatingContext?.disablePopover])
+  const x = signal<number | null>(null, "x")
+  const y = signal<number | null>(null, "y")
 
   useEffect(() => {
     if (
@@ -111,7 +130,11 @@ export const Content: Kaioken.FC = (props) => {
           floatingContext.anchorRef.current &&
           floatingContext.popoverRef.current
         ) {
-          const { x, y } = await computePosition(
+          const {
+            x: _x,
+            y: _y,
+            placement: _placement,
+          } = await computePosition(
             floatingContext.anchorRef.current,
             floatingContext.popoverRef.current,
             {
@@ -130,17 +153,31 @@ export const Content: Kaioken.FC = (props) => {
               ],
             }
           )
+          x.value = _x
+          y.value = _y
+          if (props.placement) {
+            props.placement.value = _placement
+          }
 
-          Object.assign(floatingContext.popoverRef.current.style, {
-            position: "fixed",
-            top: `var(--kaioken-components-floating-top, ${y}px)`,
-            left: `var(--kaioken-components-floating-left, ${x}px)`,
-          })
+          floatingContext.popoverRef.current.style.setProperty(
+            "position",
+            "fixed"
+          )
+          floatingContext.popoverRef.current.style.setProperty(
+            "top",
+            `var(--kaioken-core-floating-top, ${y.value}px)`
+          )
+          floatingContext.popoverRef.current.style.setProperty(
+            "left",
+            `var(--kaioken-core-floating-left, ${x.value}px)`
+          )
         }
       }
     )
 
-    return () => cleanup()
+    return () => {
+      cleanup()
+    }
   }, [
     floatingContext?.popoverRef.current,
     floatingContext?.anchorRef.current,
@@ -149,6 +186,15 @@ export const Content: Kaioken.FC = (props) => {
     accessCollisionBoundary(floatingContext?.collisionBoundary),
     floatingContext?.collisionPadding,
   ])
+
+  useEffect(() => {
+    if (
+      floatingContext?.popoverRef.current &&
+      floatingContext.disablePopover === false
+    ) {
+      floatingContext?.popoverRef.current.showPopover()
+    }
+  }, [floatingContext?.popoverRef.current, floatingContext?.disablePopover])
 
   if (!floatingContext) {
     console.log("Floating.Root context was not found in Floating.Content")
@@ -159,8 +205,14 @@ export const Content: Kaioken.FC = (props) => {
     <Slot
       popover={floatingContext.disablePopover ? null : "manual"}
       ref={floatingContext.popoverRef}
+      style={{
+        position: "fixed",
+        top: `var(--kaioken-core-floating-top, ${y.value}px)`,
+        left: `var(--kaioken-core-floating-left, ${x.value}px)`,
+      }}
     >
       {props.children}
     </Slot>
   )
 }
+Content.displayName = "Floating.Content"

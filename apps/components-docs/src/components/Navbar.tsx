@@ -4,12 +4,6 @@ export function Navbar() {
       <a className="text-sm underline" href="/">
         Home
       </a>
-      <a className="text-sm underline" href="/counter">
-        Counter
-      </a>
-      <a className="text-sm underline" href="/products">
-        Products
-      </a>
     </nav>
   )
 }

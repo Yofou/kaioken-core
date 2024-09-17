@@ -27,9 +27,12 @@
     "kaioken": "^0.26.0"
   },
   "devDependencies": {
-    "kaioken": "0.28.4",
+    "kaioken": "0.29.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.7.3"
+  },
+  "dependencies": {
+    "vite-plugin-kaioken": "^0.10.7"
   }
 }
