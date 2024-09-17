@@ -6,7 +6,7 @@ const setPolyRef = (
   value: Element
 ) => {
   if (Signal.isSignal(ref)) {
-    Signal.setValueSilently(ref, value)
+    ref.sneak(value)
   } else if (ref instanceof Function) {
     ref(value)
   } else if (ref && "current" in ref) {

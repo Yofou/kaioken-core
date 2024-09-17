@@ -60,6 +60,7 @@ Root.displayName = "Dialog.Root"
 
 type TriggerProps = ElementProps<"button"> & {
   asChild?: boolean
+  disableClick?: boolean
 }
 
 export const Trigger: Kaioken.FC<TriggerProps> = ({ asChild, ...props }) => {
@@ -68,7 +69,7 @@ export const Trigger: Kaioken.FC<TriggerProps> = ({ asChild, ...props }) => {
 
   const onClick = (e: MouseEvent) => {
     props.onclick?.call(window, e)
-    if (e.defaultPrevented) return
+    if (props.disableClick) return
 
     if (!rootContext) {
       console.warn("Dialog.Root context was not found in Dialog.Trigger")
@@ -223,6 +224,7 @@ Container.displayName = "Dialog.Container"
 
 type ContentProps = ElementProps<"p"> & {
   asChild?: boolean
+  disableInteractOutside?: boolean
 }
 
 export const Content: Kaioken.FC<ContentProps> = ({ asChild, ...props }) => {
@@ -254,7 +256,7 @@ export const Content: Kaioken.FC<ContentProps> = ({ asChild, ...props }) => {
       }
 
       rootContext?.onInteractOutside?.bind(window)?.(e)
-      if (e.defaultPrevented) return
+      if (props.disableInteractOutside) return
 
       rootContext.open.value = false
     },
