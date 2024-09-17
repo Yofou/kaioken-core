@@ -4,6 +4,8 @@ import kaioken from "vite-plugin-kaioken"
 
 export default defineConfig({
   build: {
+    minify: false,
+
     lib: {
       entry: ["./lib/main.tsx"],
       name: "KaiokenCore",

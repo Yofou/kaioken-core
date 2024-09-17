@@ -3,13 +3,15 @@ import {
   ElementProps,
   signal,
   useContext,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
 } from "kaioken"
-import { UnwrapContext } from "../utils"
+import { UnwrapContext, useAwareKeyDown } from "../utils"
 import { Slot } from "../Slot"
 import { useClickOutside, useKeyDown } from "@kaioken-core/hooks"
+import * as KeyboardStack from "../KeyboardStack"
 
 ///////////////////
 // Dialog Root
@@ -22,8 +24,8 @@ type RootProps = {
 
 const RootContext = createContext<{
   open: Kaioken.Signal<boolean>
-  titleId: string
-  descriptionId: string
+  titleId: Kaioken.Signal<string | null>
+  descriptionId: Kaioken.Signal<string | null>
   onInteractOutside?: ElementProps<"div">["onclick"]
   onKeyDownEscape?: ElementProps<"div">["onkeydown"]
 } | null>(null)
@@ -31,8 +33,8 @@ const RootContext = createContext<{
 export const Root: Kaioken.FC<RootProps> = (props) => {
   const _open = signal(false)
   const open = props.open ?? _open
-  const titleId = useMemo(() => crypto.randomUUID().split("-")[0], [])
-  const descriptionId = useMemo(() => crypto.randomUUID().split("-")[0], [])
+  const titleId = signal<string | null>(null)
+  const descriptionId = signal<string | null>(null)
 
   const providerValue = useMemo(() => {
     return {
@@ -58,6 +60,7 @@ Root.displayName = "Dialog.Root"
 
 type TriggerProps = ElementProps<"button"> & {
   asChild?: boolean
+  disableClick?: boolean
 }
 
 export const Trigger: Kaioken.FC<TriggerProps> = ({ asChild, ...props }) => {
@@ -66,7 +69,7 @@ export const Trigger: Kaioken.FC<TriggerProps> = ({ asChild, ...props }) => {
 
   const onClick = (e: MouseEvent) => {
     props.onclick?.call(window, e)
-    if (e.defaultPrevented) return
+    if (props.disableClick) return
 
     if (!rootContext) {
       console.warn("Dialog.Root context was not found in Dialog.Trigger")
@@ -95,13 +98,21 @@ export const Title: Kaioken.FC<TitleProps> = ({ asChild, ...props }) => {
   const rootContext = useContext(RootContext)
   const Comp = asChild ? Slot : "h2"
 
+  const titleId = useMemo(() => crypto.randomUUID().split("-")[0], [])
+
+  useEffect(() => {
+    if (rootContext == null) return
+
+    rootContext.titleId.value = titleId
+  }, [titleId])
+
   if (!rootContext) {
     console.warn("Dialog.Root context was not found in Dialog.Title")
     return
   }
 
   return (
-    <Comp id={rootContext.titleId} {...props}>
+    <Comp id={rootContext.titleId.value ?? undefined} {...props}>
       {props.children}
     </Comp>
   )
@@ -122,14 +133,21 @@ export const Description: Kaioken.FC<DescriptionProps> = ({
 }) => {
   const rootContext = useContext(RootContext)
   const Comp = asChild ? Slot : "p"
+  const descriptionId = useMemo(() => crypto.randomUUID().split("-")[0], [])
+
+  useEffect(() => {
+    if (rootContext == null) return
+
+    rootContext.descriptionId.value = descriptionId
+  }, [descriptionId])
 
   if (!rootContext) {
     console.warn("Dialog.Root context was not found in Dialog.Description")
-    return
+    return null
   }
 
   return (
-    <Comp id={rootContext.descriptionId} {...props}>
+    <Comp id={rootContext.descriptionId.value ?? undefined} {...props}>
       {props.children}
     </Comp>
   )
@@ -142,6 +160,7 @@ Description.displayName = "Dialog.Description"
 
 type ContainerProps = ElementProps<"dialog"> & {
   asChild?: boolean
+  forceMount?: boolean
 }
 
 export const Container: Kaioken.FC<ContainerProps> = ({
@@ -154,11 +173,11 @@ export const Container: Kaioken.FC<ContainerProps> = ({
   const featureAttrs = useMemo(() => {
     const attrs = {}
 
-    if (rootContext?.titleId) {
+    if (rootContext?.titleId?.value) {
       // @ts-expect-error
       attrs.ariaLabelledBy = rootContext.titleId.value
     }
-    if (rootContext?.descriptionId) {
+    if (rootContext?.descriptionId?.value) {
       // @ts-expect-error
       attrs.ariaDescribedBy = rootContext.descriptionId.value
     }
@@ -169,7 +188,7 @@ export const Container: Kaioken.FC<ContainerProps> = ({
     }
 
     return attrs
-  }, [rootContext?.descriptionId, rootContext?.titleId, asChild])
+  }, [rootContext?.descriptionId?.value, rootContext?.titleId?.value, asChild])
 
   useLayoutEffect(() => {
     if (!ref.current || rootContext?.open?.value === false) {
@@ -189,10 +208,12 @@ export const Container: Kaioken.FC<ContainerProps> = ({
   }
 
   const Comp = asChild ? Slot : "dialog"
-  return rootContext.open.value ? (
-    <Comp {...props} {...featureAttrs} ref={ref as any}>
-      {props.children}
-    </Comp>
+  return props.forceMount || rootContext.open.value ? (
+    <KeyboardStack.Root __dev="Dialog">
+      <Comp {...props} {...featureAttrs} ref={ref as any}>
+        {props.children}
+      </Comp>
+    </KeyboardStack.Root>
   ) : null
 }
 Container.displayName = "Dialog.Container"
@@ -203,6 +224,7 @@ Container.displayName = "Dialog.Container"
 
 type ContentProps = ElementProps<"p"> & {
   asChild?: boolean
+  disableInteractOutside?: boolean
 }
 
 export const Content: Kaioken.FC<ContentProps> = ({ asChild, ...props }) => {
@@ -214,9 +236,15 @@ export const Content: Kaioken.FC<ContentProps> = ({ asChild, ...props }) => {
       return
     }
 
-    rootContext?.onKeyDownEscape?.bind(window)?.(e)
-    if (e.defaultPrevented) return
+    e.preventDefault()
+  })
 
+  useAwareKeyDown("Escape", (e) => {
+    if (!rootContext || rootContext.open.value === false) {
+      return
+    }
+
+    rootContext?.onKeyDownEscape?.bind(window)?.(e)
     rootContext.open.value = false
   })
 
@@ -228,7 +256,7 @@ export const Content: Kaioken.FC<ContentProps> = ({ asChild, ...props }) => {
       }
 
       rootContext?.onInteractOutside?.bind(window)?.(e)
-      if (e.defaultPrevented) return
+      if (props.disableInteractOutside) return
 
       rootContext.open.value = false
     },
