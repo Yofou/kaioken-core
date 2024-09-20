@@ -13,8 +13,8 @@ import { useMouse, useElementByPoint } from "@kaioken-core/hooks"
 const { mouse } = useMouse()
 // ---cut---
 const { element } = useElementByPoint({
-  x: mouse.x,
-  y: mouse.y,
+  x: mouse.value.x,
+  y: mouse.value.y,
   multiple: false,
   immediate: true,
 })

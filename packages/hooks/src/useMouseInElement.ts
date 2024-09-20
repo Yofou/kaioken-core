@@ -28,8 +28,8 @@ export const useMouseInElement = (
     setElementWidth(width)
     setElementHeight(height)
 
-    const elX = mouse.x - tempElementPositionX
-    const elY = mouse.y - tempElementPositionY
+    const elX = mouse.value.x - tempElementPositionX
+    const elY = mouse.value.y - tempElementPositionY
 
     const tempIsOutside =
       width === 0 ||
@@ -44,7 +44,7 @@ export const useMouseInElement = (
       setElementX(elX)
       setElementY(elY)
     }
-  }, [target.current, mouse.x, mouse.y])
+  }, [target.current, mouse.value.x, mouse.value.y])
 
   useEventListener(
     "mouseleave",
@@ -57,8 +57,8 @@ export const useMouseInElement = (
   )
 
   return {
-    x: mouse.x,
-    y: mouse.y,
+    x: mouse.value.x,
+    y: mouse.value.y,
     elementX,
     elementY,
     elementPositionX,

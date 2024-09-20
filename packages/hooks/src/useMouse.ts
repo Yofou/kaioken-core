@@ -1,26 +1,26 @@
-import { useState } from "kaioken"
+import { signal } from "kaioken"
 import { useEventListener } from "./useEventListener"
 
 export const useMouse = () => {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
-  const [delta, setDelta] = useState({ x: 0, y: 0 })
-  const [client, setClient] = useState({ x: 0, y: 0 })
+  const mouse = signal({ x: 0, y: 0 })
+  const delta = signal({ x: 0, y: 0 })
+  const client = signal({ x: 0, y: 0 })
 
   useEventListener("mousemove", (event) => {
-    setMouse({
+    mouse.value = {
       x: event.x,
       y: event.y,
-    })
+    }
 
-    setDelta({
+    delta.value = {
       x: event.movementX,
       y: event.movementY,
-    })
+    }
 
-    setClient({
+    client.value = {
       x: event.clientX,
       y: event.clientY,
-    })
+    }
   })
 
   return { mouse, delta, client }
