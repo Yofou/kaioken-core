@@ -10,7 +10,9 @@ function Page() {
           className={
             "w-6 h-6 border border-red-500 rounded-sm grid place-content-center"
           }
-        ></Checkbox.Indicator>
+        >
+          X
+        </Checkbox.Indicator>
         Boop
       </Checkbox.Item>
     </>
