@@ -33,6 +33,7 @@
     "vite-plugin-dts": "^3.7.3"
   },
   "dependencies": {
+    "@kaioken-core/hooks": "file:",
     "vite-plugin-kaioken": "^0.10.7"
   }
 }
