@@ -8,8 +8,8 @@ import { useEffect, useRef } from "kaioken"
 export const UseElementByPointExample: Kaioken.FC = () => {
   const { mouse } = useMouse()
   const { element } = useElementByPoint({
-    x: mouse.x,
-    y: mouse.y,
+    x: mouse.value.x,
+    y: mouse.value.y,
     multiple: false,
     immediate: true,
   })
@@ -24,7 +24,7 @@ export const UseElementByPointExample: Kaioken.FC = () => {
     <>
       <div
         className="bg-red -translate-x-1/2 -translate-y-1/2 w-[20px] h-[20px] pointer-events-none z-10 rounded-full fixed"
-        style={{ top: `${mouse.y}px`, left: `${mouse.x}px` }}
+        style={{ top: `${mouse.value.y}px`, left: `${mouse.value.x}px` }}
       />
 
       <div
