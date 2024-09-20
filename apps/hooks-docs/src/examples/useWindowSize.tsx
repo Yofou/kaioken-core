@@ -7,7 +7,7 @@ export const UseWindowSizeExample = () => {
     <DemoContainer className="p-4 font-cabin flex gap-2 flex-col">
       <p>Resize your window</p>
       <p>
-        Width: {width}px, Height: {height}px
+        Width: {width.value}px, Height: {height.value}px
       </p>
     </DemoContainer>
   )
