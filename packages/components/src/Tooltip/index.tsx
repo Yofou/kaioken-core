@@ -23,6 +23,9 @@ const TooltipContext = createContext<{
   tooltipRef: Kaioken.MutableRefObject<number | null>
   disableEsc: boolean
 } | null>(null)
+TooltipContext.displayName = "Tooltip.Context"
+
+export { TooltipContext as Context }
 
 type RootProps = Floating.RootProps & {
   open?: Signal<boolean>

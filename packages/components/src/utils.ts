@@ -13,7 +13,7 @@ export const KeyboardContext = createContext<{
   __dev?: string
 } | null>(null)
 type KeyboardParams = Parameters<typeof useKeyDown>
-KeyboardContext.displayName = "KeyboardContext"
+KeyboardContext.displayName = "Keyboard.Context"
 
 export const keyboardStack = signal([] as string[])
 
