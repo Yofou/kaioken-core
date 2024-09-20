@@ -1,4 +1,4 @@
-import { useEffect, useState } from "kaioken"
+import { useEffect, signal, computed } from "kaioken"
 import { useMouse } from "./useMouse"
 import { useEventListener } from "./useEventListener"
 
@@ -6,13 +6,13 @@ export const useMouseInElement = (
   target: Kaioken.MutableRefObject<HTMLElement | null>
 ) => {
   const { mouse } = useMouse()
-  const [elementX, setElementX] = useState(0)
-  const [elementY, setElementY] = useState(0)
-  const [elementPositionX, setElementPositionX] = useState(0)
-  const [elementPositionY, setElementPositionY] = useState(0)
-  const [elementWidth, setElementWidth] = useState(0)
-  const [elementHeight, setElementHeight] = useState(0)
-  const [isOutside, setIsOutside] = useState(true)
+  const elementX = signal(0)
+  const elementY = signal(0)
+  const elementPositionX = signal(0)
+  const elementPositionY = signal(0)
+  const elementWidth = signal(0)
+  const elementHeight = signal(0)
+  const isOutside = signal(true)
 
   useEffect(() => {
     const el = target.current
@@ -23,10 +23,10 @@ export const useMouseInElement = (
     const tempElementPositionX = left + window.scrollX
     const tempElementPositionY = top + window.scrollY
 
-    setElementPositionX(tempElementPositionX)
-    setElementPositionY(tempElementPositionY)
-    setElementWidth(width)
-    setElementHeight(height)
+    elementPositionX.value = tempElementPositionX
+    elementPositionY.value = tempElementPositionY
+    elementWidth.value = width
+    elementHeight.value = height
 
     const elX = mouse.value.x - tempElementPositionX
     const elY = mouse.value.y - tempElementPositionY
@@ -38,18 +38,18 @@ export const useMouseInElement = (
       elY < 0 ||
       elX > width ||
       elY > height
-    setIsOutside(tempIsOutside)
+    isOutside.value = tempIsOutside
 
     if (!tempIsOutside) {
-      setElementX(elX)
-      setElementY(elY)
+      elementX.value = elX
+      elementY.value = elY
     }
   }, [target.current, mouse.value.x, mouse.value.y])
 
   useEventListener(
     "mouseleave",
     () => {
-      setIsOutside(true)
+      isOutside.value = true
     },
     {
       ref: () => document,
@@ -57,8 +57,8 @@ export const useMouseInElement = (
   )
 
   return {
-    x: mouse.value.x,
-    y: mouse.value.y,
+    x: computed(() => mouse.value.x),
+    y: computed(() => mouse.value.y),
     elementX,
     elementY,
     elementPositionX,

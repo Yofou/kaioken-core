@@ -16,7 +16,7 @@
     }
   },
   "scripts": {
-    "dev": "tsc && sleep 2 && vite build --watch",
+    "dev": "tsc && vite build --watch",
     "build": "tsc && vite build"
   },
   "peerDependencies": {

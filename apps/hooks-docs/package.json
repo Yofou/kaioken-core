@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "sleep 5 && tsx ./src/server.ts",
+    "dev": "tsx ./src/server.ts",
     "build": "vite build",
     "preview": "set NODE_ENV=production&& tsx ./src/server.ts"
   },

@@ -26,7 +26,8 @@ export const useGlowAngle = <T extends HTMLElement>(duration = 500) => {
   const angle = useTweenMemo(
     () => {
       const newAngle =
-        Math.atan2(mouse.value.y - asideY, mouse.value.x - asideX) * (180 / Math.PI)
+        Math.atan2(mouse.value.y - asideY, mouse.value.x - asideX) *
+        (180 / Math.PI)
 
       if (!oldAngle.current) {
         oldAngle.current = newAngle
