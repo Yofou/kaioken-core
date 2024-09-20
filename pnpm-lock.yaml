@@ -84,8 +84,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       kaioken:
-        specifier: 0.29.0
-        version: 0.29.0
+        specifier: 0.29.5
+        version: 0.29.5
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
@@ -143,7 +143,7 @@ importers:
         version: 5.5.4
       vite-plugin-kaioken:
         specifier: 0.10.7
-        version: 0.10.7(kaioken@0.29.0)
+        version: 0.10.7(kaioken@0.29.5)
 
   packages/components:
     dependencies:
@@ -2448,12 +2448,6 @@ packages:
     resolution:
       {
         integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==,
-      }
-
-  kaioken@0.29.0:
-    resolution:
-      {
-        integrity: sha512-hZw7Jv1w66zCEudCZ56HgA7sbU+bi9UIvgxXeBVvRuOlGJZe70/tYCTgnmaBGuqU/Nq3lFB5VcXFkH2AF6uDVg==,
       }
 
   kaioken@0.29.5:
@@ -5295,8 +5289,6 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  kaioken@0.29.0: {}
-
   kaioken@0.29.5: {}
 
   kolorist@1.8.0: {}
@@ -6386,10 +6378,6 @@ snapshots:
       - "@types/node"
       - rollup
       - supports-color
-
-  vite-plugin-kaioken@0.10.7(kaioken@0.29.0):
-    dependencies:
-      kaioken: 0.29.0
 
   vite-plugin-kaioken@0.10.7(kaioken@0.29.5):
     dependencies:
