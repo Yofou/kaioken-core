@@ -15,7 +15,7 @@ import * as KeyboardStack from "../KeyboardStack"
 
 ///////////////////
 // Dialog Root
-//////////////////
+///////////////////
 type RootProps = {
   open?: Kaioken.Signal<boolean>
   onInteractOutside?: ElementProps<"div">["onclick"]
@@ -29,6 +29,7 @@ const RootContext = createContext<{
   onInteractOutside?: ElementProps<"div">["onclick"]
   onKeyDownEscape?: ElementProps<"div">["onkeydown"]
 } | null>(null)
+RootContext.displayName = "Dialog.Context"
 
 export const Root: Kaioken.FC<RootProps> = (props) => {
   const _open = signal(false)

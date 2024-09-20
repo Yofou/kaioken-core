@@ -23,8 +23,8 @@ importers:
         specifier: ^4.19.2
         version: 4.19.2
       kaioken:
-        specifier: 0.29.0
-        version: 0.29.0
+        specifier: 0.29.5
+        version: 0.29.5
       tsx:
         specifier: ^4.16.5
         version: 4.19.0
@@ -61,7 +61,7 @@ importers:
         version: 5.5.4
       vite-plugin-kaioken:
         specifier: 0.10.7
-        version: 0.10.7(kaioken@0.29.0)
+        version: 0.10.7(kaioken@0.29.5)
 
   apps/hooks-docs:
     dependencies:
@@ -152,14 +152,14 @@ importers:
         version: 1.6.10
       vite-plugin-kaioken:
         specifier: ^0.10.7
-        version: 0.10.7(kaioken@0.29.0)
+        version: 0.10.7(kaioken@0.29.5)
     devDependencies:
       "@kaioken-core/hooks":
         specifier: workspace:^
         version: link:../hooks
       kaioken:
-        specifier: 0.29.0
-        version: 0.29.0
+        specifier: 0.29.5
+        version: 0.29.5
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
@@ -174,11 +174,11 @@ importers:
     dependencies:
       vite-plugin-kaioken:
         specifier: ^0.10.7
-        version: 0.10.7(kaioken@0.29.0)
+        version: 0.10.7(kaioken@0.29.5)
     devDependencies:
       kaioken:
-        specifier: 0.29.0
-        version: 0.29.0
+        specifier: 0.29.5
+        version: 0.29.5
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
@@ -2454,6 +2454,12 @@ packages:
     resolution:
       {
         integrity: sha512-hZw7Jv1w66zCEudCZ56HgA7sbU+bi9UIvgxXeBVvRuOlGJZe70/tYCTgnmaBGuqU/Nq3lFB5VcXFkH2AF6uDVg==,
+      }
+
+  kaioken@0.29.5:
+    resolution:
+      {
+        integrity: sha512-9fjwq5FdXT4QEI5Tn355lbuvdECmPIVjfCJKiS7GpYmFhwEbC4EPyXgP14HLhmSjGIwuWog3akkuwdNWXkKbpQ==,
       }
 
   kolorist@1.8.0:
@@ -5291,6 +5297,8 @@ snapshots:
 
   kaioken@0.29.0: {}
 
+  kaioken@0.29.5: {}
+
   kolorist@1.8.0: {}
 
   lilconfig@2.1.0: {}
@@ -6382,6 +6390,10 @@ snapshots:
   vite-plugin-kaioken@0.10.7(kaioken@0.29.0):
     dependencies:
       kaioken: 0.29.0
+
+  vite-plugin-kaioken@0.10.7(kaioken@0.29.5):
+    dependencies:
+      kaioken: 0.29.5
 
   vite-plugin-sitemap@0.7.1: {}
 

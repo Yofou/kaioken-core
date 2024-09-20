@@ -1,5 +1,5 @@
-import { Dialog, Tooltip } from "@kaioken-core/components"
-import { computed, signal } from "kaioken"
+import { Dialog, Tooltip, RadioGroup } from "@kaioken-core/components"
+import { signal } from "kaioken"
 
 export { Page }
 
@@ -22,25 +22,35 @@ const TestTooltip = () => {
 }
 
 function Page() {
-  const zindex = signal(100)
-  const styles = zindex.map((i) => `z-index: ${i}`)
-  const onClick = () => {
-    zindex.value += 1
-  }
-  console.log("redefined")
+  const radioValue = signal("hello")
+  const dialogValue = signal(true)
   return (
-    <Dialog.Root>
-      <Dialog.Trigger>Open Dialog {styles}</Dialog.Trigger>
+    <Dialog.Root open={dialogValue}>
+      <Dialog.Trigger>Open Dialog</Dialog.Trigger>
+      <TestTooltip />
 
-      <Dialog.Container
-        className="m-0 w-full flex justify-center items-start p-10 bg-transparent max-w-[unset] h-full max-h-[unset]"
-        style={styles}
-      >
+      <Dialog.Container className="m-0 w-full open:flex justify-center items-start p-10 bg-transparent max-w-[unset] h-full max-h-[unset]">
         <Dialog.Content className="max-w-[500px] flex flex-col text-black w-screen p-8 bg-white rounded-xl">
-          <button onclick={onClick}>1</button>
-          <button>2</button>
-          <button>3</button>
-          <TestTooltip />
+          <RadioGroup.Root
+            loop={false}
+            value={radioValue}
+            className={
+              "flex flex-col focus:outline focus-within:outline-1 focus-within:outline-red-500"
+            }
+          >
+            <RadioGroup.Item className={"group"} value="hello">
+              <p className={"group-has-[input[checked]]:bg-red-500"}>Boop</p>
+            </RadioGroup.Item>
+            <RadioGroup.Item id={"testing"} value="world1" asChild>
+              <label className={"[input:checked+&]:bg-red-500"}>Boop</label>
+            </RadioGroup.Item>
+            <RadioGroup.Item value="world2" required>
+              <p className={"[input:checked+&]:bg-red-500"}>Boop</p>
+            </RadioGroup.Item>
+            <RadioGroup.Item value="world3" required>
+              <p className={"[input:checked+&]:bg-red-500"}>Boop</p>
+            </RadioGroup.Item>
+          </RadioGroup.Root>
         </Dialog.Content>
       </Dialog.Container>
     </Dialog.Root>

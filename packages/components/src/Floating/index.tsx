@@ -54,6 +54,7 @@ export const FloatingContext = createContext<{
   collisionPadding: number
   disablePopover: boolean
 } | null>(null)
+FloatingContext.displayName = "Floating.Context"
 
 export const Root: Kaioken.FC<RootProps> = (props) => {
   const anchorRef = useRef<HTMLElement>(null)
