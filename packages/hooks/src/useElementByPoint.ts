@@ -1,4 +1,4 @@
-import { signal, Signal } from 'kaioken';
+import { signal, Signal } from "kaioken"
 import { useRafFn } from "./useRafFn"
 
 type useElementByPointOptions<M extends boolean = false> = {
@@ -22,11 +22,9 @@ export const useElementByPoint = <M extends boolean = false>(
 
   const element = signal<any>(null)
   const cb = () => {
-    element.value =(
-      multiple
-        ? (document.elementsFromPoint(x, y) ?? [])
-        : (document.elementFromPoint(x, y) ?? null)
-    )
+    element.value = multiple
+      ? (document.elementsFromPoint(x, y) ?? [])
+      : (document.elementFromPoint(x, y) ?? null)
   }
 
   const controls = useRafFn(cb, { immediate })
