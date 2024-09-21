@@ -11,7 +11,7 @@ type InputProps<T extends string | number | undefined> = {
   min?: ElementProps<"input">["min"]
   max?: ElementProps<"input">["max"]
   pattern?: ElementProps<"input">["pattern"]
-  inputmode?: ElementProps<"input">["inputmode"]
+  inputmode?: ElementProps<"input">["inputMode"]
   placeholder?: string
 }
 
