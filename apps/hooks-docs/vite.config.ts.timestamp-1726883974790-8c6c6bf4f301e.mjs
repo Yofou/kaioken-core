@@ -2,7 +2,7 @@
 import path from "node:path"
 import { defineConfig } from "file:///Users/nathanewen/github/kaioken-core/node_modules/.pnpm/vite@5.3.5_@types+node@20.14.12/node_modules/vite/dist/node/index.js"
 import ssr from "file:///Users/nathanewen/github/kaioken-core/node_modules/.pnpm/vike@0.4.181_vite@5.3.5_@types+node@20.14.12_/node_modules/vike/dist/esm/node/plugin/index.js"
-import kaioken from "file:///Users/nathanewen/github/kaioken-core/node_modules/.pnpm/vite-plugin-kaioken@0.10.4_kaioken@0.28.4/node_modules/vite-plugin-kaioken/dist/index.js"
+import kaioken from "file:///Users/nathanewen/github/kaioken-core/node_modules/.pnpm/vite-plugin-kaioken@0.10.7_kaioken@0.29.5/node_modules/vite-plugin-kaioken/dist/index.js"
 import mdx from "file:///Users/nathanewen/github/kaioken-core/node_modules/.pnpm/@mdx-js+rollup@3.0.1_rollup@4.19.0/node_modules/@mdx-js/rollup/index.js"
 import shiki from "file:///Users/nathanewen/github/kaioken-core/node_modules/.pnpm/@shikijs+rehype@1.12.1/node_modules/@shikijs/rehype/dist/index.mjs"
 import {
