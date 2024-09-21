@@ -6,8 +6,8 @@ export const useWindowScroll = (behavior: ScrollBehavior = "auto") => {
   const y = signal(0)
 
   const update = () => {
-    x.value =  window.scrollX 
-    y.value = window.scrollY 
+    x.value = window.scrollX
+    y.value = window.scrollY
   }
 
   useEffect(update, [])
