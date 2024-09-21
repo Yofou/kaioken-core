@@ -19,7 +19,6 @@ export const useCurrentElement = <T extends Element>() => {
   const elm = signal<T | undefined>(undefined)
   if (!sideEffectsEnabled()) return elm
 
-
   return useHook("useCurrentElement", {}, ({ vNode, queueEffect }) => {
     queueEffect(() => {
       elm.value = findMountedDomRecursive<T>(vNode.child)
