@@ -3,7 +3,7 @@ import { useCurrentElement } from "@kaioken-core/hooks"
 
 export const UseCurrentElementExample: Kaioken.FC = () => {
   const currentElm = useCurrentElement()
-  console.log("current element", currentElm?.value)
+  console.log("current element", currentElm!.peek())
 
   return (
     <DemoContainer className="p-4 font-cabin flex gap-4 flex-col">
