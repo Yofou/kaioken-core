@@ -5,12 +5,14 @@ import {
   Signal,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
 } from "kaioken"
 import { Slot } from "../Slot"
 import { styleObjectToCss } from "kaioken/utils"
+import { GroupContext } from "./group"
 
-const ItemContext = createContext<{
+export const ItemContext = createContext<{
   checked: Signal<boolean>
 } | null>(null)
 ItemContext.displayName = "Checkbox.ItemContext"
@@ -23,9 +25,10 @@ type ItemProps = ElementProps<"label"> & {
   checked?: Signal<boolean>
   asChild?: boolean
   name?: string
+  value?: string
 }
 export const Item: Kaioken.FC<ItemProps> = (props) => {
-  const { asChild, name, checked: propChecked, ...rest } = props
+  const { asChild, name, value, checked: propChecked, ...rest } = props
   const internalChecked = signal(false)
   const checked = propChecked ?? internalChecked
   const inputStyles = useMemo(() => {
@@ -54,8 +57,37 @@ export const Item: Kaioken.FC<ItemProps> = (props) => {
       checked,
     }
   }, [])
+  const groupContext = useContext(GroupContext, false)
 
   const Comp = asChild ? Slot : "label"
+
+  // @TODO: make effect in kaioken and use that instead
+  useEffect(() => {
+    if (!groupContext || value == null) return
+
+    if (checked.value && !groupContext.group.value.includes(value)) {
+      groupContext.group.value.push(value)
+      groupContext.group.notify()
+    } else {
+      const index = groupContext.group.value.findIndex((item) => item === value)
+      if (index != -1) {
+        groupContext.group.value.splice(index, 1)
+        groupContext.group.notify()
+      }
+    }
+  }, [checked.value, groupContext])
+
+  useEffect(() => {
+    return () => {
+      if (!groupContext || value == null) return
+
+      const index = groupContext.group.value.findIndex((item) => item === value)
+      if (index != -1) {
+        groupContext.group.value.splice(index, 1)
+        groupContext.group.notify()
+      }
+    }
+  }, [])
 
   return (
     <ItemContext.Provider value={checkboxItemContext}>
@@ -64,6 +96,7 @@ export const Item: Kaioken.FC<ItemProps> = (props) => {
           type="checkbox"
           style={inputStyles}
           name={name}
+          value={value}
           oninput={onInput}
           checked={checked}
         />

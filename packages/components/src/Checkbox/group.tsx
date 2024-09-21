@@ -1,6 +1,8 @@
 import { createContext, Signal, useMemo } from "kaioken"
 
-export const GroupContext = createContext<{} | null>(null)
+export const GroupContext = createContext<{
+  group: Signal<string[]>
+} | null>(null)
 GroupContext.displayName = "CheckboxGroup.Context"
 
 ///////////////////
@@ -11,8 +13,15 @@ type RootProps = {
   checked: Signal<string[]>
 }
 export const Root: Kaioken.FC<RootProps> = (props) => {
-  const contextValue = useMemo(() => {}, [])
+  const contextValue = useMemo(() => {
+    return {
+      group: props.checked,
+    }
+  }, [props.checked])
+
   return (
-    <GroupContext.Provider value={{}}>{props.children}</GroupContext.Provider>
+    <GroupContext.Provider value={contextValue}>
+      {props.children}
+    </GroupContext.Provider>
   )
 }
