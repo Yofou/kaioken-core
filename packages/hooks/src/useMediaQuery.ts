@@ -1,12 +1,12 @@
-import { signal, useEffect, useState } from "kaioken"
+import { signal, useEffect } from "kaioken"
 
 export const useMediaQuery = (query: string) => {
   const isSupported = signal(false)
-  const [matches, setMatches] = useState(false)
+  const matches = signal(false)
   let mediaQuery: MediaQueryList | undefined
 
   const handler = (event: MediaQueryListEvent) => {
-    setMatches(event.matches)
+    matches.value = event.matches
   }
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const useMediaQuery = (query: string) => {
     // @ts-expect-error deprecated API
     else mediaQuery.addListener(handler)
 
-    setMatches(mediaQuery.matches)
+    matches.value = mediaQuery.matches
 
     return cleanup
   }, [query])

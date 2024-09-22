@@ -18,7 +18,7 @@ export const useWindowSize = (listenOrientation: boolean = true) => {
 
   if (listenOrientation) {
     const [matches] = useMediaQuery("(orientation: portrait)")
-    useEffect(update, [matches])
+    useEffect(update, [matches.value])
   }
 
   return { width, height }
