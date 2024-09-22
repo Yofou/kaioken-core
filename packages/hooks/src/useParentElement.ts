@@ -21,12 +21,15 @@ export const findMountedDomRecursive = <T extends Element>(
 }
 
 export const useParentElement = <T extends Element>() => {
-  if (!sideEffectsEnabled()) return
-
   const elm = signal<T | undefined>(undefined)
+  if (!sideEffectsEnabled()) return elm
+
   return useHook("useParentElement", {}, ({ vNode, queueEffect }) => {
     queueEffect(() => {
-      elm.value = findParentElm<T>(vNode)
+      const newElm = findParentElm<T>(vNode)
+      if (newElm != elm.value) {
+        elm.value = newElm
+      }
     })
     return elm
   })

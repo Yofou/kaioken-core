@@ -20,14 +20,14 @@ export const useElementBounding = (
   const windowResize = options?.windowResize ?? true
   const immediate = options.immediate ?? true
 
-  const width= signal(0)
-  const height= signal(0)
+  const width = signal(0)
+  const height = signal(0)
   const top = signal(0)
   const right = signal(0)
   const bottom = signal(0)
   const left = signal(0)
   const x = signal(0)
-  const y =signal(0)
+  const y = signal(0)
 
   const update = () => {
     const el = ref.current

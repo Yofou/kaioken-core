@@ -23,7 +23,10 @@ export const UseElementVisibilityExample: Kaioken.FC = () => {
             <p className="text-center">
               Text no longer visible{" "}
               <span
-                className={twMerge("text-red", isVisible.value && "text-[lime]")}
+                className={twMerge(
+                  "text-red",
+                  isVisible.value && "text-[lime]"
+                )}
               >{`${isVisible.value}`}</span>
             </p>
           </DemoContainer>
