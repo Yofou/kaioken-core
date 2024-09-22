@@ -1,18 +1,5 @@
-import { Signal } from "kaioken"
 import { styleObjectToCss } from "kaioken/utils"
-
-const setPolyRef = (
-  ref: Kaioken.Signal<any> | Kaioken.MutableRefObject<any>,
-  value: Element
-) => {
-  if (Signal.isSignal(ref)) {
-    ref.sneak(value)
-  } else if (ref instanceof Function) {
-    ref(value)
-  } else if (ref && "current" in ref) {
-    ref.current = value
-  }
-}
+import { setPolyRef } from "../utils"
 
 const styleStringToObject = (value: string | null | undefined) => {
   if (!value) return {}
