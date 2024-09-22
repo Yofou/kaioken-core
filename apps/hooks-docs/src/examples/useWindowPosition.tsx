@@ -7,7 +7,7 @@ export const UseWindowPositionExample = () => {
     <DemoContainer className="p-4 font-cabin flex gap-2 flex-col">
       <p>Move your window around</p>
       <p>
-        X: {screenX}, Y: {screenY}
+        X: {screenX.value}, Y: {screenY.value}
       </p>
     </DemoContainer>
   )
