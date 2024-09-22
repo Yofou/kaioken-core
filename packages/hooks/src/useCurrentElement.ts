@@ -21,7 +21,10 @@ export const useCurrentElement = <T extends Element>() => {
 
   return useHook("useCurrentElement", {}, ({ vNode, queueEffect }) => {
     queueEffect(() => {
-      elm.value = findMountedDomRecursive<T>(vNode.child)
+      const newElm = findMountedDomRecursive<T>(vNode.child)
+      if (newElm != elm.value) {
+        elm.value = newElm
+      }
     })
     return elm
   })
