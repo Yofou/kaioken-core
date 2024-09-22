@@ -1,4 +1,4 @@
-import { useState } from "kaioken"
+import { signal, Signal } from "kaioken"
 import { useRafFn } from "./useRafFn"
 
 type useElementByPointOptions<M extends boolean = false> = {
@@ -9,7 +9,7 @@ type useElementByPointOptions<M extends boolean = false> = {
 }
 
 type UseElementByPointReturn<M extends boolean = false> = {
-  element: M extends true ? HTMLElement[] : HTMLElement | null
+  element: M extends true ? Signal<HTMLElement[]> : Signal<HTMLElement | null>
   start: () => void
   stop: () => void
   isActive: boolean
@@ -20,13 +20,11 @@ export const useElementByPoint = <M extends boolean = false>(
 ) => {
   const { x, y, multiple, immediate = true } = options
 
-  const [element, setElement] = useState<any>(null)
+  const element = signal<any>(null)
   const cb = () => {
-    setElement(
-      multiple
-        ? (document.elementsFromPoint(x, y) ?? [])
-        : (document.elementFromPoint(x, y) ?? null)
-    )
+    element.value = multiple
+      ? (document.elementsFromPoint(x, y) ?? [])
+      : (document.elementFromPoint(x, y) ?? null)
   }
 
   const controls = useRafFn(cb, { immediate })

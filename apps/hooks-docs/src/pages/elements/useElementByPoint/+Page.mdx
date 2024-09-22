@@ -10,6 +10,7 @@ Reactive elementByPoint
 
 ```tsx twoslash
 import { useMouse, useElementByPoint } from "@kaioken-core/hooks"
+import { Signal } from "kaioken"
 const { mouse } = useMouse()
 // ---cut---
 const { element } = useElementByPoint({
@@ -20,7 +21,7 @@ const { element } = useElementByPoint({
 })
 
 type UseElementByPointReturn<M extends boolean = false> = {
-  element: M extends true ? HTMLElement[] : HTMLElement | null
+  element: M extends true ? Signal<HTMLElement[]> : Signal<HTMLElement | null>
   start: () => void
   stop: () => void
   isActive: boolean
