@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "kaioken"
+import { useLayoutEffect, signal } from "kaioken"
 import { useEventListener } from "./useEventListener"
 import { useResizeObserver } from "./useResizeObserver"
 import { useMutationObserver } from "./useMutationObserver"
@@ -8,17 +8,6 @@ type UseElementBoundingOptions = {
   windowResize?: boolean
   immediate?: boolean
 }
-
-const getDefault = () => ({
-  width: 0,
-  height: 0,
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  x: 0,
-  y: 0,
-})
 
 export const useElementBounding = (
   ref: Kaioken.MutableRefObject<Element | null>,
@@ -31,18 +20,39 @@ export const useElementBounding = (
   const windowResize = options?.windowResize ?? true
   const immediate = options.immediate ?? true
 
-  const [bounding, setBounding] = useState(getDefault)
+  const width = signal(0)
+  const height = signal(0)
+  const top = signal(0)
+  const right = signal(0)
+  const bottom = signal(0)
+  const left = signal(0)
+  const x = signal(0)
+  const y = signal(0)
 
   const update = () => {
     const el = ref.current
 
     if (!el) {
-      setBounding(getDefault())
+      width.value = 0
+      height.value = 0
+      top.value = 0
+      right.value = 0
+      bottom.value = 0
+      left.value = 0
+      x.value = 0
+      y.value = 0
       return
     }
 
     const bounding = el.getBoundingClientRect()
-    setBounding(bounding.toJSON())
+    width.value = bounding.width
+    height.value = bounding.height
+    top.value = bounding.top
+    right.value = bounding.right
+    bottom.value = bounding.bottom
+    left.value = bounding.left
+    x.value = bounding.x
+    y.value = bounding.y
   }
 
   useResizeObserver(ref, update)
@@ -77,7 +87,14 @@ export const useElementBounding = (
   }, [])
 
   return {
-    ...bounding,
+    width,
+    height,
+    top,
+    right,
+    bottom,
+    left,
+    x,
+    y,
     update,
   }
 }

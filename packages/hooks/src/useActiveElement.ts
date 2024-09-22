@@ -1,4 +1,4 @@
-import { useEffect, useState } from "kaioken"
+import { signal, useEffect } from "kaioken"
 import { useEventListener } from "./useEventListener"
 
 type ActiveElementOptions = {
@@ -7,7 +7,7 @@ type ActiveElementOptions = {
 
 export const useActiveElement = (options: ActiveElementOptions = {}) => {
   const deep = options.deep ?? true
-  const [activeElement, setActiveElement] = useState<Element | null>(null)
+  const activeElement = signal<Element | null>(null)
 
   const getDeepActiveElement = () => {
     let element = document?.activeElement
@@ -18,7 +18,7 @@ export const useActiveElement = (options: ActiveElementOptions = {}) => {
   }
 
   const update = () => {
-    setActiveElement(getDeepActiveElement())
+    activeElement.value = getDeepActiveElement()
   }
 
   useEventListener("focus", update, {
