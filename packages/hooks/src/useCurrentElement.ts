@@ -1,4 +1,4 @@
-import { sideEffectsEnabled, useHook, useState } from "kaioken"
+import { sideEffectsEnabled, signal, useHook } from "kaioken"
 
 export const findMountedDomRecursive = <T extends Element>(
   vNode?: Kaioken.VNode
@@ -16,13 +16,15 @@ export const findMountedDomRecursive = <T extends Element>(
 }
 
 export const useCurrentElement = <T extends Element>() => {
-  if (!sideEffectsEnabled()) return
-
-  const [elm, setElm] = useState<T | undefined>(undefined)
+  const elm = signal<T | undefined>(undefined)
+  if (!sideEffectsEnabled()) return elm
 
   return useHook("useCurrentElement", {}, ({ vNode, queueEffect }) => {
     queueEffect(() => {
-      setElm(findMountedDomRecursive<T>(vNode.child))
+      const newElm = findMountedDomRecursive<T>(vNode.child)
+      if (newElm != elm.value) {
+        elm.value = newElm
+      }
     })
     return elm
   })
