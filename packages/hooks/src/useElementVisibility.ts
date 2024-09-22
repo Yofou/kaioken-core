@@ -1,8 +1,8 @@
-import { useRef, useState } from "kaioken"
+import { useRef, signal } from "kaioken"
 import { useIntersectionObserver } from "./useIntersectionObserver"
 
 export const useElementVisibility = <T extends Element = Element>() => {
-  const [isVisible, setIsVisible] = useState(false)
+  const isVisible = signal(false)
   const ref = useRef<T | null>(null)
 
   useIntersectionObserver(ref, (items) => {
@@ -16,7 +16,7 @@ export const useElementVisibility = <T extends Element = Element>() => {
       }
     })
 
-    setIsVisible(isIntersecting)
+    isVisible.value = isIntersecting
   })
 
   return [ref, isVisible] as const
