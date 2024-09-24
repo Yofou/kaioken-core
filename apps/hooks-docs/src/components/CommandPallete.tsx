@@ -128,7 +128,8 @@ export const CommandPalette: Kaioken.FC<{
 
   return (
     isClient && (
-      <Dialog.Container>
+      <Dialog.Container
+      >
         <div
           className="w-full h-screen fixed top-0 left-0 text-white z-30 flex justify-center p-12 items-start bg-black/50"
           ariaLabel={"Escape to close"}
