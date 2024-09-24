@@ -10,6 +10,7 @@ import { MoveDown } from "$/icons/MoveDown"
 import { CornerDownLeft } from "$/icons/CornerLeft"
 import { Github } from "$/icons/Github"
 import { Discord } from "$/icons/Discord"
+import { Dialog } from "@kaioken-core/components"
 
 const keyboardList = signal(
   new Map<
@@ -127,7 +128,7 @@ export const CommandPalette: Kaioken.FC<{
 
   return (
     isClient && (
-      <Portal container={document.body}>
+      <Dialog.Container>
         <div
           className="w-full h-screen fixed top-0 left-0 text-white z-30 flex justify-center p-12 items-start bg-black/50"
           ariaLabel={"Escape to close"}
@@ -176,7 +177,7 @@ export const CommandPalette: Kaioken.FC<{
             </div>
           </DemoContainer>
         </div>
-      </Portal>
+      </Dialog.Container>
     )
   )
 }

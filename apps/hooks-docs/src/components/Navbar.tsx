@@ -6,6 +6,7 @@ import { CMD } from "$/icons/Cmd"
 import { Github } from "$/icons/Github"
 import { Discord } from "$/icons/Discord"
 import { Hamburger } from "$/icons/Hamburger"
+import { Dialog } from "@kaioken-core/components"
 
 export function Navbar() {
   const pageCtx = usePageContext() as any
@@ -34,6 +35,7 @@ export function Navbar() {
   }, [pageCtx.urlPathname])
 
   return (
+    <Dialog.Root open={showCommandPalette}>
     <nav className="col-span-full text-white relative bg-glass-red rounded-xl">
       <div className="flex justify-between items-center h-[81px] md:h-[97px] w-full gap-4 rounded-xl p-4 border-b border-black/50">
         <a
@@ -43,9 +45,8 @@ export function Navbar() {
           <img className="w-[32px] h-[32px]" src="/kaioken-hook.svg" alt="" />
           <span className="">Kaioken-Core/Hooks</span>
         </a>
-
+        <Dialog.Trigger asChild>
         <button
-          onclick={() => (showCommandPalette.value = true)}
           className="bg-grey-900 p-2 w-full max-w-[500px] items-center text-left hidden md:flex justify-between font-cabin border border-white/30 h-max rounded-md"
         >
           Search
@@ -53,6 +54,7 @@ export function Navbar() {
             <CMD /> + K
           </span>
         </button>
+        </Dialog.Trigger>
         {showCommandPalette.value && <CommandPalette container={container} />}
 
         <div className="hidden md:flex gap-4">
@@ -74,5 +76,6 @@ export function Navbar() {
         </button>
       </div>
     </nav>
+    </Dialog.Root>
   )
 }
