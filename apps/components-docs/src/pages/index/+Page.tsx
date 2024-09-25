@@ -1,5 +1,4 @@
 import { ContextMenu, Dialog } from "@kaioken-core/components"
-import { signal } from "kaioken"
 
 export { Page }
 
@@ -14,13 +13,15 @@ const TestContextMenu = () => {
         <p>Trigger me</p>
       </ContextMenu.Trigger>
 
-      <ContextMenu.Content
-        className={"w-[300px] h-[500px] backdrop:hidden flex flex-col gap-2"}
-      >
-        <button>button 1</button>
-        <button>button 2</button>
-        <button>button 3</button>
-      </ContextMenu.Content>
+      <ContextMenu.Container className={"backdrop:hidden"}>
+        <ContextMenu.Content
+          className={"w-[300px] h-[500px] p-10 flex flex-col gap-2"}
+        >
+          <button>button 1</button>
+          <button>button 2</button>
+          <button>button 3</button>
+        </ContextMenu.Content>
+      </ContextMenu.Container>
     </ContextMenu.Root>
   )
 }

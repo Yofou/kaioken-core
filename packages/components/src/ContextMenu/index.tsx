@@ -9,6 +9,7 @@ import {
 } from "kaioken"
 import { Slot } from "../Slot"
 import { Dialog } from "../../lib/main"
+import { computePosition, flip, shift } from "@floating-ui/dom"
 
 export const RootContext = createContext<{
   open: Signal<boolean>
@@ -87,7 +88,7 @@ Trigger.displayName = "ContextMenu.Trigger"
 type ContentProps = ElementProps<"div"> & {
   asChild?: boolean
 }
-export const Content: Kaioken.FC<ContentProps> = (props) => {
+export const Container: Kaioken.FC<ContentProps> = (props) => {
   const { asChild, ...rest } = props
   const Component = asChild ? Slot : Dialog.Container
   const rootContext = useContext(RootContext)
@@ -95,11 +96,30 @@ export const Content: Kaioken.FC<ContentProps> = (props) => {
     if (!rootContext || rootContext.coords.value == null) return
     if (el) {
       // mount
-      el.style.setProperty("margin", "0")
-      el.style.setProperty("top", `${rootContext.coords.value.y}px`)
-      el.style.setProperty("left", `${rootContext.coords.value.x}px`)
-    } else {
-      // unmount
+
+      const referenceEl = {
+        getBoundingClientRect() {
+          return {
+            x: 0,
+            y: 0,
+            top: rootContext.coords.value?.y ?? 0,
+            left: rootContext.coords.value?.x ?? 0,
+            bottom: 0,
+            right: 0,
+            width: 1,
+            height: 1,
+          }
+        },
+      }
+      computePosition(referenceEl, el, {
+        placement: "bottom-start",
+        strategy: "fixed",
+        middleware: [flip(), shift()],
+      }).then((result) => {
+        el.style.setProperty("margin", "0")
+        el.style.setProperty("top", `${result.y}px`)
+        el.style.setProperty("left", `${result.x}px`)
+      })
     }
   }
 
@@ -112,8 +132,11 @@ export const Content: Kaioken.FC<ContentProps> = (props) => {
 
   return (
     <Component {...rest} asChild={asChild ? asChild : undefined} ref={onRef}>
-      <Dialog.Content asChild={asChild}>{props.children}</Dialog.Content>
+      {props.children}
     </Component>
   )
 }
+Container.displayName = "ContextMenu.Container"
+
+export const Content: typeof Dialog.Content = Dialog.Content.bind({})
 Content.displayName = "ContextMenu.Content"
