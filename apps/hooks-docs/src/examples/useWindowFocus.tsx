@@ -12,9 +12,9 @@ export const UseWindowFocusExample = () => {
         <span
           className={twMerge(
             "text-red font-semibold",
-            isFocused && "text-[lime]"
+            isFocused.value && "text-[lime]"
           )}
-        >{`${isFocused}`}</span>
+        >{`${isFocused.value}`}</span>
       </p>
     </DemoContainer>
   )

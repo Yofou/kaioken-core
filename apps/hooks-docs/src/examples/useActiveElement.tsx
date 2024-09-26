@@ -6,9 +6,9 @@ import { sideEffectsEnabled, useMemo } from "kaioken"
 export const UseActiveElementExample: Kaioken.FC = () => {
   const node = useActiveElement()
   const content = useMemo(() => {
-    if (sideEffectsEnabled() && node === document.body) return null
-    return node?.textContent
-  }, [node])
+    if (sideEffectsEnabled() && node.value === document.body) return null
+    return node.value?.textContent
+  }, [node.value])
   return (
     <DemoContainer className="p-4 font-cabin flex gap-4 flex-col">
       <p>{content ?? "Nothing is focused."}</p>

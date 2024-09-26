@@ -11,14 +11,14 @@ export const useGlowAngle = <T extends HTMLElement>(duration = 500) => {
   const asideBounding = useElementBounding(ref)
   const [asideX, asideY] = useMemo(() => {
     return [
-      asideBounding.width / 2 + asideBounding.left,
-      asideBounding.height / 2 + asideBounding.top,
+      asideBounding.width.value / 2 + asideBounding.left.value,
+      asideBounding.height.value / 2 + asideBounding.top.value,
     ] as const
   }, [
-    asideBounding.top,
-    asideBounding.left,
-    asideBounding.width,
-    asideBounding.height,
+    asideBounding.top.value,
+    asideBounding.left.value,
+    asideBounding.width.value,
+    asideBounding.height.value,
   ])
   const { mouse } = useMouse()
 

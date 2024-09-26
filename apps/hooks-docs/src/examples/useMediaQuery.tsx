@@ -6,8 +6,8 @@ export const UseMediaQueryExample = () => {
   const [prefersLightMode] = useMediaQuery("(prefers-color-scheme: light)")
   return (
     <DemoContainer className="p-4 font-cabin flex-col">
-      <p>is larger than or equal to 684px: {`${isLargerThanPixels}`}</p>
-      <p>prefersLight: {`${prefersLightMode}`}</p>
+      <p>is larger than or equal to 684px: {`${isLargerThanPixels.value}`}</p>
+      <p>prefersLight: {`${prefersLightMode.value}`}</p>
     </DemoContainer>
   )
 }

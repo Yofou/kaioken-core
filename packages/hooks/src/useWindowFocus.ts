@@ -1,19 +1,19 @@
-import { useEffect, useState } from "kaioken"
+import { useEffect, signal } from "kaioken"
 import { useEventListener } from "./useEventListener"
 
 export const useWindowFocus = () => {
-  const [focused, setFocused] = useState(false)
+  const focused = signal(false)
 
   useEffect(() => {
-    setFocused(window.document.hasFocus())
+    focused.value = window.document.hasFocus()
   }, [])
 
   useEventListener("focus", () => {
-    setFocused(true)
+    focused.value = true
   })
 
   useEventListener("blur", () => {
-    setFocused(false)
+    focused.value = false
   })
 
   return [focused]

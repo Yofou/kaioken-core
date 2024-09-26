@@ -27,8 +27,8 @@ importers:
         specifier: ^4.19.2
         version: 4.19.2
       kaioken:
-        specifier: 0.29.5
-        version: 0.29.5
+        specifier: 0.30.2
+        version: 0.30.2
       tsx:
         specifier: ^4.16.5
         version: 4.19.0
@@ -64,8 +64,8 @@ importers:
         specifier: ^5.5.4
         version: 5.5.4
       vite-plugin-kaioken:
-        specifier: 0.10.7
-        version: 0.10.7(kaioken@0.29.5)
+        specifier: 0.12.0
+        version: 0.12.0(kaioken@0.30.2)
 
   apps/hooks-docs:
     dependencies:
@@ -88,8 +88,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       kaioken:
-        specifier: 0.29.5
-        version: 0.29.5
+        specifier: 0.30.2
+        version: 0.30.2
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
@@ -146,8 +146,8 @@ importers:
         specifier: ^5.5.3
         version: 5.5.4
       vite-plugin-kaioken:
-        specifier: 0.10.7
-        version: 0.10.7(kaioken@0.29.5)
+        specifier: 0.12.0
+        version: 0.12.0(kaioken@0.30.2)
 
   packages/components:
     dependencies:
@@ -158,15 +158,15 @@ importers:
         specifier: ^1.6.10
         version: 1.6.10
       vite-plugin-kaioken:
-        specifier: ^0.10.7
-        version: 0.10.7(kaioken@0.29.5)
+        specifier: ^0.12.0
+        version: 0.12.0(kaioken@0.30.2)
     devDependencies:
       "@kaioken-core/hooks":
         specifier: workspace:^
         version: link:../hooks
       kaioken:
-        specifier: 0.29.5
-        version: 0.29.5
+        specifier: 0.30.2
+        version: 0.30.2
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
@@ -180,12 +180,12 @@ importers:
   packages/hooks:
     dependencies:
       vite-plugin-kaioken:
-        specifier: ^0.10.7
-        version: 0.10.7(kaioken@0.29.5)
+        specifier: ^0.12.0
+        version: 0.12.0(kaioken@0.30.2)
     devDependencies:
       kaioken:
-        specifier: 0.29.5
-        version: 0.29.5
+        specifier: 0.30.2
+        version: 0.30.2
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
@@ -2476,10 +2476,10 @@ packages:
         integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==,
       }
 
-  kaioken@0.29.5:
+  kaioken@0.30.2:
     resolution:
       {
-        integrity: sha512-9fjwq5FdXT4QEI5Tn355lbuvdECmPIVjfCJKiS7GpYmFhwEbC4EPyXgP14HLhmSjGIwuWog3akkuwdNWXkKbpQ==,
+        integrity: sha512-vfTNBo/H7jjKcH+nvEFz9uqOWzPs6LyR7AWN3jheevo3ILdkmpOlqmziE8XJgciu3jLH//I0HBYgM16EOENjag==,
       }
 
   kolorist@1.8.0:
@@ -3938,13 +3938,13 @@ packages:
       vite:
         optional: true
 
-  vite-plugin-kaioken@0.10.7:
+  vite-plugin-kaioken@0.12.0:
     resolution:
       {
-        integrity: sha512-IyhNkERzoVlqrmXIAzYvXLALdWyLVNDqGi+UyTuwy9sifUWlRSEX88rK4yDGE4tWQiO9AkRLTVBwgoZKtD7ePQ==,
+        integrity: sha512-rSq+DYvbSh7rPI6EiqhfrRg0yr+punCu9SoOSMP3RenWCDK2KlIF3tALKp4VBdjzEUufLdVlHon2hcTVvLnGSw==,
       }
     peerDependencies:
-      kaioken: ">=0.28.4"
+      kaioken: ">=0.30.1"
 
   vite-plugin-sitemap@0.7.1:
     resolution:
@@ -5370,7 +5370,7 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  kaioken@0.29.5: {}
+  kaioken@0.30.2: {}
 
   kolorist@1.8.0: {}
 
@@ -6491,9 +6491,9 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-kaioken@0.10.7(kaioken@0.29.5):
+  vite-plugin-kaioken@0.12.0(kaioken@0.30.2):
     dependencies:
-      kaioken: 0.29.5
+      kaioken: 0.30.2
 
   vite-plugin-sitemap@0.7.1: {}
 

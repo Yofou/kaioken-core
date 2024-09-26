@@ -17,8 +17,8 @@ export const UseElementByPointExample: Kaioken.FC = () => {
   const boundRef = useRef<null | Element>(null)
   const bounding = useElementBounding(boundRef)
   useEffect(() => {
-    boundRef.current = element
-  }, [element])
+    boundRef.current = element.value
+  }, [element.value])
 
   return (
     <>
@@ -30,9 +30,9 @@ export const UseElementByPointExample: Kaioken.FC = () => {
       <div
         className="bg-red/50 fixed pointer-events-none transition-all ease-linear duration-75 z-10 top-0 left-0"
         style={{
-          width: `${bounding?.width}px`,
-          height: `${bounding?.height}px`,
-          transform: `translate(${bounding.x}px, ${bounding.y}px)`,
+          width: `${bounding?.width.value}px`,
+          height: `${bounding?.height.value}px`,
+          transform: `translate(${bounding.x.value}px, ${bounding.y.value}px)`,
         }}
       />
     </>
