@@ -95,8 +95,6 @@ export const Container: Kaioken.FC<ContentProps> = (props) => {
   const onRef = (el: HTMLDialogElement | null) => {
     if (!rootContext || rootContext.coords.value == null) return
     if (el) {
-      // mount
-
       const referenceEl = {
         getBoundingClientRect() {
           return {
