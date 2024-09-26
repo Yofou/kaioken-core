@@ -13,11 +13,6 @@ export function Navbar() {
   const container = useRef<HTMLDivElement>(null)
   const showCommandPalette = signal(false)
 
-  useKeyDown(["Escape"], () => {
-    if (showCommandPalette.value) {
-      showCommandPalette.value = false
-    }
-  })
 
   useKeyDown(["k"], (e) => {
     e.preventDefault()
@@ -26,9 +21,7 @@ export function Navbar() {
     }
   })
 
-  useClickOutside(container, () => {
-    showCommandPalette.value = false
-  })
+
 
   useEffect(() => {
     showCommandPalette.value = false
