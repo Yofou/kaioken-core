@@ -128,50 +128,56 @@ export const CommandPalette: Kaioken.FC<{
 
   return (
     isClient && (
-      <Dialog.Container className={`bg-black/50 w-full h-full min-h-full max-w-full`} ariaLabel={"Escape to close"} ariaLive={"polite"} >
-        <Dialog.Content className={`flex justify-center p-12 items-start text-white`}>
-            <DemoContainer ref={props.container} className="w-[750px] p-4">
-              <Input
-                ref={inputRef}
-                value={searchValue.value}
-                oninput={(e) => (searchValue.value = e.target.value)}
-                onfocus={() => (keyboardIndex.value = null)}
-                placeholder="Search to find hook"
-              />
-              <div className="w-full p-2 flex flex-col rounded-lg  mt-4 gap-4 h-[500px] md:h-[300px] overflow-y-auto mb-12">
-                {pageList.map((item) => (
-                  <CommandPaletteItem key={item.href} {...item} />
-                ))}
-              </div>
-              <div className="flex justify-end md:justify-start w-full h-[59px] bg-black bottom-0 p-4 mt-2 absolute inset-x-0 border-t border-white/20 rounded-b-xl  gap-4">
-                <span className="hidden md:flex gap-2 items-center">
-                  <CornerDownLeft /> to select
-                </span>
-                <span className="hidden md:flex gap-2 items-center">
-                  <MoveUp /> <MoveDown /> to navigate
-                </span>
-                <span className="hidden md:flex gap-2 items-center">
-                  <span className="font-semibold text-[1.1rem] uppercase">
-                    esc
-                  </span>{" "}
-                  to close
-                </span>
-                <a
-                  className="md:hidden"
-                  href="https://github.com/Yofou/kaioken-core"
-                  target="_blank"
-                >
-                  <Github />
-                </a>
-                <a
-                  className="md:hidden"
-                  href="https://discord.gg/yspvgXegvs"
-                  target="_blank"
-                >
-                  <Discord />
-                </a>
-              </div>
-            </DemoContainer>
+      <Dialog.Container
+        className={`bg-black/50 w-full h-full min-h-full max-w-full`}
+        ariaLabel={"Escape to close"}
+        ariaLive={"polite"}
+      >
+        <Dialog.Content
+          className={`flex justify-center p-12 items-start text-white`}
+        >
+          <DemoContainer ref={props.container} className="w-[750px] p-4">
+            <Input
+              ref={inputRef}
+              value={searchValue.value}
+              oninput={(e) => (searchValue.value = e.target.value)}
+              onfocus={() => (keyboardIndex.value = null)}
+              placeholder="Search to find hook"
+            />
+            <div className="w-full p-2 flex flex-col rounded-lg  mt-4 gap-4 h-[500px] md:h-[300px] overflow-y-auto mb-12">
+              {pageList.map((item) => (
+                <CommandPaletteItem key={item.href} {...item} />
+              ))}
+            </div>
+            <div className="flex justify-end md:justify-start w-full h-[59px] bg-black bottom-0 p-4 mt-2 absolute inset-x-0 border-t border-white/20 rounded-b-xl  gap-4">
+              <span className="hidden md:flex gap-2 items-center">
+                <CornerDownLeft /> to select
+              </span>
+              <span className="hidden md:flex gap-2 items-center">
+                <MoveUp /> <MoveDown /> to navigate
+              </span>
+              <span className="hidden md:flex gap-2 items-center">
+                <span className="font-semibold text-[1.1rem] uppercase">
+                  esc
+                </span>{" "}
+                to close
+              </span>
+              <a
+                className="md:hidden"
+                href="https://github.com/Yofou/kaioken-core"
+                target="_blank"
+              >
+                <Github />
+              </a>
+              <a
+                className="md:hidden"
+                href="https://discord.gg/yspvgXegvs"
+                target="_blank"
+              >
+                <Discord />
+              </a>
+            </div>
+          </DemoContainer>
         </Dialog.Content>
       </Dialog.Container>
     )

@@ -1,8 +1,8 @@
-import { UseTweenExample } from "$/examples/useTween"
+import { UseTweenExample } from "$/examples/tween"
 
-# useTween
+# tween
 
-behaves similarly to useState but instead will interpolate the value smoothly with the ability to cancel
+behaves similarly to signals but instead will interpolate the value smoothly with the ability to cancel
 
 ## Demo
 
@@ -12,19 +12,19 @@ behaves similarly to useState but instead will interpolate the value smoothly wi
 
 ```tsx
 const [duration, setDuration] = useState(500)
-const [currentValue, setCurrentValue] = useTween(0)
+const currentValue = tween(0)
 const [nextValue, setNextValue] = useState(0)
 const [hasFinished, setHasFinished] = useState(false)
 const onUpdateValue = async () => {
   setHasFinished(false)
-  await setCurrentValue(nextValue, {
+  await currentValue.set(nextValue, {
     duration,
   })
   setHasFinished(true)
 }
 
 const onCancel = () => {
-  setCurrentValue(nextValue, {
+  currentValue.set(nextValue, {
     duration: 0,
   })
   setHasFinished(true)
@@ -34,9 +34,9 @@ const onCancel = () => {
 ## Type Declaration
 
 ```tsx twoslash
-import { useTween } from "@kaioken-core/hooks"
+import { tween } from "@kaioken-core/hooks"
 // ---cut---
-const [currentValue, setCurrentValue] = useTween(0)
+const currentValue = tween(0)
 
 interface TweenedOptions<T> {
   delay?: number
