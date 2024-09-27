@@ -1,7 +1,7 @@
 import { Button } from "$/components/Button"
 import { DemoContainer } from "$/components/DemoContainer"
 import { Input } from "$/components/Input"
-import { useSpring } from "@kaioken-core/hooks"
+import { spring } from "@kaioken-core/hooks"
 import { computed, signal, useRef } from "kaioken"
 
 export const UseSpringExample: Kaioken.FC = () => {
@@ -9,12 +9,12 @@ export const UseSpringExample: Kaioken.FC = () => {
   const damping = signal(0.8)
   const stiffness = signal(0.15)
   const precision = signal(0.01)
-  const [currentValue, setCurrentValue] = useSpring(100)
+  const currentValue = spring(100)
 
   const onUpdateValue = async () => {
     nextValue.current = nextValue.current === 100 ? 350 : 100
 
-    await setCurrentValue(nextValue.current, {
+    await currentValue.set(nextValue.current, {
       damping: damping.value,
       stiffness: stiffness.value,
       precision: precision.value,
@@ -22,7 +22,7 @@ export const UseSpringExample: Kaioken.FC = () => {
   }
 
   const onCancel = async () => {
-    await setCurrentValue(nextValue.current, {
+    await currentValue.set(nextValue.current, {
       hard: true,
     })
   }

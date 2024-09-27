@@ -1,11 +1,4 @@
-import {
-  ReadonlySignal,
-  sideEffectsEnabled,
-  Signal,
-  signal,
-  useHook,
-} from "kaioken"
-import { noop } from "kaioken/utils"
+import { sideEffectsEnabled, Signal, useHook, useVNode } from "kaioken"
 import { SpringOpts, TickContext, type Task } from "./motion/types"
 import { loop, raf } from "./motion/loop"
 import { tickSpring } from "./motion/spring"
@@ -15,125 +8,139 @@ import { tickSpring } from "./motion/spring"
   Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
 */
 
-export const useSpring = <T>(
-  initial: T,
-  opts = {} as Partial<SpringOpts>
-): [
-  ReadonlySignal<T>,
-  (value: T, opts?: Partial<SpringOpts>) => Promise<void>,
-] => {
-  const internalSignal = signal(initial)
-  if (!sideEffectsEnabled()) {
-    return [
-      internalSignal,
-      noop as any as (value: T, opts?: Partial<SpringOpts>) => Promise<void>,
-    ]
+export class SpringSignal<T> extends Signal<T> {
+  lastTime: number | undefined
+  task: Task | undefined
+  currentToken: object | undefined
+  lastValue: T
+  targetValue: T
+  invMass: number
+  invMassRecoveryRate: number
+  cancelTask: boolean
+  options: Partial<SpringOpts>
+
+  constructor(initial: T, options?: Partial<SpringOpts>, displayName?: string) {
+    super(initial, displayName)
+
+    this.options = options ?? {}
+    ;(this.lastTime = undefined), (this.task = undefined)
+    this.currentToken = undefined
+    this.lastValue = structuredClone(initial)
+    this.targetValue = structuredClone(initial)
+    this.invMass = 1
+    this.invMassRecoveryRate = 0
+    this.cancelTask = false
   }
 
-  const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = opts
+  #setInternal(next: T) {
+    this.sneak(next)
+    this.notify()
+  }
 
-  return useHook(
-    "useSpring",
-    () => ({
-      signal: undefined as any as Signal<T>,
-      dispatch: noop as any as (
-        value: T,
-        opts?: Partial<SpringOpts>
-      ) => Promise<void>,
-      lastTime: undefined as number | undefined,
-      task: undefined as Task | undefined,
-      currentToken: undefined as object | undefined,
-      lastValue: structuredClone(initial),
-      targetValue: structuredClone(initial),
-      invMass: 1,
-      invMassRecoveryRate: 0,
-      cancelTask: false,
-    }),
-    ({ hook, isInit }) => {
-      if (isInit) {
-        hook.signal = internalSignal
-        hook.dispatch = (setter: T, opts = {} as SpringOpts) => {
-          const spring: SpringOpts = {
-            stiffness,
-            damping,
-            precision,
-            ...opts,
-          }
-
-          const newValue = setter
-
-          hook.targetValue = newValue
-          hook.currentToken = {}
-          const token = hook.currentToken
-          if (
-            newValue == null ||
-            opts.hard ||
-            (spring.stiffness >= 1 && spring.damping >= 1)
-          ) {
-            hook.cancelTask = true
-            hook.lastTime = raf.now()
-            hook.lastValue = newValue
-            hook.signal.value = hook.targetValue
-            return Promise.resolve()
-          } else if (opts.soft) {
-            const rate = opts.soft === true ? 0.5 : +opts.soft
-            hook.invMassRecoveryRate = 1 / (rate * 60)
-            hook.invMass = 0 // infinite mass, unaffected by spring forces
-          }
-
-          if (!hook.task) {
-            hook.lastTime = raf.now()
-            hook.cancelTask = false
-
-            hook.task = loop((now) => {
-              if (hook.cancelTask) {
-                hook.cancelTask = false
-                hook.task = undefined
-                return false
-              }
-              hook.invMass = Math.min(
-                hook.invMass + hook.invMassRecoveryRate,
-                1
-              )
-              const ctx: TickContext = {
-                inv_mass: hook.invMass,
-                opts: spring,
-                settled: true,
-                dt: ((now - (hook.lastTime ?? raf.now())) * 60) / 1000,
-              }
-              const nextValue = tickSpring(
-                ctx,
-                hook.lastValue,
-                hook.signal.value,
-                hook.targetValue
-              )
-              hook.lastTime = now
-              hook.lastValue = hook.signal.value
-              hook.signal.value = nextValue
-              if (ctx.settled) {
-                hook.task = undefined
-              }
-              return !ctx.settled
-            })
-          }
-
-          return new Promise((fulfil) => {
-            hook.task?.promise.then(() => {
-              if (token === hook.currentToken) fulfil(undefined)
-            })
-          })
-        }
-        hook.cleanup = () => {
-          if (hook.task) {
-            hook.task.abort()
-          }
-        }
-      }
-
-      return [hook.signal, hook.dispatch] as [
-        ReadonlySignal<T>,
-        (value: T, opts?: Partial<SpringOpts>) => Promise<void>,
-      ]
+  set(next: T, opts = {} as Partial<SpringOpts>) {
+    const spring: SpringOpts = {
+      stiffness: this.options.stiffness ?? 0.15,
+      damping: this.options.damping ?? 0.8,
+      precision: this.options.precision ?? 0.01,
+      ...opts,
     }
-  )
+
+    const newValue = next
+
+    this.targetValue = newValue
+    this.currentToken = {}
+    const token = this.currentToken
+    if (
+      newValue == null ||
+      opts.hard ||
+      (spring.stiffness >= 1 && spring.damping >= 1)
+    ) {
+      this.cancelTask = true
+      this.lastTime = raf.now()
+      this.lastValue = newValue
+      this.#setInternal(this.targetValue)
+      return Promise.resolve()
+    } else if (opts.soft) {
+      const rate = opts.soft === true ? 0.5 : +opts.soft
+      this.invMassRecoveryRate = 1 / (rate * 60)
+      this.invMass = 0 // infinite mass, unaffected by spring forces
+    }
+
+    if (!this.task) {
+      this.lastTime = raf.now()
+      this.cancelTask = false
+
+      this.task = loop((now) => {
+        if (this.cancelTask) {
+          this.cancelTask = false
+          this.task = undefined
+          return false
+        }
+        this.invMass = Math.min(this.invMass + this.invMassRecoveryRate, 1)
+        const ctx: TickContext = {
+          inv_mass: this.invMass,
+          opts: spring,
+          settled: true,
+          dt: ((now - (this.lastTime ?? raf.now())) * 60) / 1000,
+        }
+        const nextValue = tickSpring(
+          ctx,
+          this.lastValue,
+          this.value,
+          this.targetValue
+        )
+        this.lastTime = now
+        this.lastValue = this.value
+
+        this.#setInternal(nextValue)
+        if (ctx.settled) {
+          this.task = undefined
+        }
+        return !ctx.settled
+      })
+    }
+
+    return new Promise((fulfil) => {
+      this.task?.promise.then(() => {
+        if (token === this.currentToken) fulfil(undefined)
+      })
+    })
+  }
+}
+
+export const spring = <T>(
+  initial: T,
+  options?: Partial<SpringOpts>,
+  displayName?: string
+) => {
+  const internalSignal = new SpringSignal(initial, options, displayName)
+  if (!sideEffectsEnabled()) {
+    return internalSignal
+  }
+
+  try {
+    useVNode()
+    return useHook(
+      "useSpring",
+      {
+        signal: undefined as any as SpringSignal<T>,
+      },
+      ({ hook, isInit }) => {
+        if (isInit) {
+          hook.signal = internalSignal
+          hook.cleanup = () => {
+            if (hook.signal.task) {
+              hook.signal.task.abort()
+            }
+
+            SpringSignal.subscribers(hook.signal).clear()
+          }
+        }
+
+        return hook.signal
+      }
+    )
+  } catch {
+    return internalSignal
+  }
 }
