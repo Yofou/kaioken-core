@@ -42,7 +42,7 @@ export function Navbar() {
               </span>
             </button>
           </Dialog.Trigger>
-          {showCommandPalette.value && <CommandPalette />}
+           <CommandPalette />
 
           <div className="hidden md:flex gap-4">
             <a href="https://github.com/Yofou/kaioken-core" target="_blank">
