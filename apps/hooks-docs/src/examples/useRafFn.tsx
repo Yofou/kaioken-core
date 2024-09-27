@@ -1,15 +1,15 @@
 import { Button } from "$/components/Button"
 import { DemoContainer } from "$/components/DemoContainer"
 import { useRafFn } from "@kaioken-core/hooks"
-import { useState } from "kaioken"
+import { computed, signal } from "kaioken"
 
 export const UseRafFnExample: Kaioken.FC = () => {
-  const [count, setCount] = useState(0)
-  const [delta, setDelta] = useState(0)
+  const count = signal(0)
+  const delta = signal(0)
   const controls = useRafFn(
-    ({ delta }) => {
-      setCount(($count) => $count + 1)
-      setDelta(delta)
+    ({ delta: _delta }) => {
+      count.value += 1
+      delta.value = _delta
     },
     {
       fpsLimit: 60,
@@ -17,10 +17,14 @@ export const UseRafFnExample: Kaioken.FC = () => {
     }
   )
 
+  const roundedDelta = computed(() => {
+    return Math.round(delta.value)
+  })
+
   return (
     <DemoContainer className="p-4 font-cabin flex gap-4 flex-col">
       <p>Frames: {count}</p>
-      <p>Delta: {Math.round(delta)}ms</p>
+      <p>Delta: {roundedDelta}ms</p>
       <p>FPS: 60</p>
       <p>isPaused: {`${!controls.isActive}`}</p>
       <div className="flex gap-4">

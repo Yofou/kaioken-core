@@ -156,9 +156,9 @@ export const Pages = new Map([
     },
   ],
   [
-    "/animations/useSpring",
+    "/animations/spring",
     {
-      name: "useSpring",
+      name: "spring",
     },
   ],
   [
