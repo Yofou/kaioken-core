@@ -23,7 +23,8 @@ export class SpringSignal<T> extends Signal<T> {
     super(initial, displayName)
 
     this.options = options ?? {}
-    ;(this.lastTime = undefined), (this.task = undefined)
+    this.lastTime = undefined
+    this.task = undefined
     this.currentToken = undefined
     this.lastValue = structuredClone(initial)
     this.targetValue = structuredClone(initial)
