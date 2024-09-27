@@ -1,6 +1,6 @@
 import { signal, useEffect, useRef } from "kaioken"
 import { CommandPalette } from "./CommandPallete"
-import { useClickOutside, useKeyDown } from "@kaioken-core/hooks"
+import { useKeyDown } from "@kaioken-core/hooks"
 import { usePageContext } from "$/context/pageContext"
 import { CMD } from "$/icons/Cmd"
 import { Github } from "$/icons/Github"
@@ -10,7 +10,6 @@ import { Dialog } from "@kaioken-core/components"
 
 export function Navbar() {
   const pageCtx = usePageContext() as any
-  const container = useRef<HTMLDivElement>(null)
   const showCommandPalette = signal(false)
 
   useKeyDown(["k"], (e) => {
@@ -43,7 +42,7 @@ export function Navbar() {
               </span>
             </button>
           </Dialog.Trigger>
-          {showCommandPalette.value && <CommandPalette container={container} />}
+          {showCommandPalette.value && <CommandPalette />}
 
           <div className="hidden md:flex gap-4">
             <a href="https://github.com/Yofou/kaioken-core" target="_blank">
