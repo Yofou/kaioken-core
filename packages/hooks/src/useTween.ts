@@ -1,11 +1,4 @@
-import {
-  sideEffectsEnabled,
-  useHook,
-  ReadonlySignal,
-  signal,
-  Signal,
-} from "kaioken"
-import { noop } from "kaioken/utils"
+import { sideEffectsEnabled, useHook, Signal, useVNode } from "kaioken"
 import { getInterpolator } from "./motion/utils"
 import { Task, TweenedOptions } from "./motion/types"
 import { loop, raf } from "./motion/loop"
@@ -18,100 +11,115 @@ import { linear } from "../lib/easing"
 
 /** TODO: Make a PR in kaioken to export makeReadonly */
 
-export const useTween = <T>(
-  initial: T,
-  defaults = {} as TweenedOptions<T>
-): [
-  ReadonlySignal<T>,
-  (value: T, options?: TweenedOptions<T>) => Promise<void>,
-] => {
-  const internalSignal = signal(initial)
-  if (!sideEffectsEnabled()) {
-    return [internalSignal, noop as () => Promise<void>]
+class TweenSignal<T> extends Signal<T> {
+  task: Task | undefined
+  defaults: TweenedOptions<T>
+
+  constructor(initial: T, options?: TweenedOptions<T>, displayName?: string) {
+    super(initial, displayName)
+
+    this.task = undefined
+    this.defaults = options ?? {}
   }
 
-  return useHook(
-    "useTween",
-    {
-      signal: undefined as any as Signal<T>,
-      dispatch: noop as any as (
-        value: T,
-        options?: TweenedOptions<T>
-      ) => Promise<void>,
-      task: undefined as Task | undefined,
-      targetValue: undefined as T,
-    },
-    ({ hook, isInit }) => {
-      if (isInit) {
-        hook.signal = internalSignal
-        hook.dispatch = (setter: T, options = {} as TweenedOptions<T>) => {
-          const newState = setter
-          hook.targetValue = newState
+  #setInternal(next: T) {
+    this.sneak(next)
+    this.notify()
+  }
 
-          if (newState == null) {
-            hook.signal.value = newState
-            return Promise.resolve()
-          }
+  set(next: T, options = {} as TweenedOptions<T>) {
+    const newState = next
 
-          let previousTask = hook.task
+    if (newState == null) {
+      this.#setInternal(newState)
+      return Promise.resolve()
+    }
 
-          let started = false
-          let {
-            delay = 0,
-            duration = 400,
-            easing = linear,
-            interpolate = getInterpolator,
-          } = { ...defaults, ...options }
+    let previousTask = this.task
 
-          if (duration === 0) {
-            if (previousTask) {
-              previousTask.abort()
-              previousTask = undefined
-            }
+    let started = false
+    let {
+      delay = 0,
+      duration = 400,
+      easing = linear,
+      interpolate = getInterpolator,
+    } = { ...this.defaults, ...options }
 
-            hook.signal.value = newState
-            return Promise.resolve()
-          }
-
-          const start = raf.now() + delay
-          let fn: (t: number) => T
-          hook.task = loop((now) => {
-            if (now < start) return true
-            if (!started) {
-              fn = interpolate(hook.signal.value, newState)
-              if (typeof duration === "function") {
-                duration = duration(hook.signal.value, newState)
-              }
-              started = true
-            }
-            if (previousTask) {
-              previousTask.abort()
-              previousTask = undefined
-            }
-            const elapsed = now - start
-            if (elapsed > (duration as number)) {
-              hook.signal.value = newState
-              return false
-            }
-
-            hook.signal.value = fn(easing(elapsed / (duration as number)))
-            return true
-          })
-
-          return hook.task.promise
-        }
-
-        hook.cleanup = () => {
-          if (hook.task) {
-            hook.task.abort()
-          }
-        }
+    if (duration === 0) {
+      if (previousTask) {
+        previousTask.abort()
+        previousTask = undefined
       }
 
-      return [hook.signal, hook.dispatch] as [
-        ReadonlySignal<T>,
-        (value: T, options?: TweenedOptions<T>) => Promise<void>,
-      ]
+      this.#setInternal(newState)
+      return Promise.resolve()
     }
-  )
+
+    const start = raf.now() + delay
+    let fn: (t: number) => T
+    this.task = loop((now) => {
+      if (now < start) return true
+      if (!started) {
+        fn = interpolate(this.value, newState)
+        if (typeof duration === "function") {
+          duration = duration(this.value, newState)
+        }
+        started = true
+      }
+      if (previousTask) {
+        previousTask.abort()
+        previousTask = undefined
+      }
+      const elapsed = now - start
+      if (elapsed > (duration as number)) {
+        this.#setInternal(newState)
+        return false
+      }
+
+      this.#setInternal(fn(easing(elapsed / (duration as number))))
+      this.notify()
+      return true
+    })
+
+    return this.task.promise
+  }
+}
+
+export const tween = <T>(
+  initial: T,
+  defaults = {} as TweenedOptions<T>,
+  displayName?: string
+): TweenSignal<T> => {
+  const internalSignal = new TweenSignal(initial, defaults, displayName)
+  if (!sideEffectsEnabled()) {
+    return internalSignal
+  }
+
+  try {
+    // This will throw an exception if we're not in a kaioken component context "environment"
+    // Thanks moose :))
+    useVNode()
+    return useHook(
+      "useTween",
+      {
+        signal: undefined as any as TweenSignal<T>,
+      },
+      ({ hook, isInit }) => {
+        if (isInit) {
+          hook.signal = internalSignal
+          hook.cleanup = () => {
+            if (hook.signal.task) {
+              hook.signal.task.abort()
+            }
+
+            TweenSignal.subscribers(hook.signal).clear()
+          }
+        }
+
+        return hook.signal
+      }
+    )
+  } catch {
+    return internalSignal
+  }
 }

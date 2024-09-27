@@ -1,5 +1,5 @@
-import { useTween } from "@kaioken-core/hooks"
-import { computed, signal, useMemo, useState } from "kaioken"
+import { tween } from "@kaioken-core/hooks"
+import { computed, signal } from "kaioken"
 import * as easingFunctions from "@kaioken-core/hooks/easing"
 import { DemoContainer } from "$/components/DemoContainer"
 import { Input } from "$/components/Input"
@@ -7,22 +7,23 @@ import { Button } from "$/components/Button"
 
 export const UseTweenExample: Kaioken.FC = () => {
   const duration = signal(500)
-  const [currentValue, setCurrentValue] = useTween(0)
   const nextValue = signal(0)
+
+  const currentValue = tween(0)
   const easing = signal("linear")
   const easingFunc = computed(() => {
     return easingFunctions[easing.value]
   })
 
   const onUpdateValue = async () => {
-    await setCurrentValue(nextValue.value, {
+    await currentValue.set(nextValue.value, {
       duration: duration.value,
       easing: easingFunc.value,
     })
   }
 
   const onCancel = () => {
-    setCurrentValue(nextValue.value, {
+    currentValue.set(nextValue.value, {
       duration: 0,
     })
   }
