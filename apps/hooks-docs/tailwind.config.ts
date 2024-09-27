@@ -34,9 +34,9 @@ export default {
     plugins(({ addUtilities }) => {
       addUtilities({
         ".bg-glass": {
-          background: `rgba( 0, 0, 0, 0.05 )`,
-          "backdrop-filter": "blur( 20px )",
-          "-webkit-backdrop-filter": "blur( 20px )",
+          background: `rgba( 0, 0, 0, 0.01 )`,
+          "backdrop-filter": "blur( 12px )",
+          "-webkit-backdrop-filter": "blur( 12px )",
           border: "1px solid rgba( 255, 255, 255, 0.18 )",
         },
         ".bg-glass-red": {
