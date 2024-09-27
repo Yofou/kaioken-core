@@ -20,7 +20,7 @@ import { useParentElement } from "../src/useParentElement"
 import { useActiveElement } from "../src/useActiveElement"
 import { useCurrentElement } from "../src/useCurrentElement"
 import { useElementVisibility } from "../src/useElementVisibility"
-import { useTween } from "../src/useTween"
+import { tween } from "../src/useTween"
 import { useTweenMemo } from "../src/useTweenMemo"
 import { useSpring } from "../src/useSpring"
 import { useSpringMemo } from "../src/useSpringMemo"
@@ -53,7 +53,7 @@ export {
   useActiveElement,
   useCurrentElement,
   useElementVisibility,
-  useTween,
+  tween,
   useTweenMemo,
   useSpring,
   useSpringMemo,
