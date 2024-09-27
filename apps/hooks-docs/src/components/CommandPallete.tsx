@@ -1,5 +1,4 @@
-import { usePageContext } from "$/context/pageContext"
-import { Portal, signal, useEffect, useMemo, useRef } from "kaioken"
+import { signal, useEffect, useMemo, useRef } from "kaioken"
 import { DemoContainer } from "./DemoContainer"
 import { Input } from "./Input"
 import { useKeyDown, useStartTyping } from "@kaioken-core/hooks"
@@ -10,6 +9,7 @@ import { MoveDown } from "$/icons/MoveDown"
 import { CornerDownLeft } from "$/icons/CornerLeft"
 import { Github } from "$/icons/Github"
 import { Discord } from "$/icons/Discord"
+import { Dialog } from "@kaioken-core/components"
 
 const keyboardList = signal(
   new Map<
@@ -52,10 +52,7 @@ export const CommandPaletteItem: Kaioken.FC<{ name: string; href: string }> = (
   )
 }
 
-export const CommandPalette: Kaioken.FC<{
-  container: Kaioken.Ref<HTMLDivElement>
-}> = (props) => {
-  const { isClient } = usePageContext()
+export const CommandPalette: Kaioken.FC = () => {
   const searchValue = signal("")
   const inputRef = useRef<HTMLInputElement | null>(null)
   const pageList = useMemo(() => {
@@ -126,57 +123,53 @@ export const CommandPalette: Kaioken.FC<{
   }, [keyboardIndex.value, ...keyboardList.value.keys()])
 
   return (
-    isClient && (
-      <Portal container={document.body}>
-        <div
-          className="w-full h-screen fixed top-0 left-0 text-white z-30 flex justify-center p-12 items-start bg-black/50"
-          ariaLabel={"Escape to close"}
-          ariaLive={"polite"}
-        >
-          <DemoContainer ref={props.container} className="w-[750px] p-4">
-            <Input
-              ref={inputRef}
-              value={searchValue.value}
-              oninput={(e) => (searchValue.value = e.target.value)}
-              onfocus={() => (keyboardIndex.value = null)}
-              placeholder="Search to find hook"
-            />
-            <div className="w-full p-2 flex flex-col rounded-lg  mt-4 gap-4 h-[500px] md:h-[300px] overflow-y-auto mb-12">
-              {pageList.map((item) => (
-                <CommandPaletteItem key={item.href} {...item} />
-              ))}
-            </div>
-            <div className="flex justify-end md:justify-start w-full h-[59px] bg-black bottom-0 p-4 mt-2 absolute inset-x-0 border-t border-white/20 rounded-b-xl  gap-4">
-              <span className="hidden md:flex gap-2 items-center">
-                <CornerDownLeft /> to select
-              </span>
-              <span className="hidden md:flex gap-2 items-center">
-                <MoveUp /> <MoveDown /> to navigate
-              </span>
-              <span className="hidden md:flex gap-2 items-center">
-                <span className="font-semibold text-[1.1rem] uppercase">
-                  esc
-                </span>{" "}
-                to close
-              </span>
-              <a
-                className="md:hidden"
-                href="https://github.com/Yofou/kaioken-core"
-                target="_blank"
-              >
-                <Github />
-              </a>
-              <a
-                className="md:hidden"
-                href="https://discord.gg/yspvgXegvs"
-                target="_blank"
-              >
-                <Discord />
-              </a>
-            </div>
-          </DemoContainer>
-        </div>
-      </Portal>
-    )
+    <Dialog.Container
+      className={`flex justify-center p-12 items-start text-white bg-black/50 w-full h-full min-h-full max-w-full backdrop:hidden`}
+      ariaLabel={"Escape to close"}
+      ariaLive={"polite"}
+    >
+      <Dialog.Content asChild>
+        <DemoContainer className="w-[750px] p-4">
+          <Input
+            ref={inputRef}
+            value={searchValue.value}
+            oninput={(e) => (searchValue.value = e.target.value)}
+            onfocus={() => (keyboardIndex.value = null)}
+            placeholder="Search to find hook"
+          />
+          <div className="w-full p-2 flex flex-col rounded-lg  mt-4 gap-4 h-[500px] md:h-[300px] overflow-y-auto mb-12">
+            {pageList.map((item) => (
+              <CommandPaletteItem key={item.href} {...item} />
+            ))}
+          </div>
+          <div className="flex justify-end md:justify-start w-full h-[59px] bg-black bottom-0 p-4 mt-2 absolute inset-x-0 border-t border-white/20 rounded-b-xl  gap-4">
+            <span className="hidden md:flex gap-2 items-center">
+              <CornerDownLeft /> to select
+            </span>
+            <span className="hidden md:flex gap-2 items-center">
+              <MoveUp /> <MoveDown /> to navigate
+            </span>
+            <span className="hidden md:flex gap-2 items-center">
+              <span className="font-semibold text-[1.1rem] uppercase">esc</span>{" "}
+              to close
+            </span>
+            <a
+              className="md:hidden"
+              href="https://github.com/Yofou/kaioken-core"
+              target="_blank"
+            >
+              <Github />
+            </a>
+            <a
+              className="md:hidden"
+              href="https://discord.gg/yspvgXegvs"
+              target="_blank"
+            >
+              <Discord />
+            </a>
+          </div>
+        </DemoContainer>
+      </Dialog.Content>
+    </Dialog.Container>
   )
 }

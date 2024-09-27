@@ -112,6 +112,9 @@ importers:
         specifier: ^0.7.1
         version: 0.7.1
     devDependencies:
+      "@kaioken-core/components":
+        specifier: workspace:^
+        version: link:../../packages/components
       "@kaioken-core/hooks":
         specifier: workspace:*
         version: link:../../packages/hooks

@@ -7,15 +7,17 @@ type DemoContainerProps = {
   ref?: ElementProps<"div">["ref"]
 }
 export const DemoContainer: Kaioken.FC<DemoContainerProps> = (props) => {
+  const { ref, className, ...rest } = props
   return (
     <div
-      ref={props.ref}
+      ref={ref}
       className={twMerge(
         "p-4 w-full font-cabin bg-glass-red rounded-xl relative",
-        props.className
+        className
       )}
       onmouseover={() => (disableAnimation.value = true)}
       onmouseout={() => (disableAnimation.value = false)}
+      {...rest}
     >
       {props.children}
     </div>
