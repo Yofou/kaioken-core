@@ -1,49 +1,51 @@
 import { useTween } from "@kaioken-core/hooks"
-import { useMemo, useState } from "kaioken"
+import { computed, signal, useMemo, useState } from "kaioken"
 import * as easingFunctions from "@kaioken-core/hooks/easing"
 import { DemoContainer } from "$/components/DemoContainer"
 import { Input } from "$/components/Input"
 import { Button } from "$/components/Button"
 
 export const UseTweenExample: Kaioken.FC = () => {
-  const [duration, setDuration] = useState(500)
+  const duration = signal(500)
   const [currentValue, setCurrentValue] = useTween(0)
-  const [nextValue, setNextValue] = useState(0)
-  const [easing, setEasing] = useState("linear")
-  const easingFunc = useMemo(() => {
-    return easingFunctions[easing]
-  }, [easing])
+  const nextValue = signal(0)
+  const easing = signal("linear")
+  const easingFunc = computed(() => {
+    return easingFunctions[easing.value]
+  })
 
   const onUpdateValue = async () => {
-    await setCurrentValue(nextValue, {
-      duration,
-      easing: easingFunc,
+    await setCurrentValue(nextValue.value, {
+      duration: duration.value,
+      easing: easingFunc.value,
     })
   }
 
   const onCancel = () => {
-    setCurrentValue(nextValue, {
+    setCurrentValue(nextValue.value, {
       duration: 0,
     })
   }
 
-  const deg = useMemo(() => {
-    return `-${180 - (currentValue / 5000) * 180}deg`
-  }, [currentValue])
+  const displayValue = computed(() => {
+    return Math.round((currentValue.value + Number.EPSILON) * 100) / 100
+  })
+
+  const deg = computed(() => {
+    return `rotate: -${180 - (currentValue.value / 5000) * 180}deg`
+  })
 
   return (
     <div className="relative">
       <p className="absolute top-[12.5rem] left-1/2 md:top-[250px] md:left-[700px] text-white text-center -translate-x-1/2 font-cabin text-[2rem] z-10">
-        {Math.round((currentValue + Number.EPSILON) * 100) / 100}
+        {displayValue}
       </p>
       <div className="absolute top-[10rem] scale-[0.9] left-1/2 md:top-1/2 -translate-x-1/2 -translate-y-1/2 md:translate-x-0 md:left-[500px] md:scale-150">
         <div className="wrapper overflow-hidden">
           <div className="circle-out w-[400px] h-[200px] bg-black rounded-t-[380px] border-[100px] border-[#ededed] border-b-[0] relative">
             <div
               className="circle w-[400px] h-[200px] bg-black rounded-t-[380px] border-[100px] border-b-0 border-red origin-bottom absolute z-[1] bottom-0 left-[-100px]"
-              style={{
-                rotate: deg,
-              }}
+              style={deg}
             />
           </div>
         </div>
@@ -55,7 +57,7 @@ export const UseTweenExample: Kaioken.FC = () => {
           <Input
             type="number"
             value={duration}
-            oninput={(e) => setDuration(e.target.valueAsNumber)}
+            oninput={(e) => (duration.value = e.target.valueAsNumber)}
           />
         </label>
         <label className="flex flex-col w-full md:w-[200px]">
@@ -65,7 +67,7 @@ export const UseTweenExample: Kaioken.FC = () => {
             min={0}
             max={5000}
             value={nextValue}
-            oninput={(e) => setNextValue(e.target.valueAsNumber)}
+            oninput={(e) => (nextValue.value = e.target.valueAsNumber)}
           />
         </label>
 
@@ -73,7 +75,7 @@ export const UseTweenExample: Kaioken.FC = () => {
           Next Value:
           <select
             className="h-12 w-full cursor-default rounded-md border border-gray-800 bg-[#121212] p-3.5 text-gray-100 transition-colors duration-500 placeholder:select-none placeholder:text-gray-500 focus:border-red focus:outline-none appearance-none"
-            onchange={(e) => setEasing(e.target.value)}
+            onchange={(e) => (easing.value = e.target.value)}
           >
             <option value="linear">Linear</option>
             <option value="backInOut">Back in out</option>

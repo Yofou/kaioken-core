@@ -1,4 +1,10 @@
-import { sideEffectsEnabled, useHook } from "kaioken"
+import {
+  sideEffectsEnabled,
+  useHook,
+  ReadonlySignal,
+  signal,
+  Signal,
+} from "kaioken"
 import { noop } from "kaioken/utils"
 import { getInterpolator } from "./motion/utils"
 import { Task, TweenedOptions } from "./motion/types"
@@ -10,45 +16,40 @@ import { linear } from "../lib/easing"
   Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
 */
 
+/** TODO: Make a PR in kaioken to export makeReadonly */
+
 export const useTween = <T>(
-  initial: T | (() => T),
+  initial: T,
   defaults = {} as TweenedOptions<T>
 ): [
-  T,
-  (value: Kaioken.StateSetter<T>, options?: TweenedOptions<T>) => Promise<void>,
+  ReadonlySignal<T>,
+  (value: T, options?: TweenedOptions<T>) => Promise<void>,
 ] => {
+  const internalSignal = signal(initial)
   if (!sideEffectsEnabled()) {
-    return [
-      initial instanceof Function ? initial() : initial,
-      noop as () => Promise<void>,
-    ]
+    return [internalSignal, noop as () => Promise<void>]
   }
 
   return useHook(
     "useTween",
     {
-      value: undefined as T,
+      signal: undefined as any as Signal<T>,
       dispatch: noop as any as (
-        value: Kaioken.StateSetter<T>,
+        value: T,
         options?: TweenedOptions<T>
       ) => Promise<void>,
       task: undefined as Task | undefined,
       targetValue: undefined as T,
     },
-    ({ hook, isInit, update }) => {
+    ({ hook, isInit }) => {
       if (isInit) {
-        hook.value = initial instanceof Function ? initial() : initial
-        hook.dispatch = (
-          setter: Kaioken.StateSetter<T>,
-          options = {} as TweenedOptions<T>
-        ) => {
-          const newState =
-            setter instanceof Function ? setter(hook.value) : setter
+        hook.signal = internalSignal
+        hook.dispatch = (setter: T, options = {} as TweenedOptions<T>) => {
+          const newState = setter
           hook.targetValue = newState
 
           if (newState == null) {
-            hook.value = newState
-            update()
+            hook.signal.value = newState
             return Promise.resolve()
           }
 
@@ -68,8 +69,7 @@ export const useTween = <T>(
               previousTask = undefined
             }
 
-            hook.value = newState
-            update()
+            hook.signal.value = newState
             return Promise.resolve()
           }
 
@@ -78,9 +78,9 @@ export const useTween = <T>(
           hook.task = loop((now) => {
             if (now < start) return true
             if (!started) {
-              fn = interpolate(hook.value, newState)
+              fn = interpolate(hook.signal.value, newState)
               if (typeof duration === "function") {
-                duration = duration(hook.value, newState)
+                duration = duration(hook.signal.value, newState)
               }
               started = true
             }
@@ -90,13 +90,11 @@ export const useTween = <T>(
             }
             const elapsed = now - start
             if (elapsed > (duration as number)) {
-              hook.value = newState
-              update()
+              hook.signal.value = newState
               return false
             }
 
-            hook.value = fn(easing(elapsed / (duration as number)))
-            update()
+            hook.signal.value = fn(easing(elapsed / (duration as number)))
             return true
           })
 
@@ -110,12 +108,9 @@ export const useTween = <T>(
         }
       }
 
-      return [hook.value, hook.dispatch] as [
-        T,
-        (
-          value: Kaioken.StateSetter<T>,
-          options?: TweenedOptions<T>
-        ) => Promise<void>,
+      return [hook.signal, hook.dispatch] as [
+        ReadonlySignal<T>,
+        (value: T, options?: TweenedOptions<T>) => Promise<void>,
       ]
     }
   )
