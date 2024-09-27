@@ -1,4 +1,10 @@
-import { sideEffectsEnabled, useHook } from "kaioken"
+import {
+  ReadonlySignal,
+  sideEffectsEnabled,
+  Signal,
+  signal,
+  useHook,
+} from "kaioken"
 import { noop } from "kaioken/utils"
 import { SpringOpts, TickContext, type Task } from "./motion/types"
 import { loop, raf } from "./motion/loop"
@@ -10,20 +16,17 @@ import { tickSpring } from "./motion/spring"
 */
 
 export const useSpring = <T>(
-  initial: T | (() => T),
+  initial: T,
   opts = {} as Partial<SpringOpts>
 ): [
-  T,
-  (value: Kaioken.StateSetter<T>, opts?: Partial<SpringOpts>) => Promise<void>,
+  ReadonlySignal<T>,
+  (value: T, opts?: Partial<SpringOpts>) => Promise<void>,
 ] => {
-  const value = initial instanceof Function ? initial() : initial
+  const internalSignal = signal(initial)
   if (!sideEffectsEnabled()) {
     return [
-      value,
-      noop as any as (
-        value: Kaioken.StateSetter<T>,
-        opts?: Partial<SpringOpts>
-      ) => Promise<void>,
+      internalSignal,
+      noop as any as (value: T, opts?: Partial<SpringOpts>) => Promise<void>,
     ]
   }
 
@@ -32,27 +35,24 @@ export const useSpring = <T>(
   return useHook(
     "useSpring",
     () => ({
-      value: undefined as T,
+      signal: undefined as any as Signal<T>,
       dispatch: noop as any as (
-        value: Kaioken.StateSetter<T>,
+        value: T,
         opts?: Partial<SpringOpts>
       ) => Promise<void>,
       lastTime: undefined as number | undefined,
       task: undefined as Task | undefined,
       currentToken: undefined as object | undefined,
-      lastValue: structuredClone(value),
-      targetValue: structuredClone(value),
+      lastValue: structuredClone(initial),
+      targetValue: structuredClone(initial),
       invMass: 1,
       invMassRecoveryRate: 0,
       cancelTask: false,
     }),
-    ({ hook, isInit, update }) => {
+    ({ hook, isInit }) => {
       if (isInit) {
-        hook.value = initial instanceof Function ? initial() : initial
-        hook.dispatch = (
-          setter: Kaioken.StateSetter<T>,
-          opts = {} as SpringOpts
-        ) => {
+        hook.signal = internalSignal
+        hook.dispatch = (setter: T, opts = {} as SpringOpts) => {
           const spring: SpringOpts = {
             stiffness,
             damping,
@@ -60,22 +60,20 @@ export const useSpring = <T>(
             ...opts,
           }
 
-          const newValue =
-            setter instanceof Function ? setter(hook.value) : setter
+          const newValue = setter
 
           hook.targetValue = newValue
           hook.currentToken = {}
           const token = hook.currentToken
           if (
-            value == null ||
+            newValue == null ||
             opts.hard ||
             (spring.stiffness >= 1 && spring.damping >= 1)
           ) {
             hook.cancelTask = true
             hook.lastTime = raf.now()
             hook.lastValue = newValue
-            hook.value = hook.targetValue
-            update()
+            hook.signal.value = hook.targetValue
             return Promise.resolve()
           } else if (opts.soft) {
             const rate = opts.soft === true ? 0.5 : +opts.soft
@@ -106,13 +104,12 @@ export const useSpring = <T>(
               const nextValue = tickSpring(
                 ctx,
                 hook.lastValue,
-                hook.value,
+                hook.signal.value,
                 hook.targetValue
               )
               hook.lastTime = now
-              hook.lastValue = hook.value
-              hook.value = nextValue
-              update()
+              hook.lastValue = hook.signal.value
+              hook.signal.value = nextValue
               if (ctx.settled) {
                 hook.task = undefined
               }
@@ -133,12 +130,9 @@ export const useSpring = <T>(
         }
       }
 
-      return [hook.value, hook.dispatch] as [
-        T,
-        (
-          value: Kaioken.StateSetter<T>,
-          opts?: Partial<SpringOpts>
-        ) => Promise<void>,
+      return [hook.signal, hook.dispatch] as [
+        ReadonlySignal<T>,
+        (value: T, opts?: Partial<SpringOpts>) => Promise<void>,
       ]
     }
   )
