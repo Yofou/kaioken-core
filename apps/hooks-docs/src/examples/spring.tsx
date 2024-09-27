@@ -43,7 +43,7 @@ export const UseSpringExample: Kaioken.FC = () => {
             Damping:
             <Input
               type="number"
-              value={damping.value}
+              value={damping}
               oninput={(e) => (damping.value = e.target.valueAsNumber)}
             />
           </label>
@@ -51,7 +51,7 @@ export const UseSpringExample: Kaioken.FC = () => {
             Stiffness:
             <Input
               type="number"
-              value={stiffness.value}
+              value={stiffness}
               oninput={(e) => (stiffness.value = e.target.valueAsNumber)}
             />
           </label>
@@ -59,7 +59,7 @@ export const UseSpringExample: Kaioken.FC = () => {
             Precision:
             <Input
               type="number"
-              value={precision.value}
+              value={precision}
               oninput={(e) => (precision.value = e.target.valueAsNumber)}
             />
           </label>
