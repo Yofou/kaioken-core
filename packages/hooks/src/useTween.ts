@@ -12,14 +12,14 @@ import { linear } from "../lib/easing"
 /** TODO: Make a PR in kaioken to export makeReadonly */
 
 export class TweenSignal<T> extends Signal<T> {
-  task: Task | undefined
-  defaults: TweenedOptions<T>
+  #task: Task | undefined
+  #defaults: TweenedOptions<T>
 
   constructor(initial: T, options?: TweenedOptions<T>, displayName?: string) {
     super(initial, displayName)
 
-    this.task = undefined
-    this.defaults = options ?? {}
+    this.#task = undefined
+    this.#defaults = options ?? {}
   }
 
   #setInternal(next: T) {
@@ -35,7 +35,7 @@ export class TweenSignal<T> extends Signal<T> {
       return Promise.resolve()
     }
 
-    let previousTask = this.task
+    let previousTask = this.#task
 
     let started = false
     let {
@@ -43,7 +43,7 @@ export class TweenSignal<T> extends Signal<T> {
       duration = 400,
       easing = linear,
       interpolate = getInterpolator,
-    } = { ...this.defaults, ...options }
+    } = { ...this.#defaults, ...options }
 
     if (duration === 0) {
       if (previousTask) {
@@ -57,7 +57,7 @@ export class TweenSignal<T> extends Signal<T> {
 
     const start = raf.now() + delay
     let fn: (t: number) => T
-    this.task = loop((now) => {
+    this.#task = loop((now) => {
       if (now < start) return true
       if (!started) {
         fn = interpolate(this.value, newState)
@@ -81,7 +81,16 @@ export class TweenSignal<T> extends Signal<T> {
       return true
     })
 
-    return this.task.promise
+    return this.#task.promise
+  }
+
+  /**
+   * @description cancels the request animation frame loop that's handling interpolation, It's likely you'll never need to call this yourself
+   */
+  abortTask() {
+    if (this.#task) {
+      this.#task.abort()
+    }
   }
 }
 
@@ -108,10 +117,7 @@ export const tween = <T>(
         if (isInit) {
           hook.signal = internalSignal
           hook.cleanup = () => {
-            if (hook.signal.task) {
-              hook.signal.task.abort()
-            }
-
+            hook.signal.abortTask()
             TweenSignal.subscribers(hook.signal).clear()
           }
         }

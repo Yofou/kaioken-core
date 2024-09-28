@@ -11,23 +11,23 @@ behaves similarly to signals but instead will interpolate the value smoothly wit
 ## Usage
 
 ```tsx
-const [duration, setDuration] = useState(500)
+const duration = signal(500)
 const currentValue = tween(0)
-const [nextValue, setNextValue] = useState(0)
-const [hasFinished, setHasFinished] = useState(false)
+const nextValue = signal(0)
+const hasFinished = signal(false)
 const onUpdateValue = async () => {
-  setHasFinished(false)
+  hasFinished.value = false
   await currentValue.set(nextValue, {
     duration,
   })
-  setHasFinished(true)
+  hasFinished.value = true
 }
 
 const onCancel = () => {
   currentValue.set(nextValue, {
     duration: 0,
   })
-  setHasFinished(true)
+  hasFinished.value = true
 }
 ```
 
