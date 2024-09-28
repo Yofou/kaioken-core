@@ -1,6 +1,6 @@
 import { getPrevAndNextRoute } from "$/utils/meta"
 import { useTweenMemo } from "@kaioken-core/hooks"
-import { signal, useMemo } from "kaioken"
+import { computed, signal, useMemo } from "kaioken"
 import { twMerge } from "tailwind-merge"
 import { sineInOut } from "@kaioken-core/hooks/easing"
 import { useGlowAngle } from "$/hooks/useGlowAngle"
@@ -38,15 +38,15 @@ const BottomNavLink: Kaioken.FC<ButtonNavLinkProps> = (props) => {
     }
   )
 
-  const glowGrad = useMemo(() => {
-    return `linear-gradient(calc(var(--angle) + 90deg), #070707 ${glow.start1}% ${glow.finish1}%, #DC143C ${glow.start2}% ${glow.finish2}%)`
-  }, Object.values(glow))
+  const glowGrad = computed(() => {
+    return `linear-gradient(calc(var(--angle) + 90deg), #070707 ${glow.value.start1}% ${glow.value.finish1}%, #DC143C ${glow.value.start2}% ${glow.value.finish2}%)`
+  })
 
   return (
     <div className="relative w-full">
       <div
         ref={ref}
-        style={`--angle: ${angle ?? "0deg"};--border-color: ${glowGrad}; --bg-color: linear-gradient(#191212, #191212)`}
+        style={`--angle: ${angle.value ?? "0deg"};--border-color: ${glowGrad.value}; --bg-color: linear-gradient(#191212, #191212)`}
         className="w-full border-2 border-[#0000] [background:padding-box_var(--bg-color),_border-box_var(--border-color)] bg-center h-full inset-0 absolute pointer-events-none rounded-xl"
       />
       <a

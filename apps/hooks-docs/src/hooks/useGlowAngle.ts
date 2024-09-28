@@ -1,6 +1,6 @@
 import { disableAnimation } from "$/utils/disableAnimation"
 import { useElementBounding, useMouse, useTweenMemo } from "@kaioken-core/hooks"
-import { useMemo, useRef } from "kaioken"
+import { computed, useRef } from "kaioken"
 
 function minAbs(x: number, y: number, old: number) {
   return Math.abs(x - old) < Math.abs(y - old) ? x : y
@@ -9,24 +9,22 @@ function minAbs(x: number, y: number, old: number) {
 export const useGlowAngle = <T extends HTMLElement>(duration = 500) => {
   const ref = useRef<T | null>(null)
   const asideBounding = useElementBounding(ref)
-  const [asideX, asideY] = useMemo(() => {
-    return [
-      asideBounding.width.value / 2 + asideBounding.left.value,
-      asideBounding.height.value / 2 + asideBounding.top.value,
-    ] as const
-  }, [
-    asideBounding.top.value,
-    asideBounding.left.value,
-    asideBounding.width.value,
-    asideBounding.height.value,
-  ])
+  const asideX = computed(() => {
+    return asideBounding.width.value / 2 + asideBounding.left.value
+  })
+  const asideY = computed(() => {
+    return asideBounding.height.value / 2 + asideBounding.top.value
+  })
+
   const { mouse } = useMouse()
 
   const oldAngle = useRef<number | null>(null)
+
+  // in the future it could be possible to make a purely tween "computed" that doesn't rely on us subbing to any components
   const angle = useTweenMemo(
     () => {
       const newAngle =
-        Math.atan2(mouse.value.y - asideY, mouse.value.x - asideX) *
+        Math.atan2(mouse.value.y - asideY.value, mouse.value.x - asideX.value) *
         (180 / Math.PI)
 
       if (!oldAngle.current) {
@@ -54,11 +52,21 @@ export const useGlowAngle = <T extends HTMLElement>(duration = 500) => {
 
       return resultAngle
     },
-    [mouse.value.x, mouse.value.y, asideX, asideY, disableAnimation.value],
+    [
+      mouse.value.x,
+      mouse.value.y,
+      asideX.value,
+      asideY.value,
+      disableAnimation.value,
+    ],
     {
       duration,
     }
   )
 
-  return [ref, `${angle | 0}deg`] as const
+  const displayAngle = computed(() => {
+    return `${angle.value | 0}deg`
+  })
+
+  return [ref, displayAngle] as const
 }
