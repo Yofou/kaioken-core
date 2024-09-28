@@ -1,8 +1,8 @@
-import { UseSpringExample } from "$/examples/useSpring"
+import { UseSpringExample } from "$/examples/spring"
 
-# useSpring
+# spring
 
-The useSpring hook behaves similarly like useTween which interpolates values smoothly however now the controls using physics-based calculations, creating natural, fluid animations within your application.
+The spring behaves similarly like tween which interpolates values smoothly however now the controls using physics-based calculations, creating natural, fluid animations within your application.
 
 ## Demo
 
@@ -12,12 +12,12 @@ The useSpring hook behaves similarly like useTween which interpolates values smo
 
 ```ts
 const nextValue = useRef(100)
-const [currentValue, setCurrentValue] = useSpring(100)
+const currentValue = spring(100)
 
 const onUpdateValue = async () => {
   nextValue.current = nextValue.current === 100 ? 350 : 100
 
-  await setCurrentValue(nextValue.current, {
+  await currentValue.set(nextValue.current, {
     damping: 0.8,
     stiffness: 0.15,
     precision: 0.01,
@@ -25,7 +25,7 @@ const onUpdateValue = async () => {
 }
 
 const onCancel = async () => {
-  await setCurrentValue(nextValue.current, {
+  await currentValue.set(nextValue.current, {
     hard: true,
   })
 }
@@ -34,9 +34,9 @@ const onCancel = async () => {
 ## Type Declaration
 
 ```tsx twoslash
-import { useSpring } from "@kaioken-core/hooks"
+import { spring } from "@kaioken-core/hooks"
 // ---cut---
-const [currentValue, setCurrentValue] = useSpring(0)
+const currentValue = spring(0)
 
 interface SpringUpdateOpts {
   hard?: any

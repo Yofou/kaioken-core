@@ -1,7 +1,13 @@
-import { useRef, useState, ElementProps } from "kaioken"
+import { useRef, useState, ElementProps, SignalLike } from "kaioken"
 import { twMerge } from "tailwind-merge"
 
-type InputProps<T extends string | number | undefined> = {
+type InputProps<
+  T extends
+    | string
+    | number
+    | undefined
+    | SignalLike<string | number | undefined>,
+> = {
   className?: string
   value?: T
   type?: ElementProps<"input">["type"]
@@ -15,7 +21,13 @@ type InputProps<T extends string | number | undefined> = {
   placeholder?: string
 }
 
-export const Input = <T extends string | number | undefined>(
+export const Input = <
+  T extends
+    | string
+    | number
+    | undefined
+    | SignalLike<string | number | undefined>,
+>(
   props: InputProps<T>
 ) => {
   const divRef = useRef<HTMLInputElement | null>(null)

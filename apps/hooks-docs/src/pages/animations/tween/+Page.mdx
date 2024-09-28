@@ -1,0 +1,47 @@
+import { UseTweenExample } from "$/examples/tween"
+
+# tween
+
+behaves similarly to signals but instead will interpolate the value smoothly with the ability to cancel
+
+## Demo
+
+<UseTweenExample />
+
+## Usage
+
+```tsx
+const duration = signal(500)
+const currentValue = tween(0)
+const nextValue = signal(0)
+const hasFinished = signal(false)
+const onUpdateValue = async () => {
+  hasFinished.value = false
+  await currentValue.set(nextValue, {
+    duration,
+  })
+  hasFinished.value = true
+}
+
+const onCancel = () => {
+  currentValue.set(nextValue, {
+    duration: 0,
+  })
+  hasFinished.value = true
+}
+```
+
+## Type Declaration
+
+```tsx twoslash
+import { tween } from "@kaioken-core/hooks"
+// ---cut---
+const currentValue = tween(0)
+
+interface TweenedOptions<T> {
+  delay?: number
+  duration?: number | ((from: T, to: T) => number)
+  easing?: (t: number) => number
+  interpolate?: (a: T, b: T) => (t: number) => T
+}
+```

@@ -1,13 +1,11 @@
-import { ElementProps, useAppContext, useState, useVNode } from "kaioken"
+import { ElementProps, signal } from "kaioken"
 import { useEffectDeep } from "@kaioken-core/hooks"
 import { DemoContainer } from "$/components/DemoContainer"
 import { Button } from "$/components/Button"
 import { Input } from "$/components/Input"
 
 export const UseEffectDeepExample: Kaioken.FC = () => {
-  const node = useVNode()
-  const ctx = useAppContext()
-  const [context, setContext] = useState({
+  const context = signal({
     count: 0,
     name: "",
   })
@@ -16,24 +14,16 @@ export const UseEffectDeepExample: Kaioken.FC = () => {
     console.log(
       "I will trigger when count and name change despite context being the same object reference"
     )
-  }, [context])
+  }, [context.value])
 
   const onClick = () => {
-    setContext(($context) => {
-      $context.count += 1
-      return $context
-    })
-
-    ctx.requestUpdate(node)
+    context.value.count += 1
+    context.notify()
   }
 
   const onInput: ElementProps<"input">["oninput"] = (e) => {
-    setContext(($context) => {
-      $context.name = e.target.value
-      return $context
-    })
-
-    ctx.requestUpdate(node)
+    context.value.name = e.target.value
+    context.notify()
   }
 
   return (
@@ -47,7 +37,7 @@ export const UseEffectDeepExample: Kaioken.FC = () => {
           type="text"
           placeholder="Type name"
           className="grow-0 w-[250px]"
-          value={context.name}
+          value={context.value.name}
           oninput={onInput}
         />
       </div>

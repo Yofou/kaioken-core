@@ -11,6 +11,7 @@
   "keywords": [],
   "author": "",
   "devDependencies": {
+    "@kaioken-core/components": "workspace:^",
     "@kaioken-core/hooks": "workspace:*",
     "@shikijs/rehype": "^1.12.1",
     "@shikijs/twoslash": "^1.12.1",
@@ -22,7 +23,7 @@
     "shiki": "^1.12.1",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.5.3",
-    "vite-plugin-kaioken": "0.12.0"
+    "vite-plugin-kaioken": "0.13.0"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.10",
@@ -31,7 +32,7 @@
     "@oddbird/css-anchor-positioning": "^0.1.1",
     "express": "^4.19.2",
     "fuse.js": "^7.0.0",
-    "kaioken": "0.30.2",
+    "kaioken": "0.31.0",
     "rehype-slug": "^6.0.0",
     "remark-autolink-headings": "6.1.0",
     "tailwind-merge": "^2.4.0",
