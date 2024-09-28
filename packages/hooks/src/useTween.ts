@@ -11,7 +11,7 @@ import { linear } from "../lib/easing"
 
 /** TODO: Make a PR in kaioken to export makeReadonly */
 
-class TweenSignal<T> extends Signal<T> {
+export class TweenSignal<T> extends Signal<T> {
   task: Task | undefined
   defaults: TweenedOptions<T>
 
