@@ -11,38 +11,29 @@ same as useEffect but the dependencies array will recursively look down objects
 ## Usage
 
 ```tsx
-import { useCurrentNode, useState } from "kaioken"
+import { signal } from "kaioken"
 import { useEffectDeep } from "@kaioken-core/hooks"
 
-const node = useCurrentNode()
-const [context, setContext] = useState({
+const context = signal({
   count: 0,
   name: "",
 })
 
 useEffectDeep(() => {
   console.log(
-    "I will trigger when count and name change despite context being the same object reference"
+    "I will trigger when count and name change",
+    "despite context being the same object reference"
   )
-}, [context])
+}, [context.value])
 
 const onClick = () => {
-  setContext(($context) => {
-    $context.count += 1
-    return $context
-  })
-
-  node.ctx.requestUpdate(node)
+  context.value.count += 1
+  context.notify()
 }
 
-const onInput = (e: InputEvent) => {
-  setContext(($context) => {
-    if (e.target instanceof HTMLInputElement) {
-      $context.name = e.target.value
-    }
-    return $context
-  })
-  node.ctx.requestUpdate(node)
+const onInput: ElementProps<"input">["oninput"] = (e) => {
+  context.value.name = e.target.value
+  context.notify()
 }
 ```
 
