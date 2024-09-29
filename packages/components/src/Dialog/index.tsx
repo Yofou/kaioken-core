@@ -4,7 +4,6 @@ import {
   signal,
   useContext,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
 } from "kaioken"
@@ -197,7 +196,7 @@ export const Container: Kaioken.FC<ContainerProps> = ({
     return attrs
   }, [rootContext?.descriptionId?.value, rootContext?.titleId?.value, asChild])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!ref.current || rootContext?.open?.value === false) {
       return
     }
@@ -249,7 +248,7 @@ export const Content: Kaioken.FC<ContentProps> = ({
   ...props
 }) => {
   const rootContext = useContext(RootContext)
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLElement | null>(null)
 
   useKeyDown("Escape", (e) => {
     if (!rootContext || rootContext.open.value === false) {
@@ -287,9 +286,15 @@ export const Content: Kaioken.FC<ContentProps> = ({
 
   const Comp = asChild ? Slot : "div"
   return (
-    <Comp {...props} ref={ref as any}>
+    <Comp
+      {...props}
+      ref={(el) => {
+        ref.current = el
+        setPolyRef(props.ref as any, el)
+      }}
+    >
       {props.children}
     </Comp>
   )
 }
-Content.displayName = "Dialog.Content"
+Content.displayName = "Dialog.eContent"

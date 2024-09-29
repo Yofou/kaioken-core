@@ -5,11 +5,14 @@ import {
   Signal,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
 } from "kaioken"
 import { Slot } from "../Slot"
 import { Dialog } from "../../lib/main"
 import { computePosition, flip, shift } from "@floating-ui/dom"
+import { useAwareKeyDown } from "../utils"
 
 export const RootContext = createContext<{
   open: Signal<boolean>
@@ -17,6 +20,8 @@ export const RootContext = createContext<{
     x: number
     y: number
   } | null>
+  containerRef: Kaioken.MutableRefObject<HTMLElement | null>
+  highlightRef: Kaioken.MutableRefObject<HTMLElement | null>
 } | null>(null)
 RootContext.displayName = "ContextMenu.Context"
 
@@ -30,10 +35,14 @@ type RootProps = {
 export const Root: Kaioken.FC<RootProps> = (props) => {
   const internalOpen = signal(false)
   const coords = signal<{ x: number; y: number } | null>(null)
+  const containerRef = useRef<HTMLElement | null>(null)
+  const highlightRef = useRef<HTMLElement | null>(null)
   const rootContextValue = useMemo(() => {
     return {
       open: props.open ?? internalOpen,
       coords,
+      containerRef,
+      highlightRef,
     }
   }, [])
 
@@ -82,19 +91,19 @@ export const Trigger: Kaioken.FC<TriggerProps> = (props) => {
 Trigger.displayName = "ContextMenu.Trigger"
 
 ///////////////////
-// ContextMenu Content
+// ContextMenu Container
 ///////////////////
 
-type ContentProps = ElementProps<"div"> & {
+type ContainerProps = ElementProps<"div"> & {
   asChild?: boolean
 }
-export const Container: Kaioken.FC<ContentProps> = (props) => {
+export const Container: Kaioken.FC<ContainerProps> = (props) => {
   const { asChild, ...rest } = props
-  const Component = asChild ? Slot : Dialog.Container
   const rootContext = useContext(RootContext)
   const onRef = (el: HTMLDialogElement | null) => {
     if (!rootContext || rootContext.coords.value == null) return
     if (el) {
+      rootContext.containerRef.current = el
       const referenceEl = {
         getBoundingClientRect() {
           return {
@@ -118,6 +127,8 @@ export const Container: Kaioken.FC<ContentProps> = (props) => {
         el.style.setProperty("top", `${result.y}px`)
         el.style.setProperty("left", `${result.x}px`)
       })
+    } else {
+      rootContext.containerRef.current = el
     }
   }
 
@@ -129,12 +140,125 @@ export const Container: Kaioken.FC<ContentProps> = (props) => {
   }
 
   return (
-    <Component {...rest} asChild={asChild ? asChild : undefined} ref={onRef}>
+    <Dialog.Container {...rest} asChild={asChild} ref={onRef}>
       {props.children}
-    </Component>
+    </Dialog.Container>
   )
 }
 Container.displayName = "ContextMenu.Container"
 
-export const Content: typeof Dialog.Content = Dialog.Content.bind({})
+///////////////////
+// ContextMenu Content
+///////////////////
+
+export const Content: typeof Dialog.Content = (props) => {
+  const rootContext = useContext(RootContext)
+
+  const treeWalker = useMemo(() => {
+    if (!rootContext?.containerRef?.current) {
+      return null
+    }
+
+    return document.createTreeWalker(
+      rootContext.containerRef.current,
+      NodeFilter.SHOW_ELEMENT,
+      {
+        acceptNode(node) {
+          if (
+            node instanceof HTMLElement &&
+            node.dataset["kcContextKeyboard"]
+          ) {
+            return NodeFilter.FILTER_ACCEPT
+          }
+          return NodeFilter.FILTER_SKIP
+        },
+      }
+    )
+  }, [rootContext?.containerRef?.current])
+
+  useEffect(() => {
+    if (!rootContext) {
+      return
+    }
+    rootContext.highlightRef.current = null
+  }, [])
+
+  useAwareKeyDown(["ArrowDown", "ArrowUp"], (e) => {
+    if (!treeWalker || !rootContext) return
+
+    if (rootContext.highlightRef.current) {
+      treeWalker.currentNode = rootContext.highlightRef.current
+
+      if (e.key === "ArrowDown") {
+        const next = treeWalker.nextNode() as HTMLElement
+        if (!next) return
+        rootContext.highlightRef.current = next
+        next.focus()
+      } else if (e.key === "ArrowUp") {
+        const prev = treeWalker.previousNode() as HTMLElement
+        if (!prev) return
+        rootContext.highlightRef.current = prev
+        prev.focus()
+      }
+    } else {
+      treeWalker.currentNode = treeWalker.root
+
+      if (e.key === "ArrowDown") {
+        const first = treeWalker.firstChild() as HTMLElement
+        if (!first) return
+        rootContext.highlightRef.current = first
+        first.focus()
+      } else if (e.key === "ArrowUp") {
+        const last = treeWalker.lastChild() as HTMLElement
+        if (!last) return
+        rootContext.highlightRef.current = last
+        last.focus()
+      }
+    }
+
+    console.log(treeWalker.currentNode)
+  })
+
+  return <Dialog.Content {...props} />
+}
 Content.displayName = "ContextMenu.Content"
+
+///////////////////
+// ContextMenu Item
+///////////////////
+
+type ItemProps = ElementProps<"div"> & {
+  asChild?: boolean
+}
+
+export const Item: Kaioken.FC<ItemProps> = (props) => {
+  const { asChild, children, ...rest } = props
+  const rootContext = useContext(RootContext)
+  const ref = useRef<HTMLDivElement>(null)
+  const Component = asChild ? Slot : "div"
+
+  return (
+    <Component
+      {...rest}
+      data-kc-context-keyboard
+      tabIndex={-1}
+      ref={ref}
+      onmouseenter={() => {
+        if (!rootContext || !ref.current) {
+          return
+        }
+
+        rootContext.highlightRef.current = ref.current
+      }}
+      onmouseleave={() => {
+        if (!rootContext) {
+          return
+        }
+
+        rootContext.highlightRef.current = null
+      }}
+    >
+      {children}
+    </Component>
+  )
+}
