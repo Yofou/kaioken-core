@@ -9,8 +9,6 @@ import { linear } from "../lib/easing"
   Distributed under MIT License https://github.com/sveltejs/svelte/blob/main/LICENSE.md
 */
 
-/** TODO: Make a PR in kaioken to export makeReadonly */
-
 export class TweenSignal<T> extends Signal<T> {
   #task: Task | undefined
   #defaults: TweenedOptions<T>
