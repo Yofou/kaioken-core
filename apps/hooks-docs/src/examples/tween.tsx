@@ -1,5 +1,5 @@
 import { tween } from "@kaioken-core/hooks"
-import { computed, signal } from "kaioken"
+import { computed, signal, useEffect } from "kaioken"
 import * as easingFunctions from "@kaioken-core/hooks/easing"
 import { DemoContainer } from "$/components/DemoContainer"
 import { Input } from "$/components/Input"
