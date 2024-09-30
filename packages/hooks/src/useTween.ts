@@ -99,7 +99,9 @@ export const tween = <T>(
   defaults = {} as TweenedOptions<T>,
   displayName?: string
 ): TweenSignal<T> => {
-  const internalSignal = new TweenSignal(initial, defaults, displayName)
+  const internalSignal = Signal.makeReadonly(
+    new TweenSignal(initial, defaults, displayName)
+  ) as TweenSignal<T>
   if (!sideEffectsEnabled()) {
     return internalSignal
   }
