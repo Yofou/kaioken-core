@@ -123,7 +123,9 @@ export const spring = <T>(
   options?: Partial<SpringOpts>,
   displayName?: string
 ) => {
-  const internalSignal = new SpringSignal(initial, options, displayName)
+  const internalSignal = Signal.makeReadonly(
+    new SpringSignal(initial, options, displayName)
+  ) as SpringSignal<T>
   if (!sideEffectsEnabled()) {
     return internalSignal
   }
