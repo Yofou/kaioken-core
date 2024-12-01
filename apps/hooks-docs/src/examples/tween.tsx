@@ -1,17 +1,17 @@
 import { tween } from "@kaioken-core/hooks"
-import { computed, signal, useEffect } from "kaioken"
+import { useComputed, useSignal } from "kaioken"
 import * as easingFunctions from "@kaioken-core/hooks/easing"
 import { DemoContainer } from "$/components/DemoContainer"
 import { Input } from "$/components/Input"
 import { Button } from "$/components/Button"
 
 export const UseTweenExample: Kaioken.FC = () => {
-  const duration = signal(500)
-  const nextValue = signal(0)
+  const duration = useSignal(500)
+  const nextValue = useSignal(0)
 
   const currentValue = tween(0)
-  const easing = signal("linear")
-  const easingFunc = computed(() => {
+  const easing = useSignal("linear")
+  const easingFunc = useComputed(() => {
     return easingFunctions[easing.value]
   })
 
@@ -28,11 +28,11 @@ export const UseTweenExample: Kaioken.FC = () => {
     })
   }
 
-  const displayValue = computed(() => {
+  const displayValue = useComputed(() => {
     return Math.round((currentValue.value + Number.EPSILON) * 100) / 100
   })
 
-  const deg = computed(() => {
+  const deg = useComputed(() => {
     return `rotate: -${180 - (currentValue.value / 5000) * 180}deg`
   })
 

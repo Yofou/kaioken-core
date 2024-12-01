@@ -1,4 +1,4 @@
-import { useLayoutEffect, signal } from "kaioken"
+import { useLayoutEffect, useSignal } from "kaioken"
 import { useEventListener } from "./useEventListener"
 import { useResizeObserver } from "./useResizeObserver"
 import { useMutationObserver } from "./useMutationObserver"
@@ -20,14 +20,14 @@ export const useElementBounding = (
   const windowResize = options?.windowResize ?? true
   const immediate = options.immediate ?? true
 
-  const width = signal(0)
-  const height = signal(0)
-  const top = signal(0)
-  const right = signal(0)
-  const bottom = signal(0)
-  const left = signal(0)
-  const x = signal(0)
-  const y = signal(0)
+  const width = useSignal(0)
+  const height = useSignal(0)
+  const top = useSignal(0)
+  const right = useSignal(0)
+  const bottom = useSignal(0)
+  const left = useSignal(0)
+  const x = useSignal(0)
+  const y = useSignal(0)
 
   const update = () => {
     const el = ref.current

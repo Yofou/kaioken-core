@@ -1,5 +1,5 @@
 import { usePageContext } from "$/context/pageContext"
-import { signal, useMemo } from "kaioken"
+import { useSignal, useMemo } from "kaioken"
 import { twMerge } from "tailwind-merge"
 import { GlowBg } from "./GlowBG"
 import { PagesByGroup } from "$/utils/meta"
@@ -8,7 +8,7 @@ type GroupProps = {
   title: string
 }
 export const Group: Kaioken.FC<GroupProps> = (props) => {
-  const show = signal(true)
+  const show = useSignal(true)
   show.displayName = "groupShow"
 
   return (
@@ -48,7 +48,7 @@ export const Link: Kaioken.FC<LinkProps> = (props) => {
 }
 
 export const SideBar = () => {
-  const isFullGlow = signal(false)
+  const isFullGlow = useSignal(false)
   const pages = useMemo(() => PagesByGroup(), [])
   const groups = useMemo(() => [...pages.keys()], [pages])
 

@@ -1,4 +1,4 @@
-import { useEffect, signal, computed } from "kaioken"
+import { useEffect, useSignal, useComputed } from "kaioken"
 import { useMouse } from "./useMouse"
 import { useEventListener } from "./useEventListener"
 
@@ -6,13 +6,15 @@ export const useMouseInElement = (
   target: Kaioken.MutableRefObject<HTMLElement | null>
 ) => {
   const { mouse } = useMouse()
-  const elementX = signal(0)
-  const elementY = signal(0)
-  const elementPositionX = signal(0)
-  const elementPositionY = signal(0)
-  const elementWidth = signal(0)
-  const elementHeight = signal(0)
-  const isOutside = signal(true)
+  const elementX = useSignal(0)
+  const elementY = useSignal(0)
+  const elementPositionX = useSignal(0)
+  const elementPositionY = useSignal(0)
+  const elementWidth = useSignal(0)
+  const elementHeight = useSignal(0)
+  const isOutside = useSignal(true)
+  const mouseX = useComputed(() => mouse.value.x)
+  const mouseY = useComputed(() => mouse.value.y)
 
   useEffect(() => {
     const el = target.current
@@ -57,8 +59,8 @@ export const useMouseInElement = (
   )
 
   return {
-    x: computed(() => mouse.value.x),
-    y: computed(() => mouse.value.y),
+    x: mouseX,
+    y: mouseY,
     elementX,
     elementY,
     elementPositionX,

@@ -1,6 +1,6 @@
 import { sideEffectsEnabled, useEffect } from "kaioken"
 import { SpringOpts } from "./motion/types"
-import { spring, SpringSignal } from "./useSpring"
+import { useSpring, SpringSignal } from "./useSpring"
 
 /*
   Adapted from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion
@@ -12,7 +12,7 @@ export const useSpringMemo = <T>(
   deps: unknown[],
   opts = {} as Partial<SpringOpts>
 ): SpringSignal<T> => {
-  const internalSignal = spring(factory(), opts)
+  const internalSignal = useSpring(factory(), opts)
   if (!sideEffectsEnabled()) return internalSignal
 
   useEffect(() => {

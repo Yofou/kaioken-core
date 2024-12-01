@@ -1,4 +1,4 @@
-import { sideEffectsEnabled, Signal, useHook, useVNode } from "kaioken"
+import { sideEffectsEnabled, Signal, useHook } from "kaioken"
 import { SpringOpts, TickContext, type Task } from "./motion/types"
 import { loop, raf } from "./motion/loop"
 import { tickSpring } from "./motion/spring"
@@ -123,33 +123,35 @@ export const spring = <T>(
   options?: Partial<SpringOpts>,
   displayName?: string
 ) => {
-  const internalSignal = Signal.makeReadonly(
+  return Signal.makeReadonly(
     new SpringSignal(initial, options, displayName)
   ) as SpringSignal<T>
+}
+
+export const useSpring = <T>(
+  initial: T,
+  options?: Partial<SpringOpts>,
+  displayName?: string
+) => {
   if (!sideEffectsEnabled()) {
-    return internalSignal
+    return spring(initial, options, displayName)
   }
 
-  try {
-    useVNode()
-    return useHook(
-      "useSpring",
-      {
-        signal: undefined as any as SpringSignal<T>,
-      },
-      ({ hook, isInit }) => {
-        if (isInit) {
-          hook.signal = internalSignal
-          hook.cleanup = () => {
-            hook.signal.abortTask()
-            SpringSignal.subscribers(hook.signal).clear()
-          }
+  return useHook(
+    "useSpring",
+    {
+      signal: undefined as any as SpringSignal<T>,
+    },
+    ({ hook, isInit }) => {
+      if (isInit) {
+        hook.signal = spring(initial, options, displayName)
+        hook.cleanup = () => {
+          hook.signal.abortTask()
+          SpringSignal.subscribers(hook.signal).clear()
         }
-
-        return hook.signal
       }
-    )
-  } catch {
-    return internalSignal
-  }
+
+      return hook.signal
+    }
+  )
 }

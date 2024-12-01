@@ -1,4 +1,4 @@
-import { sideEffectsEnabled, useHook, Signal, useVNode } from "kaioken"
+import { sideEffectsEnabled, useHook, Signal } from "kaioken"
 import { getInterpolator } from "./motion/utils"
 import { Task, TweenedOptions } from "./motion/types"
 import { loop, raf } from "./motion/loop"
@@ -99,35 +99,35 @@ export const tween = <T>(
   defaults = {} as TweenedOptions<T>,
   displayName?: string
 ): TweenSignal<T> => {
-  const internalSignal = Signal.makeReadonly(
+  return Signal.makeReadonly(
     new TweenSignal(initial, defaults, displayName)
   ) as TweenSignal<T>
+}
+
+export function useTween<T>(
+  initial: T,
+  options?: TweenedOptions<T>,
+  displayName?: string
+): TweenSignal<T> {
   if (!sideEffectsEnabled()) {
-    return internalSignal
+    return tween(initial, options, displayName)
   }
 
-  try {
-    // This will throw an exception if we're not in a kaioken component context "environment"
-    // Thanks moose :))
-    useVNode()
-    return useHook(
-      "useTween",
-      {
-        signal: undefined as any as TweenSignal<T>,
-      },
-      ({ hook, isInit }) => {
-        if (isInit) {
-          hook.signal = internalSignal
-          hook.cleanup = () => {
-            hook.signal.abortTask()
-            TweenSignal.subscribers(hook.signal).clear()
-          }
+  return useHook(
+    "useTween",
+    {
+      signal: undefined as any as TweenSignal<T>,
+    },
+    ({ hook, isInit }) => {
+      if (isInit) {
+        hook.signal = tween(initial, options, displayName)
+        hook.cleanup = () => {
+          hook.signal.abortTask()
+          TweenSignal.subscribers(hook.signal).clear()
         }
-
-        return hook.signal
       }
-    )
-  } catch {
-    return internalSignal
-  }
+
+      return hook.signal
+    }
+  )
 }

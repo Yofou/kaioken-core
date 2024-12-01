@@ -1,10 +1,10 @@
 import { Checkbox, CheckboxGroup } from "@kaioken-core/components"
-import { signal } from "kaioken"
+import { useSignal } from "kaioken"
 
 export { Page }
 
 function Page() {
-  const values = signal<string[]>([])
+  const values = useSignal<string[]>([])
   return (
     <div className={"flex flex-col gap-4"}>
       <CheckboxGroup.Root checked={values}>

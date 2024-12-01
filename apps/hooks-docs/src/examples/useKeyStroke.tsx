@@ -1,7 +1,7 @@
 import { Button } from "$/components/Button"
 import { DemoContainer } from "$/components/DemoContainer"
 import { useKeyStroke } from "@kaioken-core/hooks"
-import { signal } from "kaioken"
+import { useSignal } from "kaioken"
 
 const transformKeys = (key: string) => {
   if (key === " ") {
@@ -12,7 +12,7 @@ const transformKeys = (key: string) => {
 }
 
 export const UseKeyStrokeExample = () => {
-  const keysPressed = signal<string[]>([])
+  const keysPressed = useSignal<string[]>([])
 
   useKeyStroke(true, (e) => {
     keysPressed.value.push(transformKeys(e.key))
