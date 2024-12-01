@@ -1,7 +1,7 @@
 import {
   createContext,
   Signal,
-  signal,
+  useSignal,
   useCallback,
   useContext,
   useEffect,
@@ -34,7 +34,7 @@ type RootProps = Floating.RootProps & {
 
 export const Root: Kaioken.FC<RootProps> = (props) => {
   const { open, ...floatingProps } = props
-  const _internalOpen = signal(false)
+  const _internalOpen = useSignal(false)
   const tooltipRef = useRef<number | null>(null)
   const tooltip = useMemo(() => {
     return {

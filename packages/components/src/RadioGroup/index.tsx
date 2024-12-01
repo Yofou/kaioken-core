@@ -1,8 +1,8 @@
 import {
-  computed,
+  useComputed,
   createContext,
   ElementProps,
-  signal,
+  useSignal,
   useCallback,
   useContext,
   useMemo,
@@ -34,7 +34,7 @@ export const Root: Kaioken.FC<RootProps> = (props) => {
   const internalName = useMemo(() => {
     return crypto.randomUUID()
   }, [])
-  const internalValue = signal(null)
+  const internalValue = useSignal(null)
   const { name: propsName, value: propsValue, asChild, ...rest } = props
   const ref = useRef<HTMLDivElement | null>(null)
   const loop = props.loop ?? true
@@ -90,7 +90,7 @@ export const Item: Kaioken.FC<ItemProps> = (props) => {
       borderWidth: "0",
     })
   }, [])
-  const isChecked = computed(() => {
+  const isChecked = useComputed(() => {
     if (!radioGroupContext) return false
 
     return radioGroupContext.value.value === value

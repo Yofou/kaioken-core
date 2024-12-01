@@ -1,7 +1,7 @@
 import {
   createContext,
   Signal,
-  signal,
+  useSignal,
   useContext,
   useEffect,
   useMemo,
@@ -111,8 +111,8 @@ type ContentProps = {
 
 export const Content: Kaioken.FC<ContentProps> = (props) => {
   const floatingContext = useContext(FloatingContext)
-  const x = signal<number | null>(null, "x")
-  const y = signal<number | null>(null, "y")
+  const x = useSignal<number | null>(null, "x")
+  const y = useSignal<number | null>(null, "y")
 
   useEffect(() => {
     if (
