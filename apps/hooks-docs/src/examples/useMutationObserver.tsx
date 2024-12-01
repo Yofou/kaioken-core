@@ -1,13 +1,13 @@
 import { DemoContainer } from "$/components/DemoContainer"
 import { useMutationObserver } from "@kaioken-core/hooks"
-import { signal, useEffect, useRef } from "kaioken"
+import { useSignal, useEffect, useRef } from "kaioken"
 import { twMerge } from "tailwind-merge"
 
 export const UseMutationObserverExample: Kaioken.FC = () => {
   const el = useRef<HTMLElement | null>(null)
-  const style = signal({})
-  const className = signal("")
-  const changes = signal<(string | null)[]>([])
+  const style = useSignal({})
+  const className = useSignal("")
+  const changes = useSignal<(string | null)[]>([])
 
   useEffect(() => {
     const styleTimeoutId = setTimeout(() => {

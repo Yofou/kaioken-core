@@ -1,11 +1,11 @@
 import { Button } from "$/components/Button"
 import { DemoContainer } from "$/components/DemoContainer"
 import { useRafFn } from "@kaioken-core/hooks"
-import { computed, signal } from "kaioken"
+import { useComputed, useSignal } from "kaioken"
 
 export const UseRafFnExample: Kaioken.FC = () => {
-  const count = signal(0)
-  const delta = signal(0)
+  const count = useSignal(0)
+  const delta = useSignal(0)
   const controls = useRafFn(
     ({ delta: _delta }) => {
       count.value += 1
@@ -17,7 +17,7 @@ export const UseRafFnExample: Kaioken.FC = () => {
     }
   )
 
-  const roundedDelta = computed(() => {
+  const roundedDelta = useComputed(() => {
     return Math.round(delta.value)
   })
 

@@ -1,6 +1,6 @@
 import { useGlowAngle } from "$/hooks/useGlowAngle"
 import { useTweenMemo } from "@kaioken-core/hooks"
-import { computed } from "kaioken"
+import { useComputed } from "kaioken"
 import { sineInOut } from "@kaioken-core/hooks/easing"
 
 type GlowBgProps = {
@@ -35,7 +35,7 @@ export const GlowBg: Kaioken.FC<GlowBgProps> = (props) => {
     }
   )
 
-  const glowGrad = computed(() => {
+  const glowGrad = useComputed(() => {
     return `linear-gradient(calc(var(--angle) + 90deg), #070707 ${glow.value.start1}% ${glow.value.finish1}%, #DC143C ${glow.value.start2}% ${glow.value.finish2}%)`
   })
 

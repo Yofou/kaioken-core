@@ -1,4 +1,4 @@
-import { signal, useEffect, useMemo, useRef } from "kaioken"
+import { useSignal, signal, useEffect, useMemo, useRef } from "kaioken"
 import { DemoContainer } from "./DemoContainer"
 import { Input } from "./Input"
 import { useKeyDown, useStartTyping } from "@kaioken-core/hooks"
@@ -53,7 +53,7 @@ export const CommandPaletteItem: Kaioken.FC<{ name: string; href: string }> = (
 }
 
 export const CommandPalette: Kaioken.FC = () => {
-  const searchValue = signal("")
+  const searchValue = useSignal("")
   const inputRef = useRef<HTMLInputElement | null>(null)
   const pageList = useMemo(() => {
     const pages = [...Pages.entries()].map(([href, item]) => ({

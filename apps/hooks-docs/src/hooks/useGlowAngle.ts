@@ -1,6 +1,6 @@
 import { disableAnimation } from "$/utils/disableAnimation"
 import { useElementBounding, useMouse, useTweenMemo } from "@kaioken-core/hooks"
-import { computed, useRef } from "kaioken"
+import { useComputed, useRef } from "kaioken"
 
 function minAbs(x: number, y: number, old: number) {
   return Math.abs(x - old) < Math.abs(y - old) ? x : y
@@ -9,10 +9,10 @@ function minAbs(x: number, y: number, old: number) {
 export const useGlowAngle = <T extends HTMLElement>(duration = 500) => {
   const ref = useRef<T | null>(null)
   const asideBounding = useElementBounding(ref)
-  const asideX = computed(() => {
+  const asideX = useComputed(() => {
     return asideBounding.width.value / 2 + asideBounding.left.value
   })
-  const asideY = computed(() => {
+  const asideY = useComputed(() => {
     return asideBounding.height.value / 2 + asideBounding.top.value
   })
 
@@ -64,7 +64,7 @@ export const useGlowAngle = <T extends HTMLElement>(duration = 500) => {
     }
   )
 
-  const displayAngle = computed(() => {
+  const displayAngle = useComputed(() => {
     return `${angle.value | 0}deg`
   })
 

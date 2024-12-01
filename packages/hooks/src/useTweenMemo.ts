@@ -1,6 +1,6 @@
 import { sideEffectsEnabled, useEffect } from "kaioken"
 import { TweenedOptions } from "./motion/types"
-import { tween, TweenSignal } from "./useTween"
+import { useTween, TweenSignal } from "./useTween"
 
 /*
   Adapted from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion
@@ -12,7 +12,7 @@ export function useTweenMemo<T>(
   deps: unknown[],
   options: TweenedOptions<T> = {}
 ): TweenSignal<T> {
-  const internalSignal = tween(factory(), options)
+  const internalSignal = useTween(factory(), options)
   if (!sideEffectsEnabled()) return internalSignal
 
   useEffect(() => {
