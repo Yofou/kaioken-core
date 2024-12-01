@@ -1,4 +1,4 @@
-import { signal, useEffect, useRef } from "kaioken"
+import { useSignal, useEffect } from "kaioken"
 import { CommandPalette } from "./CommandPallete"
 import { useKeyDown } from "@kaioken-core/hooks"
 import { usePageContext } from "$/context/pageContext"
@@ -10,7 +10,7 @@ import { Dialog } from "@kaioken-core/components"
 
 export function Navbar() {
   const pageCtx = usePageContext() as any
-  const showCommandPalette = signal(false)
+  const showCommandPalette = useSignal(false)
 
   useKeyDown(["k"], (e) => {
     e.preventDefault()

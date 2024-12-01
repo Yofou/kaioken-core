@@ -1,11 +1,11 @@
 import { DemoContainer } from "$/components/DemoContainer"
 import { useElementBounding } from "@kaioken-core/hooks"
-import { computed, useRef } from "kaioken"
+import { useComputed, useRef } from "kaioken"
 
 export const UseBoundingElementExample: Kaioken.FC = () => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const bounding = useElementBounding(textAreaRef)
-  const output = computed(() =>
+  const output = useComputed(() =>
     JSON.stringify(
       {
         x: bounding.x.value,

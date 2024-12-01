@@ -1,8 +1,8 @@
-import { useEffect, signal } from "kaioken"
+import { useEffect, useSignal } from "kaioken"
 import { useEventListener } from "./useEventListener"
 
 export const useWindowFocus = () => {
-  const focused = signal(false)
+  const focused = useSignal(false)
 
   useEffect(() => {
     focused.value = window.document.hasFocus()

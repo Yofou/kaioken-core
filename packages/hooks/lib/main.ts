@@ -20,9 +20,9 @@ import { useParentElement } from "../src/useParentElement"
 import { useActiveElement } from "../src/useActiveElement"
 import { useCurrentElement } from "../src/useCurrentElement"
 import { useElementVisibility } from "../src/useElementVisibility"
-import { tween } from "../src/useTween"
+import { tween, useTween } from "../src/useTween"
 import { useTweenMemo } from "../src/useTweenMemo"
-import { spring } from "../src/useSpring"
+import { spring, useSpring } from "../src/useSpring"
 import { useSpringMemo } from "../src/useSpringMemo"
 import { useElementByPoint } from "../src/useElementByPoint"
 import { useWindowPosition } from "../src/useWindowPosition"
@@ -54,8 +54,10 @@ export {
   useCurrentElement,
   useElementVisibility,
   tween,
+  useTween,
   useTweenMemo,
   spring,
+  useSpring,
   useSpringMemo,
   useElementByPoint,
   useWindowPosition,

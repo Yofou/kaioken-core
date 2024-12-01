@@ -1,8 +1,8 @@
-import { signal, useEffect } from "kaioken"
+import { useSignal, useEffect } from "kaioken"
 
 export const useMediaQuery = (query: string) => {
-  const isSupported = signal(false)
-  const matches = signal(false)
+  const isSupported = useSignal(false)
+  const matches = useSignal(false)
   let mediaQuery: MediaQueryList | undefined
 
   const handler = (event: MediaQueryListEvent) => {

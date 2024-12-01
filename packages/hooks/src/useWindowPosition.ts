@@ -1,9 +1,9 @@
-import { signal } from "kaioken"
+import { useSignal } from "kaioken"
 import { useRafFn } from "./useRafFn"
 
 export const useWindowPosition = () => {
-  const screenX = signal(0)
-  const screenY = signal(0)
+  const screenX = useSignal(0)
+  const screenY = useSignal(0)
 
   useRafFn(
     () => {

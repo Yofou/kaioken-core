@@ -1,4 +1,4 @@
-import { signal, useEffect } from "kaioken"
+import { useSignal, useEffect } from "kaioken"
 import { useEventListener } from "./useEventListener"
 
 type ActiveElementOptions = {
@@ -7,7 +7,7 @@ type ActiveElementOptions = {
 
 export const useActiveElement = (options: ActiveElementOptions = {}) => {
   const deep = options.deep ?? true
-  const activeElement = signal<Element | null>(null)
+  const activeElement = useSignal<Element | null>(null)
 
   const getDeepActiveElement = () => {
     let element = document?.activeElement

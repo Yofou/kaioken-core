@@ -1,8 +1,8 @@
-import { useRef, signal } from "kaioken"
+import { useRef, useSignal } from "kaioken"
 import { useIntersectionObserver } from "./useIntersectionObserver"
 
 export const useElementVisibility = <T extends Element = Element>() => {
-  const isVisible = signal(false)
+  const isVisible = useSignal(false)
   const ref = useRef<T | null>(null)
 
   useIntersectionObserver(ref, (items) => {

@@ -1,5 +1,5 @@
 import { ContextMenu, Tooltip } from "@kaioken-core/components"
-import { signal, useEffect } from "kaioken"
+import { useSignal } from "kaioken"
 
 export { Page }
 
@@ -33,7 +33,7 @@ const TestContextMenu = () => {
 
 // TOOLTIP IS CURRENTLY ALWAYS AS CHILD, WE NEED TOO CHANGE
 const TestTooltipMenu: Kaioken.FC = () => {
-  const isOpen = signal(false)
+  const isOpen = useSignal(false)
 
   return (
     <Tooltip.Root

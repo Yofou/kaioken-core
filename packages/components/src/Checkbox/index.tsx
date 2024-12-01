@@ -1,7 +1,7 @@
 import {
   createContext,
   ElementProps,
-  signal,
+  useSignal,
   Signal,
   useCallback,
   useContext,
@@ -29,7 +29,7 @@ type ItemProps = ElementProps<"label"> & {
 }
 export const Item: Kaioken.FC<ItemProps> = (props) => {
   const { asChild, name, value, checked: propChecked, ...rest } = props
-  const internalChecked = signal(false)
+  const internalChecked = useSignal(false)
   const checked = propChecked ?? internalChecked
   const inputStyles = useMemo(() => {
     return styleObjectToCss({

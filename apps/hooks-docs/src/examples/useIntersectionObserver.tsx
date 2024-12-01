@@ -1,11 +1,11 @@
 import { DemoContainer } from "$/components/DemoContainer"
 import { useIntersectionObserver } from "@kaioken-core/hooks"
-import { signal, useRef } from "kaioken"
+import { useSignal, useRef } from "kaioken"
 
 export const UseIntersectionObserverExample: Kaioken.FC = () => {
-  const isVisible = signal(false)
+  const isVisible = useSignal(false)
 
-  const ref = useRef<HTMLElement | null>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const controls = useIntersectionObserver(ref, (intersections) => {
     isVisible.value = intersections[0].isIntersecting
   })

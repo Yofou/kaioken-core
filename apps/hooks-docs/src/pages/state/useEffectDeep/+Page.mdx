@@ -11,10 +11,10 @@ same as useEffect but the dependencies array will recursively look down objects
 ## Usage
 
 ```tsx
-import { signal } from "kaioken"
+import { useSignal } from "kaioken"
 import { useEffectDeep } from "@kaioken-core/hooks"
 
-const context = signal({
+const context = useSignal({
   count: 0,
   name: "",
 })

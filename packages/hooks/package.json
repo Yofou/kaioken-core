@@ -1,7 +1,7 @@
 {
   "name": "@kaioken-core/hooks",
   "public": true,
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "module",
   "files": [
     "dist"
@@ -24,15 +24,15 @@
     "build": "tsc && vite build"
   },
   "peerDependencies": {
-    "kaioken": "^0.31.0"
+    "kaioken": "^0.35.8"
   },
   "devDependencies": {
-    "kaioken": "0.32.0",
+    "kaioken": "0.35.8",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.7.3"
   },
   "dependencies": {
-    "vite-plugin-kaioken": "^0.13.1"
+    "vite-plugin-kaioken": "^0.15.0"
   }
 }

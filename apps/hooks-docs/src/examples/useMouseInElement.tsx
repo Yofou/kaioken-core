@@ -1,11 +1,11 @@
 import { DemoContainer } from "$/components/DemoContainer"
 import { useMouseInElement } from "@kaioken-core/hooks"
-import { computed, useRef } from "kaioken"
+import { useComputed, useRef } from "kaioken"
 
 export const UseMouseInElementExample: Kaioken.FC = () => {
-  const ref = useRef<HTMLElement | null>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const result = useMouseInElement(ref)
-  const output = computed(() => {
+  const output = useComputed(() => {
     return JSON.stringify(
       {
         x: result.x.value,

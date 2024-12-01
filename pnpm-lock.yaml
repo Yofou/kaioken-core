@@ -16,7 +16,7 @@ importers:
         version: 3.3.3
       turbo:
         specifier: latest
-        version: 2.1.2
+        version: 2.3.3
 
   apps/components-docs:
     dependencies:
@@ -27,8 +27,8 @@ importers:
         specifier: ^4.19.2
         version: 4.19.2
       kaioken:
-        specifier: 0.32.0
-        version: 0.32.0
+        specifier: 0.35.8
+        version: 0.35.8
       tsx:
         specifier: ^4.16.5
         version: 4.19.0
@@ -64,8 +64,8 @@ importers:
         specifier: ^5.5.4
         version: 5.5.4
       vite-plugin-kaioken:
-        specifier: 0.13.1
-        version: 0.13.1(kaioken@0.32.0)
+        specifier: 0.15.0
+        version: 0.15.0(kaioken@0.35.8)
 
   apps/hooks-docs:
     dependencies:
@@ -88,8 +88,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       kaioken:
-        specifier: 0.32.0
-        version: 0.32.0
+        specifier: 0.35.8
+        version: 0.35.8
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
@@ -149,8 +149,8 @@ importers:
         specifier: ^5.5.3
         version: 5.5.4
       vite-plugin-kaioken:
-        specifier: 0.13.1
-        version: 0.13.1(kaioken@0.32.0)
+        specifier: 0.15.0
+        version: 0.15.0(kaioken@0.35.8)
 
   packages/components:
     dependencies:
@@ -161,15 +161,15 @@ importers:
         specifier: ^1.6.10
         version: 1.6.10
       vite-plugin-kaioken:
-        specifier: ^0.13.1
-        version: 0.13.1(kaioken@0.32.0)
+        specifier: ^0.15.0
+        version: 0.15.0(kaioken@0.35.8)
     devDependencies:
       "@kaioken-core/hooks":
         specifier: workspace:^
         version: link:../hooks
       kaioken:
-        specifier: 0.32.0
-        version: 0.32.0
+        specifier: 0.35.8
+        version: 0.35.8
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
@@ -183,12 +183,12 @@ importers:
   packages/hooks:
     dependencies:
       vite-plugin-kaioken:
-        specifier: ^0.13.1
-        version: 0.13.1(kaioken@0.32.0)
+        specifier: ^0.15.0
+        version: 0.15.0(kaioken@0.35.8)
     devDependencies:
       kaioken:
-        specifier: 0.32.0
-        version: 0.32.0
+        specifier: 0.35.8
+        version: 0.35.8
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
@@ -2479,10 +2479,10 @@ packages:
         integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==,
       }
 
-  kaioken@0.32.0:
+  kaioken@0.35.8:
     resolution:
       {
-        integrity: sha512-sy8lOLQWRnyXM16R/sUFZa5wN2/ACVPPgsIszFCABBDEgBb0xDKLGmPGJs6vgDzmw/gBFQ7XoducNSQ4Bb6VPA==,
+        integrity: sha512-S4kt4I5kheZzSQRZKoHBW7QtmlcdJ8m7j7vmeCn3gIuH1bSmsO1Gxv+MDFNaBVTBiSPON1Bzk46O4dmIElRy3w==,
       }
 
   kolorist@1.8.0:
@@ -3638,58 +3638,58 @@ packages:
     engines: { node: ">=18.0.0" }
     hasBin: true
 
-  turbo-darwin-64@2.1.2:
+  turbo-darwin-64@2.3.3:
     resolution:
       {
-        integrity: sha512-3TEBxHWh99h2yIzkuIigMEOXt/ItYQp0aPiJjPd1xN4oDcsKK5AxiFKPH9pdtfIBzYsY59kQhZiFj0ELnSP7Bw==,
+        integrity: sha512-bxX82xe6du/3rPmm4aCC5RdEilIN99VUld4HkFQuw+mvFg6darNBuQxyWSHZTtc25XgYjQrjsV05888w1grpaA==,
       }
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.1.2:
+  turbo-darwin-arm64@2.3.3:
     resolution:
       {
-        integrity: sha512-he0miWNq2WxJzsH82jS2Z4MXpnkzn9SH8a79iPXiJkq25QREImucscM4RPasXm8wARp91pyysJMq6aasD45CeA==,
+        integrity: sha512-DYbQwa3NsAuWkCUYVzfOUBbSUBVQzH5HWUFy2Kgi3fGjIWVZOFk86ss+xsWu//rlEAfYwEmopigsPYSmW4X15A==,
       }
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.1.2:
+  turbo-linux-64@2.3.3:
     resolution:
       {
-        integrity: sha512-fKUBcc0rK8Vdqv5a/E3CSpMBLG1bzwv+Q0Q83F8fG2ZfNCNKGbcEYABdonNZkkx141Rj03cZQFCgxu3MVEGU+A==,
+        integrity: sha512-eHj9OIB0dFaP6BxB88jSuaCLsOQSYWBgmhy2ErCu6D2GG6xW3b6e2UWHl/1Ho9FsTg4uVgo4DB9wGsKa5erjUA==,
       }
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.1.2:
+  turbo-linux-arm64@2.3.3:
     resolution:
       {
-        integrity: sha512-sV8Bpmm0WiuxgbhxymcC7wSsuxfBBieI98GegSwbr/bs1ANAgzCg93urIrdKdQ3/b31zZxQwcaP4FBF1wx1Qdg==,
+        integrity: sha512-NmDE/NjZoDj1UWBhMtOPmqFLEBKhzGS61KObfrDEbXvU3lekwHeoPvAMfcovzswzch+kN2DrtbNIlz+/rp8OCg==,
       }
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.1.2:
+  turbo-windows-64@2.3.3:
     resolution:
       {
-        integrity: sha512-wcmIJZI9ORT9ykHGliFE6kWRQrlH930QGSjSgWC8uFChFFuOyUlvC7ttcxuSvU9VqC7NF4C+GVAcFJQ8lTjN7g==,
+        integrity: sha512-O2+BS4QqjK3dOERscXqv7N2GXNcqHr9hXumkMxDj/oGx9oCatIwnnwx34UmzodloSnJpgSqjl8iRWiY65SmYoQ==,
       }
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.1.2:
+  turbo-windows-arm64@2.3.3:
     resolution:
       {
-        integrity: sha512-zdnXjrhk7YO6CP+Q5wPueEvOCLH4lDa6C4rrwiakcWcPgcQGbVozJlo4uaQ6awo8HLWQEvOwu84RkWTdLAc/Hw==,
+        integrity: sha512-dW4ZK1r6XLPNYLIKjC4o87HxYidtRRcBeo/hZ9Wng2XM/MqqYkAyzJXJGgRMsc0MMEN9z4+ZIfnSNBrA0b08ag==,
       }
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.1.2:
+  turbo@2.3.3:
     resolution:
       {
-        integrity: sha512-Jb0rbU4iHEVQ18An/YfakdIv9rKnd3zUfSE117EngrfWXFHo3RndVH96US3GsT8VHpwTncPePDBT2t06PaFLrw==,
+        integrity: sha512-DUHWQAcC8BTiUZDRzAYGvpSpGLiaOQPfYXlCieQbwUvmml/LRGIe3raKdrOPOoiX0DYlzxs2nH6BoWJoZrj8hA==,
       }
     hasBin: true
 
@@ -3941,13 +3941,13 @@ packages:
       vite:
         optional: true
 
-  vite-plugin-kaioken@0.13.1:
+  vite-plugin-kaioken@0.15.0:
     resolution:
       {
-        integrity: sha512-iiw96f4a0gV1YG8e+QeJlXFAYic2NDbUmhw1k2k+ujrYKrVDQtVeAcXBIDunC8f8R1vNvGujJNTdOpzDgsdVqg==,
+        integrity: sha512-VL5xqgbxQKod98qNWESLmjnl6AakijdLrZqQrzz4PMugTzYREJh5MWLxL0kje1jyVJr/CxapXNHGE7NLQ5qqfA==,
       }
     peerDependencies:
-      kaioken: ">=0.31.0"
+      kaioken: ">=0.35.0"
 
   vite-plugin-sitemap@0.7.1:
     resolution:
@@ -5373,7 +5373,7 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  kaioken@0.32.0: {}
+  kaioken@0.35.8: {}
 
   kolorist@1.8.0: {}
 
@@ -6256,32 +6256,32 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  turbo-darwin-64@2.1.2:
+  turbo-darwin-64@2.3.3:
     optional: true
 
-  turbo-darwin-arm64@2.1.2:
+  turbo-darwin-arm64@2.3.3:
     optional: true
 
-  turbo-linux-64@2.1.2:
+  turbo-linux-64@2.3.3:
     optional: true
 
-  turbo-linux-arm64@2.1.2:
+  turbo-linux-arm64@2.3.3:
     optional: true
 
-  turbo-windows-64@2.1.2:
+  turbo-windows-64@2.3.3:
     optional: true
 
-  turbo-windows-arm64@2.1.2:
+  turbo-windows-arm64@2.3.3:
     optional: true
 
-  turbo@2.1.2:
+  turbo@2.3.3:
     optionalDependencies:
-      turbo-darwin-64: 2.1.2
-      turbo-darwin-arm64: 2.1.2
-      turbo-linux-64: 2.1.2
-      turbo-linux-arm64: 2.1.2
-      turbo-windows-64: 2.1.2
-      turbo-windows-arm64: 2.1.2
+      turbo-darwin-64: 2.3.3
+      turbo-darwin-arm64: 2.3.3
+      turbo-linux-64: 2.3.3
+      turbo-linux-arm64: 2.3.3
+      turbo-windows-64: 2.3.3
+      turbo-windows-arm64: 2.3.3
 
   twoslash-protocol@0.2.9: {}
 
@@ -6494,9 +6494,9 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-kaioken@0.13.1(kaioken@0.32.0):
+  vite-plugin-kaioken@0.15.0(kaioken@0.35.8):
     dependencies:
-      kaioken: 0.32.0
+      kaioken: 0.35.8
 
   vite-plugin-sitemap@0.7.1: {}
 

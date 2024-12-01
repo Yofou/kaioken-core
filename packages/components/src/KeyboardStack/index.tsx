@@ -1,4 +1,4 @@
-import { computed, useCallback, useEffect, useMemo } from "kaioken"
+import { useComputed, useCallback, useEffect, useMemo } from "kaioken"
 import { KeyboardContext, keyboardStack } from "../utils"
 
 type RootProps = {
@@ -11,7 +11,7 @@ export const Root: Kaioken.FC<RootProps> = (props) => {
   const uid = useMemo(() => {
     return crypto.randomUUID()
   }, [])
-  const isActive = computed(() => {
+  const isActive = useComputed(() => {
     return keyboardStack.value.at(0) === uid
   })
 

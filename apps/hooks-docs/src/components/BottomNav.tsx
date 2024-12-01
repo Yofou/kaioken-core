@@ -1,6 +1,6 @@
 import { getPrevAndNextRoute } from "$/utils/meta"
 import { useTweenMemo } from "@kaioken-core/hooks"
-import { computed, signal, useMemo } from "kaioken"
+import { useComputed, useSignal } from "kaioken"
 import { twMerge } from "tailwind-merge"
 import { sineInOut } from "@kaioken-core/hooks/easing"
 import { useGlowAngle } from "$/hooks/useGlowAngle"
@@ -11,7 +11,7 @@ type ButtonNavLinkProps = {
 }
 const BottomNavLink: Kaioken.FC<ButtonNavLinkProps> = (props) => {
   const [ref, angle] = useGlowAngle<HTMLDivElement>()
-  const isFullGlow = signal(false)
+  const isFullGlow = useSignal(false)
   isFullGlow.displayName = "isFullGlow"
   const glow = useTweenMemo(
     () => {
@@ -38,7 +38,7 @@ const BottomNavLink: Kaioken.FC<ButtonNavLinkProps> = (props) => {
     }
   )
 
-  const glowGrad = computed(() => {
+  const glowGrad = useComputed(() => {
     return `linear-gradient(calc(var(--angle) + 90deg), #070707 ${glow.value.start1}% ${glow.value.finish1}%, #DC143C ${glow.value.start2}% ${glow.value.finish2}%)`
   })
 

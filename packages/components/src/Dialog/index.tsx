@@ -1,7 +1,7 @@
 import {
   createContext,
   ElementProps,
-  signal,
+  useSignal,
   useContext,
   useEffect,
   useMemo,
@@ -36,10 +36,10 @@ const RootContext = createContext<{
 RootContext.displayName = "Dialog.Context"
 
 export const Root: Kaioken.FC<RootProps> = (props) => {
-  const _open = signal(false)
+  const _open = useSignal(false)
   const open = props.open ?? _open
-  const titleId = signal<string | null>(null)
-  const descriptionId = signal<string | null>(null)
+  const titleId = useSignal<string | null>(null)
+  const descriptionId = useSignal<string | null>(null)
 
   const providerValue = useMemo(() => {
     return {

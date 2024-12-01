@@ -1,9 +1,9 @@
-import { useCallback, useEffect, signal } from "kaioken"
+import { useCallback, useEffect, useSignal } from "kaioken"
 import { useEventListener } from "./useEventListener"
 
 export const useWindowScroll = (behavior: ScrollBehavior = "auto") => {
-  const x = signal(0)
-  const y = signal(0)
+  const x = useSignal(0)
+  const y = useSignal(0)
 
   const update = () => {
     x.value = window.scrollX

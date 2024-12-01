@@ -1,10 +1,10 @@
-import { useEffect, signal } from "kaioken"
+import { useEffect, useSignal } from "kaioken"
 import { useEventListener } from "./useEventListener"
 import { useMediaQuery } from "./useMediaQuery"
 
 export const useWindowSize = (listenOrientation: boolean = true) => {
-  const width = signal(0)
-  const height = signal(0)
+  const width = useSignal(0)
+  const height = useSignal(0)
 
   const update = () => {
     if (window) {

@@ -1,6 +1,6 @@
 import { UseSpringExample } from "$/examples/spring"
 
-# spring
+# useSpring
 
 The spring behaves similarly like tween which interpolates values smoothly however now the controls using physics-based calculations, creating natural, fluid animations within your application.
 
@@ -12,7 +12,7 @@ The spring behaves similarly like tween which interpolates values smoothly howev
 
 ```ts
 const nextValue = useRef(100)
-const currentValue = spring(100)
+const currentValue = useSpring(100)
 
 const onUpdateValue = async () => {
   nextValue.current = nextValue.current === 100 ? 350 : 100
@@ -34,9 +34,9 @@ const onCancel = async () => {
 ## Type Declaration
 
 ```tsx twoslash
-import { spring } from "@kaioken-core/hooks"
+import { useSpring } from "@kaioken-core/hooks"
 // ---cut---
-const currentValue = spring(0)
+const currentValue = useSpring(0)
 
 interface SpringUpdateOpts {
   hard?: any
