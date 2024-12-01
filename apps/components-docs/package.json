@@ -24,7 +24,7 @@
   "dependencies": {
     "@floating-ui/dom": "^1.6.10",
     "express": "^4.19.2",
-    "kaioken": "0.35.7",
+    "kaioken": "0.35.8",
     "tsx": "^4.16.5",
     "vike": "^0.4.182",
     "vite": "^5.3.5"
