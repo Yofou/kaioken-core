@@ -4,13 +4,17 @@ import {
   useSignal,
   useContext,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
 } from "kaioken"
-import { UnwrapContext, useAwareKeyDown } from "../utils"
+import {
+  setPolyRef,
+  UnwrapContext,
+  useAwareClickOutside,
+  useAwareKeyDown,
+} from "../utils"
 import { Slot } from "../Slot"
-import { useClickOutside, useKeyDown } from "@kaioken-core/hooks"
+import { useKeyDown } from "@kaioken-core/hooks"
 import * as KeyboardStack from "../KeyboardStack"
 
 ///////////////////
@@ -166,10 +170,11 @@ type ContainerProps = ElementProps<"dialog"> & {
 
 export const Container: Kaioken.FC<ContainerProps> = ({
   asChild,
+  forceMount,
   ...props
 }) => {
   const rootContext = useContext(RootContext)
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLElement | null>(null)
 
   const featureAttrs = useMemo(() => {
     const attrs = {}
@@ -191,7 +196,7 @@ export const Container: Kaioken.FC<ContainerProps> = ({
     return attrs
   }, [rootContext?.descriptionId?.value, rootContext?.titleId?.value, asChild])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!ref.current || rootContext?.open?.value === false) {
       return
     }
@@ -209,9 +214,18 @@ export const Container: Kaioken.FC<ContainerProps> = ({
   }
 
   const Comp = asChild ? Slot : "dialog"
-  return props.forceMount || rootContext.open.value ? (
+  return forceMount || rootContext.open.value ? (
     <KeyboardStack.Root __dev="Dialog">
-      <Comp {...props} {...featureAttrs} ref={ref as any}>
+      <Comp
+        {...props}
+        {...featureAttrs}
+        ref={(el) => {
+          ref.current = el
+          if (props.ref) {
+            setPolyRef(props.ref, el)
+          }
+        }}
+      >
         {props.children}
       </Comp>
     </KeyboardStack.Root>
@@ -228,9 +242,13 @@ type ContentProps = ElementProps<"p"> & {
   disableInteractOutside?: boolean
 }
 
-export const Content: Kaioken.FC<ContentProps> = ({ asChild, ...props }) => {
+export const Content: Kaioken.FC<ContentProps> = ({
+  asChild,
+  disableInteractOutside,
+  ...props
+}) => {
   const rootContext = useContext(RootContext)
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLElement | null>(null)
 
   useKeyDown("Escape", (e) => {
     if (!rootContext || rootContext.open.value === false) {
@@ -249,7 +267,7 @@ export const Content: Kaioken.FC<ContentProps> = ({ asChild, ...props }) => {
     rootContext.open.value = false
   })
 
-  useClickOutside(
+  useAwareClickOutside(
     ref,
     (e) => {
       if (!rootContext || rootContext.open.value === false) {
@@ -257,7 +275,7 @@ export const Content: Kaioken.FC<ContentProps> = ({ asChild, ...props }) => {
       }
 
       rootContext?.onInteractOutside?.bind(window)?.(e)
-      if (props.disableInteractOutside) return
+      if (disableInteractOutside) return
 
       rootContext.open.value = false
     },
@@ -268,9 +286,15 @@ export const Content: Kaioken.FC<ContentProps> = ({ asChild, ...props }) => {
 
   const Comp = asChild ? Slot : "div"
   return (
-    <Comp {...props} ref={ref as any}>
+    <Comp
+      {...props}
+      ref={(el) => {
+        ref.current = el
+        setPolyRef(props.ref as any, el)
+      }}
+    >
       {props.children}
     </Comp>
   )
 }
-Content.displayName = "Dialog.Content"
+Content.displayName = "Dialog.eContent"
