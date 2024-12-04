@@ -17,14 +17,11 @@ const TestContextMenu = () => {
       <ContextMenu.Container className={"backdrop:hidden"}>
         <ContextMenu.Content
           className={"w-[300px] h-[500px] p-10 flex flex-col gap-2"}
+          disableInteractOutside
         >
           <ContextMenu.Item>button 1</ContextMenu.Item>
-          <ContextMenu.Item asChild>
-            <button>button 2</button>
-          </ContextMenu.Item>
-          <ContextMenu.Item asChild>
-            <button>button 3</button>
-          </ContextMenu.Item>
+          <ContextMenu.Item>button 2</ContextMenu.Item>
+          <ContextMenu.Item>button 3</ContextMenu.Item>
         </ContextMenu.Content>
       </ContextMenu.Container>
     </ContextMenu.Root>
@@ -36,12 +33,7 @@ const TestTooltipMenu: Kaioken.FC = () => {
   const isOpen = useSignal(false)
 
   return (
-    <Tooltip.Root
-      open={isOpen}
-      sideGap={16}
-      side="right"
-      avoidCollisions={true}
-    >
+    <Tooltip.Root open={isOpen} sideGap={16} side="left" avoidCollisions={true}>
       <Tooltip.Trigger>
         <button className={"w-[50px] ml-[50px]"}>Boop</button>
       </Tooltip.Trigger>
@@ -59,8 +51,8 @@ function Page() {
   return (
     <div className={"flex flex-col gap-4"}>
       <div className={"w-full"} />
-      {/*  <TestTooltipMenu />  */}
-      <TestContextMenu />
+      <TestTooltipMenu />
+      {/*  <TestContextMenu />  */}
     </div>
   )
 }

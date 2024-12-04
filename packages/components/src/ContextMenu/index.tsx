@@ -1,13 +1,13 @@
 import {
   createContext,
   ElementProps,
-  signal,
   Signal,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useRef,
+  useSignal,
 } from "kaioken"
 import { Slot } from "../Slot"
 import { Dialog } from "../../lib/main"
@@ -20,7 +20,7 @@ export const RootContext = createContext<{
     x: number
     y: number
   } | null>
-  containerRef: Kaioken.MutableRefObject<HTMLElement | null>
+  containerRef: Signal<HTMLElement | null>
   highlightRef: Kaioken.MutableRefObject<HTMLElement | null>
 } | null>(null)
 RootContext.displayName = "ContextMenu.Context"
@@ -33,9 +33,9 @@ type RootProps = {
   open?: Signal<boolean>
 }
 export const Root: Kaioken.FC<RootProps> = (props) => {
-  const internalOpen = signal(false)
-  const coords = signal<{ x: number; y: number } | null>(null)
-  const containerRef = useRef<HTMLElement | null>(null)
+  const internalOpen = useSignal(false)
+  const coords = useSignal<{ x: number; y: number } | null>(null)
+  const containerRef = useSignal<HTMLElement | null>(null)
   const highlightRef = useRef<HTMLElement | null>(null)
   const rootContextValue = useMemo(() => {
     return {
@@ -103,7 +103,7 @@ export const Container: Kaioken.FC<ContainerProps> = (props) => {
   const onRef = (el: HTMLDialogElement | null) => {
     if (!rootContext || rootContext.coords.value == null) return
     if (el) {
-      rootContext.containerRef.current = el
+      rootContext.containerRef.value = el
       const referenceEl = {
         getBoundingClientRect() {
           return {
@@ -128,7 +128,7 @@ export const Container: Kaioken.FC<ContainerProps> = (props) => {
         el.style.setProperty("left", `${result.x}px`)
       })
     } else {
-      rootContext.containerRef.current = el
+      rootContext.containerRef.value = el
     }
   }
 
@@ -155,12 +155,12 @@ export const Content: typeof Dialog.Content = (props) => {
   const rootContext = useContext(RootContext)
 
   const treeWalker = useMemo(() => {
-    if (!rootContext?.containerRef?.current) {
+    if (!rootContext?.containerRef?.value) {
       return null
     }
 
     return document.createTreeWalker(
-      rootContext.containerRef.current,
+      rootContext.containerRef.value,
       NodeFilter.SHOW_ELEMENT,
       {
         acceptNode(node) {
@@ -174,7 +174,7 @@ export const Content: typeof Dialog.Content = (props) => {
         },
       }
     )
-  }, [rootContext?.containerRef?.current])
+  }, [rootContext?.containerRef?.value])
 
   useEffect(() => {
     if (!rootContext) {
@@ -215,8 +215,6 @@ export const Content: typeof Dialog.Content = (props) => {
         last.focus()
       }
     }
-
-    console.log(treeWalker.currentNode)
   })
 
   return <Dialog.Content {...props} />
