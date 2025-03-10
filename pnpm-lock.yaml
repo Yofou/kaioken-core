@@ -16,7 +16,7 @@ importers:
         version: 3.3.3
       turbo:
         specifier: latest
-        version: 2.3.3
+        version: 2.4.4
 
   apps/components-docs:
     dependencies:
@@ -27,17 +27,20 @@ importers:
         specifier: ^4.19.2
         version: 4.19.2
       kaioken:
-        specifier: 0.35.8
-        version: 0.35.8
+        specifier: 0.35.10
+        version: 0.35.10
+      muuri:
+        specifier: ^0.9.5
+        version: 0.9.5
       tsx:
         specifier: ^4.16.5
         version: 4.19.0
       vike:
         specifier: ^0.4.182
-        version: 0.4.195(vite@5.3.5(@types/node@20.14.12))
+        version: 0.4.195(vite@5.3.5(@types/node@22.13.10))
       vite:
         specifier: ^5.3.5
-        version: 5.3.5(@types/node@20.14.12)
+        version: 5.3.5(@types/node@22.13.10)
     devDependencies:
       "@kaioken-core/components":
         specifier: workspace:^
@@ -45,6 +48,9 @@ importers:
       "@kaioken-core/hooks":
         specifier: workspace:^
         version: link:../../packages/hooks
+      "@kaioken-core/sortable":
+        specifier: workspace:^
+        version: link:../../packages/sortable
       "@types/express":
         specifier: ^4.17.21
         version: 4.17.21
@@ -65,7 +71,7 @@ importers:
         version: 5.5.4
       vite-plugin-kaioken:
         specifier: 0.15.0
-        version: 0.15.0(kaioken@0.35.8)
+        version: 0.15.0(kaioken@0.35.10)
 
   apps/hooks-docs:
     dependencies:
@@ -88,8 +94,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       kaioken:
-        specifier: 0.35.8
-        version: 0.35.8
+        specifier: 0.35.10
+        version: 0.35.10
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
@@ -104,10 +110,10 @@ importers:
         version: 4.16.2
       vike:
         specifier: ^0.4.180
-        version: 0.4.181(vite@5.3.5(@types/node@20.14.12))
+        version: 0.4.181(vite@5.3.5(@types/node@22.13.10))
       vite:
         specifier: ^5.3.4
-        version: 5.3.5(@types/node@20.14.12)
+        version: 5.3.5(@types/node@22.13.10)
       vite-plugin-sitemap:
         specifier: ^0.7.1
         version: 0.7.1
@@ -150,7 +156,7 @@ importers:
         version: 5.5.4
       vite-plugin-kaioken:
         specifier: 0.15.0
-        version: 0.15.0(kaioken@0.35.8)
+        version: 0.15.0(kaioken@0.35.10)
 
   packages/components:
     dependencies:
@@ -162,42 +168,73 @@ importers:
         version: 1.6.10
       vite-plugin-kaioken:
         specifier: ^0.15.0
-        version: 0.15.0(kaioken@0.35.8)
+        version: 0.15.0(kaioken@0.35.10)
     devDependencies:
       "@kaioken-core/hooks":
         specifier: workspace:^
         version: link:../hooks
       kaioken:
-        specifier: 0.35.8
-        version: 0.35.8
+        specifier: 0.35.10
+        version: 0.35.10
+      rollup-plugin-tree-shakeable:
+        specifier: ^1.0.3
+        version: 1.0.3
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
       vite:
         specifier: ^5.0.10
-        version: 5.3.5(@types/node@20.14.12)
+        version: 5.3.5(@types/node@22.13.10)
       vite-plugin-dts:
         specifier: ^3.7.3
-        version: 3.9.1(@types/node@20.14.12)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12))
+        version: 3.9.1(@types/node@22.13.10)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.5(@types/node@22.13.10))
 
   packages/hooks:
     dependencies:
       vite-plugin-kaioken:
         specifier: ^0.15.0
-        version: 0.15.0(kaioken@0.35.8)
+        version: 0.15.0(kaioken@0.35.10)
     devDependencies:
       kaioken:
-        specifier: 0.35.8
-        version: 0.35.8
+        specifier: 0.35.10
+        version: 0.35.10
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
       vite:
         specifier: ^5.0.10
-        version: 5.3.4(@types/node@20.14.12)
+        version: 5.3.4(@types/node@22.13.10)
       vite-plugin-dts:
         specifier: ^3.7.3
-        version: 3.9.1(@types/node@20.14.12)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.4(@types/node@20.14.12))
+        version: 3.9.1(@types/node@22.13.10)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.4(@types/node@22.13.10))
+
+  packages/sortable:
+    dependencies:
+      muuri:
+        specifier: ^0.9.5
+        version: 0.9.5
+      vite-plugin-kaioken:
+        specifier: ^0.15.0
+        version: 0.15.0(kaioken@0.35.10)
+    devDependencies:
+      "@kaioken-core/components":
+        specifier: workspace:^
+        version: link:../components
+      "@kaioken-core/hooks":
+        specifier: workspace:^
+        version: link:../hooks
+      kaioken:
+        specifier: 0.35.10
+        version: 0.35.10
+      typescript:
+        specifier: ^5.3.3
+        version: 5.5.4
+      vite:
+        specifier: ^5.0.10
+        version: 5.3.5(@types/node@22.13.10)
+      vite-plugin-dts:
+        specifier: ^3.7.3
+        version: 3.9.1(@types/node@22.13.10)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.5(@types/node@22.13.10))
 
 packages:
   "@alloc/quick-lru@5.2.0":
@@ -1357,6 +1394,12 @@ packages:
         integrity: sha512-r7wNXakLeSsGT0H1AU863vS2wa5wBOK4bWMjZz2wj+8nBx+m5PeIn0k8AloSLpRuiwdRQZwarZqHE4FNArPuJQ==,
       }
 
+  "@types/node@22.13.10":
+    resolution:
+      {
+        integrity: sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==,
+      }
+
   "@types/qs@6.9.15":
     resolution:
       {
@@ -2479,10 +2522,10 @@ packages:
         integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==,
       }
 
-  kaioken@0.35.8:
+  kaioken@0.35.10:
     resolution:
       {
-        integrity: sha512-S4kt4I5kheZzSQRZKoHBW7QtmlcdJ8m7j7vmeCn3gIuH1bSmsO1Gxv+MDFNaBVTBiSPON1Bzk46O4dmIElRy3w==,
+        integrity: sha512-2Xa4qNtuYfI5i0qiR24S3GaP3ZVLO43M58cRsMWvh7ajXB2JNfZLrDpR1uEArICajMSHhAe358Nc4DTMkr1chQ==,
       }
 
   kolorist@1.8.0:
@@ -2516,12 +2559,14 @@ packages:
       {
         integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==,
       }
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
 
   lodash.isequal@4.5.0:
     resolution:
       {
         integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==,
       }
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
   lodash@4.17.21:
     resolution:
@@ -2552,6 +2597,12 @@ packages:
     resolution:
       {
         integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==,
+      }
+
+  magic-string@0.30.17:
+    resolution:
+      {
+        integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==,
       }
 
   markdown-extensions@2.0.0:
@@ -2900,6 +2951,12 @@ packages:
     resolution:
       {
         integrity: sha512-ckmWDJjphvd/FvZawgygcUeQCxzvohjFO5RxTjj4eq8kw359gFF3E1brjfI+viLMxss5JrHTDRHZvu2/tuy0Qg==,
+      }
+
+  muuri@0.9.5:
+    resolution:
+      {
+        integrity: sha512-nJL9/Pd5IaIXGAVunBs/LLQ+v6tPkvlqCYrlauWESgkVFr+F+CRf8HnayRh4AqiQ1S/PIEN39fhJSe4L5rLlxg==,
       }
 
   mz@2.7.0:
@@ -3276,6 +3333,13 @@ packages:
       }
     engines: { iojs: ">=1.0.0", node: ">=0.10.0" }
 
+  rollup-plugin-tree-shakeable@1.0.3:
+    resolution:
+      {
+        integrity: sha512-A4c06mvUYIuYMN2NJnnPNh5AZlW3KzisCXSENBABUFK4HDgLycuKRsDMRFT21P5CfijoHIo7FDdrVrOGFce4vg==,
+      }
+    engines: { node: ">= 18" }
+
   rollup@4.19.0:
     resolution:
       {
@@ -3638,58 +3702,58 @@ packages:
     engines: { node: ">=18.0.0" }
     hasBin: true
 
-  turbo-darwin-64@2.3.3:
+  turbo-darwin-64@2.4.4:
     resolution:
       {
-        integrity: sha512-bxX82xe6du/3rPmm4aCC5RdEilIN99VUld4HkFQuw+mvFg6darNBuQxyWSHZTtc25XgYjQrjsV05888w1grpaA==,
+        integrity: sha512-5kPvRkLAfmWI0MH96D+/THnDMGXlFNmjeqNRj5grLKiry+M9pKj3pRuScddAXPdlxjO5Ptz06UNaOQrrYGTx1g==,
       }
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.3.3:
+  turbo-darwin-arm64@2.4.4:
     resolution:
       {
-        integrity: sha512-DYbQwa3NsAuWkCUYVzfOUBbSUBVQzH5HWUFy2Kgi3fGjIWVZOFk86ss+xsWu//rlEAfYwEmopigsPYSmW4X15A==,
+        integrity: sha512-/gtHPqbGQXDFhrmy+Q/MFW2HUTUlThJ97WLLSe4bxkDrKHecDYhAjbZ4rN3MM93RV9STQb3Tqy4pZBtsd4DfCw==,
       }
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.3.3:
+  turbo-linux-64@2.4.4:
     resolution:
       {
-        integrity: sha512-eHj9OIB0dFaP6BxB88jSuaCLsOQSYWBgmhy2ErCu6D2GG6xW3b6e2UWHl/1Ho9FsTg4uVgo4DB9wGsKa5erjUA==,
+        integrity: sha512-SR0gri4k0bda56hw5u9VgDXLKb1Q+jrw4lM7WAhnNdXvVoep4d6LmnzgMHQQR12Wxl3KyWPbkz9d1whL6NTm2Q==,
       }
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.3.3:
+  turbo-linux-arm64@2.4.4:
     resolution:
       {
-        integrity: sha512-NmDE/NjZoDj1UWBhMtOPmqFLEBKhzGS61KObfrDEbXvU3lekwHeoPvAMfcovzswzch+kN2DrtbNIlz+/rp8OCg==,
+        integrity: sha512-COXXwzRd3vslQIfJhXUklgEqlwq35uFUZ7hnN+AUyXx7hUOLIiD5NblL+ETrHnhY4TzWszrbwUMfe2BYWtaPQg==,
       }
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.3.3:
+  turbo-windows-64@2.4.4:
     resolution:
       {
-        integrity: sha512-O2+BS4QqjK3dOERscXqv7N2GXNcqHr9hXumkMxDj/oGx9oCatIwnnwx34UmzodloSnJpgSqjl8iRWiY65SmYoQ==,
+        integrity: sha512-PV9rYNouGz4Ff3fd6sIfQy5L7HT9a4fcZoEv8PKRavU9O75G7PoDtm8scpHU10QnK0QQNLbE9qNxOAeRvF0fJg==,
       }
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.3.3:
+  turbo-windows-arm64@2.4.4:
     resolution:
       {
-        integrity: sha512-dW4ZK1r6XLPNYLIKjC4o87HxYidtRRcBeo/hZ9Wng2XM/MqqYkAyzJXJGgRMsc0MMEN9z4+ZIfnSNBrA0b08ag==,
+        integrity: sha512-403sqp9t5sx6YGEC32IfZTVWkRAixOQomGYB8kEc6ZD+//LirSxzeCHCnM8EmSXw7l57U1G+Fb0kxgTcKPU/Lg==,
       }
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.3.3:
+  turbo@2.4.4:
     resolution:
       {
-        integrity: sha512-DUHWQAcC8BTiUZDRzAYGvpSpGLiaOQPfYXlCieQbwUvmml/LRGIe3raKdrOPOoiX0DYlzxs2nH6BoWJoZrj8hA==,
+        integrity: sha512-N9FDOVaY3yz0YCOhYIgOGYad7+m2ptvinXygw27WPLQvcZDl3+0Sa77KGVlLSiuPDChOUEnTKE9VJwLSi9BPGQ==,
       }
     hasBin: true
 
@@ -3740,6 +3804,12 @@ packages:
     resolution:
       {
         integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==,
+      }
+
+  undici-types@6.20.0:
+    resolution:
+      {
+        integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==,
       }
 
   unified@11.0.5:
@@ -4404,23 +4474,23 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  "@microsoft/api-extractor-model@7.28.13(@types/node@20.14.12)":
+  "@microsoft/api-extractor-model@7.28.13(@types/node@22.13.10)":
     dependencies:
       "@microsoft/tsdoc": 0.14.2
       "@microsoft/tsdoc-config": 0.16.2
-      "@rushstack/node-core-library": 4.0.2(@types/node@20.14.12)
+      "@rushstack/node-core-library": 4.0.2(@types/node@22.13.10)
     transitivePeerDependencies:
       - "@types/node"
 
-  "@microsoft/api-extractor@7.43.0(@types/node@20.14.12)":
+  "@microsoft/api-extractor@7.43.0(@types/node@22.13.10)":
     dependencies:
-      "@microsoft/api-extractor-model": 7.28.13(@types/node@20.14.12)
+      "@microsoft/api-extractor-model": 7.28.13(@types/node@22.13.10)
       "@microsoft/tsdoc": 0.14.2
       "@microsoft/tsdoc-config": 0.16.2
-      "@rushstack/node-core-library": 4.0.2(@types/node@20.14.12)
+      "@rushstack/node-core-library": 4.0.2(@types/node@22.13.10)
       "@rushstack/rig-package": 0.5.2
-      "@rushstack/terminal": 0.10.0(@types/node@20.14.12)
-      "@rushstack/ts-command-line": 4.19.1(@types/node@20.14.12)
+      "@rushstack/terminal": 0.10.0(@types/node@22.13.10)
+      "@rushstack/ts-command-line": 4.19.1(@types/node@22.13.10)
       lodash: 4.17.21
       minimatch: 3.0.8
       resolve: 1.22.8
@@ -4519,7 +4589,7 @@ snapshots:
   "@rollup/rollup-win32-x64-msvc@4.19.0":
     optional: true
 
-  "@rushstack/node-core-library@4.0.2(@types/node@20.14.12)":
+  "@rushstack/node-core-library@4.0.2(@types/node@22.13.10)":
     dependencies:
       fs-extra: 7.0.1
       import-lazy: 4.0.0
@@ -4528,23 +4598,23 @@ snapshots:
       semver: 7.5.4
       z-schema: 5.0.5
     optionalDependencies:
-      "@types/node": 20.14.12
+      "@types/node": 22.13.10
 
   "@rushstack/rig-package@0.5.2":
     dependencies:
       resolve: 1.22.8
       strip-json-comments: 3.1.1
 
-  "@rushstack/terminal@0.10.0(@types/node@20.14.12)":
+  "@rushstack/terminal@0.10.0(@types/node@22.13.10)":
     dependencies:
-      "@rushstack/node-core-library": 4.0.2(@types/node@20.14.12)
+      "@rushstack/node-core-library": 4.0.2(@types/node@22.13.10)
       supports-color: 8.1.1
     optionalDependencies:
-      "@types/node": 20.14.12
+      "@types/node": 22.13.10
 
-  "@rushstack/ts-command-line@4.19.1(@types/node@20.14.12)":
+  "@rushstack/ts-command-line@4.19.1(@types/node@22.13.10)":
     dependencies:
-      "@rushstack/terminal": 0.10.0(@types/node@20.14.12)
+      "@rushstack/terminal": 0.10.0(@types/node@22.13.10)
       "@types/argparse": 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
@@ -4640,6 +4710,10 @@ snapshots:
   "@types/node@20.14.12":
     dependencies:
       undici-types: 5.26.5
+
+  "@types/node@22.13.10":
+    dependencies:
+      undici-types: 6.20.0
 
   "@types/qs@6.9.15": {}
 
@@ -5373,7 +5447,7 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  kaioken@0.35.8: {}
+  kaioken@0.35.10: {}
 
   kolorist@1.8.0: {}
 
@@ -5398,6 +5472,10 @@ snapshots:
       yallist: 4.0.0
 
   magic-string@0.30.10:
+    dependencies:
+      "@jridgewell/sourcemap-codec": 1.5.0
+
+  magic-string@0.30.17:
     dependencies:
       "@jridgewell/sourcemap-codec": 1.5.0
 
@@ -5755,6 +5833,8 @@ snapshots:
 
   muggle-string@0.3.1: {}
 
+  muuri@0.9.5: {}
+
   mz@2.7.0:
     dependencies:
       any-promise: 1.3.0
@@ -5979,6 +6059,12 @@ snapshots:
       supports-preserve-symlinks-flag: 1.0.0
 
   reusify@1.0.4: {}
+
+  rollup-plugin-tree-shakeable@1.0.3:
+    dependencies:
+      "@types/node": 22.13.10
+      estree-walker: 3.0.3
+      magic-string: 0.30.17
 
   rollup@4.19.0:
     dependencies:
@@ -6256,32 +6342,32 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  turbo-darwin-64@2.3.3:
+  turbo-darwin-64@2.4.4:
     optional: true
 
-  turbo-darwin-arm64@2.3.3:
+  turbo-darwin-arm64@2.4.4:
     optional: true
 
-  turbo-linux-64@2.3.3:
+  turbo-linux-64@2.4.4:
     optional: true
 
-  turbo-linux-arm64@2.3.3:
+  turbo-linux-arm64@2.4.4:
     optional: true
 
-  turbo-windows-64@2.3.3:
+  turbo-windows-64@2.4.4:
     optional: true
 
-  turbo-windows-arm64@2.3.3:
+  turbo-windows-arm64@2.4.4:
     optional: true
 
-  turbo@2.3.3:
+  turbo@2.4.4:
     optionalDependencies:
-      turbo-darwin-64: 2.3.3
-      turbo-darwin-arm64: 2.3.3
-      turbo-linux-64: 2.3.3
-      turbo-linux-arm64: 2.3.3
-      turbo-windows-64: 2.3.3
-      turbo-windows-arm64: 2.3.3
+      turbo-darwin-64: 2.4.4
+      turbo-darwin-arm64: 2.4.4
+      turbo-linux-64: 2.4.4
+      turbo-linux-arm64: 2.4.4
+      turbo-windows-64: 2.4.4
+      turbo-windows-arm64: 2.4.4
 
   twoslash-protocol@0.2.9: {}
 
@@ -6305,6 +6391,8 @@ snapshots:
   undefsafe@2.0.5: {}
 
   undici-types@5.26.5: {}
+
+  undici-types@6.20.0: {}
 
   unified@11.0.5:
     dependencies:
@@ -6426,7 +6514,7 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vike@0.4.181(vite@5.3.5(@types/node@20.14.12)):
+  vike@0.4.181(vite@5.3.5(@types/node@22.13.10)):
     dependencies:
       "@brillout/import": 0.2.3
       "@brillout/json-serializer": 0.5.13
@@ -6441,9 +6529,9 @@ snapshots:
       semver: 7.6.3
       sirv: 2.0.4
       source-map-support: 0.5.21
-      vite: 5.3.5(@types/node@20.14.12)
+      vite: 5.3.5(@types/node@22.13.10)
 
-  vike@0.4.195(vite@5.3.5(@types/node@20.14.12)):
+  vike@0.4.195(vite@5.3.5(@types/node@22.13.10)):
     dependencies:
       "@brillout/import": 0.2.3
       "@brillout/json-serializer": 0.5.13
@@ -6458,11 +6546,11 @@ snapshots:
       semver: 7.6.3
       sirv: 2.0.4
       source-map-support: 0.5.21
-      vite: 5.3.5(@types/node@20.14.12)
+      vite: 5.3.5(@types/node@22.13.10)
 
-  vite-plugin-dts@3.9.1(@types/node@20.14.12)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.4(@types/node@20.14.12)):
+  vite-plugin-dts@3.9.1(@types/node@22.13.10)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.4(@types/node@22.13.10)):
     dependencies:
-      "@microsoft/api-extractor": 7.43.0(@types/node@20.14.12)
+      "@microsoft/api-extractor": 7.43.0(@types/node@22.13.10)
       "@rollup/pluginutils": 5.1.0(rollup@4.19.0)
       "@vue/language-core": 1.8.27(typescript@5.5.4)
       debug: 4.3.5(supports-color@5.5.0)
@@ -6471,15 +6559,15 @@ snapshots:
       typescript: 5.5.4
       vue-tsc: 1.8.27(typescript@5.5.4)
     optionalDependencies:
-      vite: 5.3.4(@types/node@20.14.12)
+      vite: 5.3.4(@types/node@22.13.10)
     transitivePeerDependencies:
       - "@types/node"
       - rollup
       - supports-color
 
-  vite-plugin-dts@3.9.1(@types/node@20.14.12)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12)):
+  vite-plugin-dts@3.9.1(@types/node@22.13.10)(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.5(@types/node@22.13.10)):
     dependencies:
-      "@microsoft/api-extractor": 7.43.0(@types/node@20.14.12)
+      "@microsoft/api-extractor": 7.43.0(@types/node@22.13.10)
       "@rollup/pluginutils": 5.1.0(rollup@4.19.0)
       "@vue/language-core": 1.8.27(typescript@5.5.4)
       debug: 4.3.5(supports-color@5.5.0)
@@ -6488,34 +6576,34 @@ snapshots:
       typescript: 5.5.4
       vue-tsc: 1.8.27(typescript@5.5.4)
     optionalDependencies:
-      vite: 5.3.5(@types/node@20.14.12)
+      vite: 5.3.5(@types/node@22.13.10)
     transitivePeerDependencies:
       - "@types/node"
       - rollup
       - supports-color
 
-  vite-plugin-kaioken@0.15.0(kaioken@0.35.8):
+  vite-plugin-kaioken@0.15.0(kaioken@0.35.10):
     dependencies:
-      kaioken: 0.35.8
+      kaioken: 0.35.10
 
   vite-plugin-sitemap@0.7.1: {}
 
-  vite@5.3.4(@types/node@20.14.12):
+  vite@5.3.4(@types/node@22.13.10):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.45
       rollup: 4.19.0
     optionalDependencies:
-      "@types/node": 20.14.12
+      "@types/node": 22.13.10
       fsevents: 2.3.3
 
-  vite@5.3.5(@types/node@20.14.12):
+  vite@5.3.5(@types/node@22.13.10):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.45
       rollup: 4.19.0
     optionalDependencies:
-      "@types/node": 20.14.12
+      "@types/node": 22.13.10
       fsevents: 2.3.3
 
   vue-template-compiler@2.7.16:

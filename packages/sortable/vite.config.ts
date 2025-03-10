@@ -7,14 +7,14 @@ export default defineConfig({
     minify: false,
 
     lib: {
-      entry: ["./lib/main.tsx", "./lib/Slot.tsx"],
+      entry: ["./lib/main.tsx"],
       name: "KaiokenCore",
       fileName: (extension, name) =>
         extension === "es" ? `${name}.js` : `${name}.${extension}.js`,
     },
 
     rollupOptions: {
-      external: ["kaioken", "kaioken/utils"],
+      external: ["kaioken", "kaioken/utils", "muuri"],
       output: {
         globals: {
           kaioken: "Kaioken",
