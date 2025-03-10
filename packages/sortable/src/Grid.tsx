@@ -5,7 +5,6 @@ import {
   Signal,
   useEffect,
   useSignal,
-  useWatch,
 } from "kaioken"
 import Muuri from "muuri"
 import { type GridOptions, type GridEvents } from "muuri"
@@ -142,16 +141,20 @@ export const Grid = (props: GridProps) => {
     if (!containerRef.value) {
       return () => {}
     } else if (MuuriModule.peek()) {
-      muuriInstance.value = new (MuuriModule.value as typeof Muuri)(
-        containerRef.value,
-        rest
-      )
+      import("muuri").then(({ default: Grid }) => {
+        MuuriModule.value = Grid
+        hasLoaded.value = true
+        muuriInstance.value = new (MuuriModule.value as typeof Muuri)(
+          containerRef?.value!,
+          rest
+        )
 
-      if (Signal.isSignal(ref)) {
-        ref.sneak(muuriInstance.value)
-      } else if (ref) {
-        ref.current = muuriInstance.value
-      }
+        if (Signal.isSignal(ref)) {
+          ref.sneak(muuriInstance.value)
+        } else if (ref) {
+          ref.current = muuriInstance.value
+        }
+      })
 
       return () => {
         if (muuriInstance.value) {
@@ -166,7 +169,7 @@ export const Grid = (props: GridProps) => {
       }
     }
   }
-  useWatch(handleGridInit)
+  //  useWatch(handleGridInit)
   useEffect(handleGridInit, [rest.dragSort, hasLoaded.value])
 
   const handleEventAttaching = () => {
@@ -201,8 +204,9 @@ export const Grid = (props: GridProps) => {
     }
   }
 
-  useWatch(handleEventAttaching)
+  //  useWatch(handleEventAttaching)
   useEffect(handleEventAttaching, [
+    muuriInstance.value,
     onAdd,
     onMove,
     onSend,

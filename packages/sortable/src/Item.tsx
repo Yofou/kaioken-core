@@ -1,4 +1,4 @@
-import { ElementProps, useContext, useSignal, useWatch } from "kaioken"
+import { ElementProps, useContext, useEffect, useSignal } from "kaioken"
 import { GridProvider } from "./Grid"
 import { Signal } from "kaioken"
 import { Item as MuuriItem } from "muuri"
@@ -24,7 +24,7 @@ export const Item = (props: ItemProps) => {
   const itemEl = useSignal<HTMLDivElement | null>(null)
   const gridInstance = useContext(GridProvider)
 
-  useWatch(() => {
+  useEffect(() => {
     if (!itemEl.value || !gridInstance?.value) {
       return () => {}
     }
@@ -43,7 +43,7 @@ export const Item = (props: ItemProps) => {
         ref.current = null
       }
     }
-  })
+  }, [gridInstance?.value, itemEl.value])
 
   return (
     <div style={"position: absolute;"} {...outerProps} ref={itemEl}>
