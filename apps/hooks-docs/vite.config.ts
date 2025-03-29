@@ -11,6 +11,7 @@ import rehypeAutolinkHeadings, {
   Options as AutoLinkOptions,
 } from "rehype-autolink-headings"
 import rehypeSlug from "rehype-slug"
+import tailwindcss from "@tailwindcss/vite"
 
 const hoverHighlight = rendererRich({
   hast: {
@@ -29,6 +30,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    tailwindcss(),
     {
       enforce: "pre",
       ...mdx({

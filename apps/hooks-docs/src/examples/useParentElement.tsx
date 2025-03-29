@@ -1,5 +1,5 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { useParentElement } from "@kaioken-core/hooks"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseParentElementExample: Kaioken.FC = () => {
   const parentElm = useParentElement()

@@ -1,15 +1,23 @@
 import { useSignal, useEffect } from "kaioken"
 import { CommandPalette } from "./CommandPallete"
 import { useKeyDown } from "@kaioken-core/hooks"
-import { usePageContext } from "$/context/pageContext"
-import { CMD } from "$/icons/Cmd"
-import { Github } from "$/icons/Github"
-import { Discord } from "$/icons/Discord"
-import { Hamburger } from "$/icons/Hamburger"
+import { CMD } from "../icons/Cmd"
+import { Github } from "../icons/Github"
+import { Discord } from "../icons/Discord"
+import { Hamburger } from "../icons/Hamburger"
 import { Dialog } from "@kaioken-core/components"
 
-export function Navbar() {
-  const pageCtx = usePageContext() as any
+type NavBarProps = {
+  pageCtx: any
+  Pages: Map<
+    string,
+    {
+      name: string
+    }
+  >
+}
+
+export const Navbar: Kaioken.FC<NavBarProps> = (props) => {
   const showCommandPalette = useSignal(false)
 
   useKeyDown(["k"], (e) => {
@@ -21,7 +29,7 @@ export function Navbar() {
 
   useEffect(() => {
     showCommandPalette.value = false
-  }, [pageCtx.urlPathname])
+  }, [props.pageCtx.urlPathname])
 
   return (
     <Dialog.Root open={showCommandPalette}>
@@ -42,7 +50,7 @@ export function Navbar() {
               </span>
             </button>
           </Dialog.Trigger>
-          <CommandPalette />
+          <CommandPalette Pages={props.Pages} />
 
           <div className="hidden md:flex gap-4">
             <a href="https://github.com/Yofou/kaioken-core" target="_blank">

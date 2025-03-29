@@ -1,6 +1,6 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { useTextareaAutoSize } from "@kaioken-core/hooks"
 import { useModel } from "kaioken"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseTextareaAutoSizeExample = () => {
   const [ref, value] = useModel<HTMLTextAreaElement>(

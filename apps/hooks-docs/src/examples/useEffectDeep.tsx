@@ -1,8 +1,10 @@
 import { ElementProps, useSignal } from "kaioken"
 import { useEffectDeep } from "@kaioken-core/hooks"
-import { DemoContainer } from "$/components/DemoContainer"
-import { Button } from "$/components/Button"
-import { Input } from "$/components/Input"
+import {
+  DemoContainer,
+  Button,
+  Input,
+} from "@kaioken-core/private-docs-components"
 
 export const UseEffectDeepExample: Kaioken.FC = () => {
   const context = useSignal({

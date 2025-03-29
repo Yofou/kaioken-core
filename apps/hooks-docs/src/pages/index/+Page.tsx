@@ -1,7 +1,7 @@
-import { Button } from "$/components/Button"
 import { Pages } from "$/utils/meta"
 import { navigate } from "kaioken"
 import Bash from "./bash.mdx"
+import { Button } from "@kaioken-core/private-docs-components"
 
 export { Page }
 
@@ -14,7 +14,7 @@ function Page() {
 
   return (
     <>
-      <div className="w-full grid grid-cols-1 md:grid-cols-[1fr,max-content] items-center">
+      <div className="w-full grid grid-cols-1 md:grid-cols-[1fr_max-content] items-center">
         <div className="flex flex-col">
           <h2 className="font-cabin text-[4rem] font-semibold leading-[80%]">
             Kaioken core Hooks

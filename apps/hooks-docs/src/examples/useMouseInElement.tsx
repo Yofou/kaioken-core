@@ -1,6 +1,6 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { useMouseInElement } from "@kaioken-core/hooks"
 import { useComputed, useRef } from "kaioken"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseMouseInElementExample: Kaioken.FC = () => {
   const ref = useRef<HTMLDivElement>(null)

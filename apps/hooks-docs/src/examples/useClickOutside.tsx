@@ -1,7 +1,6 @@
-import { Button } from "$/components/Button"
-import { DemoContainer } from "$/components/DemoContainer"
 import { useClickOutside } from "@kaioken-core/hooks"
 import { useRef, useState } from "kaioken"
+import { Button, DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseClickOutsideExample = () => {
   const [isOpen, setIsOpen] = useState(false)

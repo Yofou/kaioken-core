@@ -1,0 +1,65 @@
+@import "tailwindcss";
+@source "../src/**";
+
+@theme {
+  --color-*: initial;
+  --color-grey-700: #1e1e1e;
+  --color-grey-900: #151313;
+  --color-red: #ea495e;
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  --font-cabin: "Cabin Variable", sans-serif;
+
+  --animate-background-shine: background-shine 2s linear infinite;
+}
+
+@keyframes background-shine {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.bg-glass {
+  background: rgba(0, 0, 0, 0.01);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.bg-glass-red {
+  background: rgba(25, 18, 18, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.bg-metalic {
+  background: linear-gradient(
+    45deg,
+    #999 20%,
+    #ccc 30%,
+    #ddd 50%,
+    #ccc 70%,
+    #fff 80%,
+    #999 95%
+  );
+}
+
+.text-metalic {
+  background: linear-gradient(
+    45deg,
+    #999 5%,
+    #fff 10%,
+    #ccc 30%,
+    #ddd 50%,
+    #ccc 70%,
+    #fff 80%,
+    #999 95%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

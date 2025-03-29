@@ -1,4 +1,9 @@
+import "@fontsource-variable/cabin"
+
+import "@kaioken-core/private-docs-components/style.css"
 import "./PageShell.css"
+import "../css/mdx.css"
+import "../css/shiki.css"
 import { LayoutDefault } from "$/layouts/LayoutDefault"
 import { PageContextProvider } from "$/context/pageContext"
 import type { PageContext } from "vike/types"

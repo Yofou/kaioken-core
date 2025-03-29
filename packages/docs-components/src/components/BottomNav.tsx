@@ -1,12 +1,14 @@
-import { getPrevAndNextRoute } from "$/utils/meta"
 import { useTweenMemo } from "@kaioken-core/hooks"
 import { useComputed, useSignal } from "kaioken"
 import { twMerge } from "tailwind-merge"
 import { sineInOut } from "@kaioken-core/hooks/easing"
-import { useGlowAngle } from "$/hooks/useGlowAngle"
+import { useGlowAngle } from "../hooks/useGlowAngle"
 
 type ButtonNavLinkProps = {
-  route: NonNullable<ReturnType<typeof getPrevAndNextRoute>[0]>
+  route: {
+    route: string
+    name: string
+  }
   className: string
 }
 const BottomNavLink: Kaioken.FC<ButtonNavLinkProps> = (props) => {
@@ -67,11 +69,23 @@ const BottomNavLink: Kaioken.FC<ButtonNavLinkProps> = (props) => {
   )
 }
 
+type GetPrevAndNextFn = (route: string) => readonly [
+  {
+    route: string
+    name: string
+  } | null,
+  {
+    route: string
+    name: string
+  } | null,
+]
+
 type ButtonNavProps = {
+  getPrevAndNextRoute: GetPrevAndNextFn
   currRoute: string
 }
 export const BottomNav: Kaioken.FC<ButtonNavProps> = (props) => {
-  const [prev, next] = getPrevAndNextRoute(props.currRoute)
+  const [prev, next] = props.getPrevAndNextRoute(props.currRoute)
   return (
     <nav
       className="flex flex-col md:flex-row gap-4 mt-8"

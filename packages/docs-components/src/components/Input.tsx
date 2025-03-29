@@ -45,6 +45,7 @@ export const Input = <
   }
 
   const handleFocus: ElementProps<"input">["onfocus"] = (e) => {
+    // @ts-ignore
     props?.onfocus?.(e)
     setIsFocused(true)
     setOpacity(1)

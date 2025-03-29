@@ -1,9 +1,11 @@
 import { tween } from "@kaioken-core/hooks"
 import { useComputed, useSignal } from "kaioken"
 import * as easingFunctions from "@kaioken-core/hooks/easing"
-import { DemoContainer } from "$/components/DemoContainer"
-import { Input } from "$/components/Input"
-import { Button } from "$/components/Button"
+import {
+  Input,
+  Button,
+  DemoContainer,
+} from "@kaioken-core/private-docs-components"
 
 export const UseTweenExample: Kaioken.FC = () => {
   const duration = useSignal(500)

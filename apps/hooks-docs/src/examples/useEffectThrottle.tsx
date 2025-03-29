@@ -1,7 +1,6 @@
 import { useState } from "kaioken"
 import { useEffectThrottle } from "@kaioken-core/hooks"
-import { DemoContainer } from "$/components/DemoContainer"
-import { Button } from "$/components/Button"
+import { DemoContainer, Button } from "@kaioken-core/private-docs-components"
 
 export const UseEffectThrottleExample: Kaioken.FC = () => {
   const [count, setCount] = useState(0)

@@ -1,7 +1,6 @@
-import { Button } from "$/components/Button"
-import { DemoContainer } from "$/components/DemoContainer"
 import { useRafFn } from "@kaioken-core/hooks"
 import { useComputed, useSignal } from "kaioken"
+import { Button, DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseRafFnExample: Kaioken.FC = () => {
   const count = useSignal(0)

@@ -1,5 +1,5 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { useWindowPosition } from "@kaioken-core/hooks"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseWindowPositionExample = () => {
   const { screenX, screenY } = useWindowPosition()

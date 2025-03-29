@@ -1,0 +1,45 @@
+{
+  "name": "@kaioken-core/private-docs-components",
+  "public": true,
+  "version": "0.0.8",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/main.js",
+  "module": "./dist/main.js",
+  "types": "./dist/lib/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/lib/main.d.ts",
+      "default": "./dist/main.js"
+    },
+    "./style.css": {
+      "default": "./dist/style.css"
+    }
+  },
+  "scripts": {
+    "dev": "tsc && vite build --watch",
+    "build": "tsc && vite build"
+  },
+  "peerDependencies": {
+    "kaioken": "^0.35.10"
+  },
+  "devDependencies": {
+    "@kaioken-core/components": "workspace:^",
+    "@kaioken-core/hooks": "workspace:^",
+    "kaioken": "0.35.10",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-dts": "^3.7.3",
+    "vite-plugin-static-copy": "^2.3.0"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.15",
+    "fuse.js": "^7.0.0",
+    "muuri": "^0.9.5",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss": "^4.0.14",
+    "vite-plugin-kaioken": "^0.15.0"
+  }
+}

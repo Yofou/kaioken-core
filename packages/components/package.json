@@ -14,9 +14,37 @@
       "types": "./dist/lib/main.d.ts",
       "default": "./dist/main.js"
     },
+    "./Checkbox": {
+      "types": "./dist/lib/Checkbox.d.ts",
+      "default": "./dist/Checkbox.js"
+    },
+    "./ContextMenu": {
+      "types": "./dist/lib/ContextMenu.d.ts",
+      "default": "./dist/ContextMenu.js"
+    },
+    "./Dialog": {
+      "types": "./dist/lib/Dialog.d.ts",
+      "default": "./dist/Dialog.js"
+    },
+    "./Floating": {
+      "types": "./dist/lib/Floating.d.ts",
+      "default": "./dist/Floating.js"
+    },
+    "./KeyboardStack": {
+      "types": "./dist/lib/KeyboardStack.d.ts",
+      "default": "./dist/KeyboardStack.js"
+    },
+    "./RadioGroup": {
+      "types": "./dist/lib/RadioGroup.d.ts",
+      "default": "./dist/RadioGroup.js"
+    },
     "./Slot": {
       "types": "./dist/lib/Slot.d.ts",
       "default": "./dist/Slot.js"
+    },
+    "./Tooltip": {
+      "types": "./dist/lib/Tooltip.d.ts",
+      "default": "./dist/Tooltip.js"
     }
   },
   "scripts": {
