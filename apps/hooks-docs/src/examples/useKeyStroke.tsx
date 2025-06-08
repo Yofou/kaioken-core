@@ -1,7 +1,6 @@
-import { Button } from "$/components/Button"
-import { DemoContainer } from "$/components/DemoContainer"
 import { useKeyStroke } from "@kaioken-core/hooks"
 import { useSignal } from "kaioken"
+import { Button, DemoContainer } from "@kaioken-core/private-docs-components"
 
 const transformKeys = (key: string) => {
   if (key === " ") {

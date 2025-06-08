@@ -1,7 +1,6 @@
-import { Button } from "$/components/Button"
-import { DemoContainer } from "$/components/DemoContainer"
 import { useActiveElement } from "@kaioken-core/hooks"
 import { sideEffectsEnabled, useMemo } from "kaioken"
+import { Button, DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseActiveElementExample: Kaioken.FC = () => {
   const node = useActiveElement()

@@ -1,5 +1,5 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { useMouse } from "@kaioken-core/hooks"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseMouseExample: Kaioken.FC = () => {
   const result = useMouse()

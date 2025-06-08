@@ -1,6 +1,6 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { useWindowFocus } from "@kaioken-core/hooks"
 import { twMerge } from "tailwind-merge"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseWindowFocusExample = () => {
   const [isFocused] = useWindowFocus()

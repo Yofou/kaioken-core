@@ -7,7 +7,17 @@ export default defineConfig({
     minify: false,
 
     lib: {
-      entry: ["./lib/main.tsx"],
+      entry: [
+        "./lib/main.tsx",
+        "./lib/Checkbox.tsx",
+        "./lib/ContextMenu.tsx",
+        "./lib/Dialog.tsx",
+        "./lib/Floating.tsx",
+        "./lib/KeyboardStack.tsx",
+        "./lib/RadioGroup.tsx",
+        "./lib/Slot.tsx",
+        "./lib/Tooltip.tsx",
+      ],
       name: "KaiokenCore",
       fileName: (extension, name) =>
         extension === "es" ? `${name}.js` : `${name}.${extension}.js`,

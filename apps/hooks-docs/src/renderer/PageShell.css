@@ -1,8 +1,8 @@
 /* This CSS is common to all pages */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "../../node_modules/@kaioken-core/private-docs-components/dist/config.css";
+@source '../**';
 
 :root {
   --color-bg: #151313;

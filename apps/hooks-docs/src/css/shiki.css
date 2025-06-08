@@ -29,7 +29,6 @@ pre.shiki {
   border-radius: 0.35rem;
   background: rgba(25, 18, 18, 0.8) !important;
   backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 1rem;

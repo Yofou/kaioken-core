@@ -1,0 +1,37 @@
+{
+  "name": "@kaioken-core/sortable",
+  "public": true,
+  "version": "0.0.8",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/main.js",
+  "module": "./dist/main.js",
+  "types": "./dist/lib/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/lib/main.d.ts",
+      "default": "./dist/main.js"
+    }
+  },
+  "scripts": {
+    "dev": "tsc && vite build --watch",
+    "build": "tsc && vite build"
+  },
+  "peerDependencies": {
+    "kaioken": "^0.35.10"
+  },
+  "devDependencies": {
+    "@kaioken-core/components": "workspace:^",
+    "@kaioken-core/hooks": "workspace:^",
+    "kaioken": "0.40.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-dts": "^3.7.3"
+  },
+  "dependencies": {
+    "muuri": "^0.9.5",
+    "vite-plugin-kaioken": "^0.20.1"
+  }
+}

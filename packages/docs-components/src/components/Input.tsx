@@ -1,12 +1,8 @@
-import { useRef, useState, ElementProps, SignalLike } from "kaioken"
+import { useRef, useState, ElementProps, Signal } from "kaioken"
 import { twMerge } from "tailwind-merge"
 
 type InputProps<
-  T extends
-    | string
-    | number
-    | undefined
-    | SignalLike<string | number | undefined>,
+  T extends string | number | undefined | Signal<string | number>,
 > = {
   className?: string
   value?: T
@@ -22,11 +18,7 @@ type InputProps<
 }
 
 export const Input = <
-  T extends
-    | string
-    | number
-    | undefined
-    | SignalLike<string | number | undefined>,
+  T extends string | number | undefined | Signal<string | number>,
 >(
   props: InputProps<T>
 ) => {
@@ -45,6 +37,7 @@ export const Input = <
   }
 
   const handleFocus: ElementProps<"input">["onfocus"] = (e) => {
+    // @ts-ignore
     props?.onfocus?.(e)
     setIsFocused(true)
     setOpacity(1)

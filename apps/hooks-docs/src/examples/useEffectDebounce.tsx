@@ -1,7 +1,6 @@
 import { useState } from "kaioken"
 import { useEffectDebounce } from "@kaioken-core/hooks"
-import { DemoContainer } from "$/components/DemoContainer"
-import { Button } from "$/components/Button"
+import { Button, DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseEffectDebounceExample: Kaioken.FC = () => {
   const [count, setCount] = useState(0)

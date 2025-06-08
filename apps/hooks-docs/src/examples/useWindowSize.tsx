@@ -1,5 +1,5 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { useWindowSize } from "@kaioken-core/hooks"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseWindowSizeExample = () => {
   const { width, height } = useWindowSize()

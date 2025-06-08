@@ -1,8 +1,14 @@
-import { usePageContext } from "$/context/pageContext"
 import { useSignal, useMemo } from "kaioken"
 import { twMerge } from "tailwind-merge"
 import { GlowBg } from "./GlowBG"
-import { PagesByGroup } from "$/utils/meta"
+
+type PagesByGroup = () => Map<
+  string,
+  {
+    name: string
+    url: string
+  }[]
+>
 
 type GroupProps = {
   title: string
@@ -29,11 +35,11 @@ export const Group: Kaioken.FC<GroupProps> = (props) => {
 }
 
 type LinkProps = {
+  pageCtx: any
   href?: string
 }
 export const Link: Kaioken.FC<LinkProps> = (props) => {
-  const pageCtx = usePageContext() as any
-  const isActive = pageCtx!.urlPathname === props.href
+  const isActive = props.pageCtx!.urlPathname === props.href
   return (
     <a
       href={props.href}
@@ -47,9 +53,14 @@ export const Link: Kaioken.FC<LinkProps> = (props) => {
   )
 }
 
-export const SideBar = () => {
+type SideBarProps = {
+  pageCtx: any
+  PagesByGroup: PagesByGroup
+}
+
+export const SideBar: Kaioken.FC<SideBarProps> = (props) => {
   const isFullGlow = useSignal(false)
-  const pages = useMemo(() => PagesByGroup(), [])
+  const pages = useMemo(() => props.PagesByGroup(), [])
   const groups = useMemo(() => [...pages.keys()], [pages])
 
   return (
@@ -70,7 +81,7 @@ export const SideBar = () => {
             <Group key={group} title={group}>
               {groupPages.map((page) => {
                 return (
-                  <Link key={page.url} href={page.url}>
+                  <Link key={page.url} pageCtx={props.pageCtx} href={page.url}>
                     {page.name}
                   </Link>
                 )

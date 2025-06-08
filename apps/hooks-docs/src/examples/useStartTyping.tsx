@@ -1,7 +1,6 @@
-import { DemoContainer } from "$/components/DemoContainer"
-import { Input } from "$/components/Input"
 import { useStartTyping } from "@kaioken-core/hooks"
 import { useRef } from "kaioken"
+import { DemoContainer, Input } from "@kaioken-core/private-docs-components"
 
 export const UseStartTypingExample = () => {
   const inputRef = useRef<HTMLInputElement | null>(null)

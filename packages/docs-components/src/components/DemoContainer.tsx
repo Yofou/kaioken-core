@@ -1,4 +1,4 @@
-import { disableAnimation } from "$/utils/disableAnimation"
+import { disableAnimation } from "../utils/disableAnimation"
 import { ElementProps } from "kaioken"
 import { twMerge } from "tailwind-merge"
 

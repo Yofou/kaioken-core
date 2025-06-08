@@ -1,4 +1,4 @@
-import { useGlowAngle } from "$/hooks/useGlowAngle"
+import { useGlowAngle } from "../hooks/useGlowAngle"
 import { useTweenMemo } from "@kaioken-core/hooks"
 import { useComputed } from "kaioken"
 import { sineInOut } from "@kaioken-core/hooks/easing"

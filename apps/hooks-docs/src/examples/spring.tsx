@@ -1,8 +1,10 @@
-import { Button } from "$/components/Button"
-import { DemoContainer } from "$/components/DemoContainer"
-import { Input } from "$/components/Input"
 import { useSpring } from "@kaioken-core/hooks"
 import { useComputed, useSignal, useRef } from "kaioken"
+import {
+  Button,
+  DemoContainer,
+  Input,
+} from "@kaioken-core/private-docs-components"
 
 export const UseSpringExample: Kaioken.FC = () => {
   const nextValue = useRef(100)

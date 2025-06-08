@@ -1,13 +1,12 @@
-import { Navbar } from "$/components/Navbar"
-import { SideBar } from "$/components/SideBar"
-import "@fontsource-variable/cabin"
-
-import "../css/mdx.css"
-import "../css/shiki.css"
-import { BottomNav } from "$/components/BottomNav"
 import { usePageContext } from "$/context/pageContext"
 import { useEffect } from "kaioken"
+import {
+  SideBar,
+  Navbar,
+  BottomNav,
+} from "@kaioken-core/private-docs-components"
 import { autoUpdate, computePosition, offset, shift } from "@floating-ui/dom"
+import { getPrevAndNextRoute, Pages, PagesByGroup } from "../utils/meta"
 
 export function LayoutDefault({ children }: { children: JSX.Children }) {
   const context = usePageContext()
@@ -44,12 +43,15 @@ export function LayoutDefault({ children }: { children: JSX.Children }) {
   })
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[300px,minmax(0,1fr)] gap-8 grid-rows-[max-content,1fr] items-center m-auto w-full min-h-screen">
-      <Navbar />
-      <SideBar />
+    <div className="grid grid-cols-1 md:grid-cols-[300px_minmax(0,1fr)] gap-8 grid-rows-[max-content_1fr] items-center m-auto w-full min-h-screen">
+      <Navbar pageCtx={context} Pages={Pages} />
+      <SideBar pageCtx={context} PagesByGroup={PagesByGroup} />
       <div className="max-w-[1100px] text-white justify-self-center w-full h-full p-5">
         {children}
-        <BottomNav currRoute={context!.urlPathname} />
+        <BottomNav
+          getPrevAndNextRoute={getPrevAndNextRoute}
+          currRoute={context!.urlPathname}
+        />
       </div>
     </div>
   )

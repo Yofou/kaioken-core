@@ -2,13 +2,12 @@ import { useSignal, signal, useEffect, useMemo, useRef } from "kaioken"
 import { DemoContainer } from "./DemoContainer"
 import { Input } from "./Input"
 import { useKeyDown, useStartTyping } from "@kaioken-core/hooks"
-import { Pages } from "$/utils/meta"
 import Fuse from "fuse.js"
-import { MoveUp } from "$/icons/MoveUp"
-import { MoveDown } from "$/icons/MoveDown"
-import { CornerDownLeft } from "$/icons/CornerLeft"
-import { Github } from "$/icons/Github"
-import { Discord } from "$/icons/Discord"
+import { MoveUp } from "../icons/MoveUp"
+import { MoveDown } from "../icons/MoveDown"
+import { CornerDownLeft } from "../icons/CornerLeft"
+import { Github } from "../icons/Github"
+import { Discord } from "../icons/Discord"
 import { Dialog } from "@kaioken-core/components"
 
 const keyboardList = signal(
@@ -52,11 +51,20 @@ export const CommandPaletteItem: Kaioken.FC<{ name: string; href: string }> = (
   )
 }
 
-export const CommandPalette: Kaioken.FC = () => {
+type CommandPaletteProps = {
+  Pages: Map<
+    string,
+    {
+      name: string
+    }
+  >
+}
+
+export const CommandPalette: Kaioken.FC<CommandPaletteProps> = (props) => {
   const searchValue = useSignal("")
   const inputRef = useRef<HTMLInputElement | null>(null)
   const pageList = useMemo(() => {
-    const pages = [...Pages.entries()].map(([href, item]) => ({
+    const pages = [...props.Pages.entries()].map(([href, item]) => ({
       ...item,
       href,
     }))

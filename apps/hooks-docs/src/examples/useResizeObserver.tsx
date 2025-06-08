@@ -1,6 +1,6 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { useResizeObserver } from "@kaioken-core/hooks"
 import { useRef } from "kaioken"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseResizeObserverExample = () => {
   const ref = useRef<HTMLElement | null>(null)

@@ -1,8 +1,8 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { usePageContext } from "$/context/pageContext"
 import { useElementVisibility } from "@kaioken-core/hooks"
 import { Portal } from "kaioken"
 import { twMerge } from "tailwind-merge"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseElementVisibilityExample: Kaioken.FC = () => {
   const [ref, isVisible] = useElementVisibility<HTMLParagraphElement>()

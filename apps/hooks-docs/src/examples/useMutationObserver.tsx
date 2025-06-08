@@ -1,7 +1,7 @@
-import { DemoContainer } from "$/components/DemoContainer"
 import { useMutationObserver } from "@kaioken-core/hooks"
 import { useSignal, useEffect, useRef } from "kaioken"
 import { twMerge } from "tailwind-merge"
+import { DemoContainer } from "@kaioken-core/private-docs-components"
 
 export const UseMutationObserverExample: Kaioken.FC = () => {
   const el = useRef<HTMLElement | null>(null)
