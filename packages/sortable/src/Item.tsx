@@ -1,4 +1,10 @@
-import { ElementProps, useContext, useSignal, useWatch } from "kaioken"
+import {
+  ElementProps,
+  useContext,
+  useEffect,
+  useSignal,
+  useWatch,
+} from "kaioken"
 import { GridProvider } from "./Grid"
 import { Signal } from "kaioken"
 import { Item as MuuriItem } from "muuri"
@@ -24,12 +30,22 @@ export const Item = (props: ItemProps) => {
   const itemEl = useSignal<HTMLDivElement | null>(null)
   const gridInstance = useContext(GridProvider)
 
+  useEffect(() => {
+    return () => {
+      gridInstance?.value?.remove
+    }
+  }, [])
+
   useWatch(() => {
     if (!itemEl.value || !gridInstance?.value) {
       return () => {}
     }
 
-    const itemInstance = gridInstance.value.getItem(itemEl.value)
+    let itemInstance = gridInstance.value.getItem(itemEl.value)
+    if (!itemInstance) {
+      ;[itemInstance] = gridInstance.value.add(itemEl.value)
+    }
+
     if (ref && Signal.isSignal(ref)) {
       ref.value = itemInstance
     } else if (ref) {
@@ -37,6 +53,12 @@ export const Item = (props: ItemProps) => {
     }
 
     return () => {
+      if (itemInstance) {
+        gridInstance.value?.remove([itemInstance], {
+          layout: "instant",
+        })
+      }
+
       if (ref && Signal.isSignal(ref)) {
         ref.value = null
       } else if (ref) {

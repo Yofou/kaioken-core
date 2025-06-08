@@ -1,9 +1,11 @@
 import { Slot } from "@kaioken-core/components/Slot"
 import {
   createContext,
+  Derive,
   ElementProps,
   Signal,
   useEffect,
+  useRef,
   useSignal,
   useWatch,
 } from "kaioken"
@@ -129,6 +131,7 @@ export const Grid = (props: GridProps) => {
   const Container = asChild ? Slot : "div"
   const containerRef = useSignal<HTMLDivElement | null>(null)
   const muuriInstance = useSignal<Muuri | null>(null)
+  const attachedEvents = useRef<Record<string, Function>>({})
   const hasLoaded = useSignal(false)
 
   useEffect(() => {
@@ -166,39 +169,46 @@ export const Grid = (props: GridProps) => {
       }
     }
   }
+
   useWatch(handleGridInit)
   useEffect(handleGridInit, [rest.dragSort, hasLoaded.value])
 
   const handleEventAttaching = () => {
-    if (!muuriInstance.value) {
-      return () => {}
+    const cleanupFn = () => {
+      if (
+        !muuriInstance.value ||
+        Object.keys(attachedEvents.current).length === 0
+      ) {
+        return
+      }
+
+      for (let [eventFnName, eventFn] of Object.entries(
+        attachedEvents.current
+      )) {
+        const eventName =
+          ComponentEventToGridEvent[eventFnName as keyof KaiokenGridEvents]
+
+        muuriInstance.value.off(eventName, eventFn as any)
+      }
+    }
+
+    if (!muuriInstance.value || !hasLoaded.value) {
+      return cleanupFn
     }
 
     for (let [eventFnName, eventFn] of Object.entries(Events)) {
-      if (!eventFn) {
+      if (!eventFn || attachedEvents.current[eventFnName]) {
         continue
       }
 
       const eventName =
         ComponentEventToGridEvent[eventFnName as keyof KaiokenGridEvents]
       muuriInstance.value.on(eventName, eventFn)
+
+      attachedEvents.current[eventName] = eventFn
     }
 
-    return () => {
-      if (!muuriInstance.value) {
-        return
-      }
-
-      for (let [eventFnName, eventFn] of Object.entries(Events)) {
-        if (!eventFn) {
-          continue
-        }
-
-        const eventName =
-          ComponentEventToGridEvent[eventFnName as keyof KaiokenGridEvents]
-        muuriInstance.value.off(eventName, eventFn)
-      }
-    }
+    return cleanupFn
   }
 
   useWatch(handleEventAttaching)
@@ -233,7 +243,11 @@ export const Grid = (props: GridProps) => {
   return (
     <GridProvider.Provider value={muuriInstance}>
       <Container ref={containerRef} style={`position: ${position}`} {...rest}>
-        {hasLoaded.value ? children : null}
+        <Derive from={hasLoaded}>
+          {(loaded) => {
+            return loaded ? children : null
+          }}
+        </Derive>
       </Container>
     </GridProvider.Provider>
   )
