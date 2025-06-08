@@ -1,0 +1,26 @@
+import { UseCrossTabMainExample } from "$/examples/useCrossTab"
+
+# useCrossTab
+
+The useCrossTab hook provides a synchronized state across multiple tabs (or iframes) of the same origin using the BroadcastChannel API. It works similarly to **useSignal**, but any changes to the state are broadcasted to all open tabs, ensuring consistent state updates across different browser contexts.
+
+## Demo
+
+<UseCrossTabMainExample />
+
+## Usage
+
+```tsx
+const count = useCrossTab("counter", 0)
+count.value += 1
+```
+
+## Type Declaration
+
+```tsx twoslash
+import { useCrossTab } from "@kaioken-core/hooks"
+
+const count = useCrossTab("counter", 0)
+
+count.value += 1
+```

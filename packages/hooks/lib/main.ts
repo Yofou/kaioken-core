@@ -27,6 +27,7 @@ import { useSpringMemo } from "../src/useSpringMemo"
 import { useElementByPoint } from "../src/useElementByPoint"
 import { useWindowPosition } from "../src/useWindowPosition"
 import { useMouseInElement } from "../src/useMouseInElement"
+import { useCrossTab } from "../src/useCrossTab"
 
 export {
   useMouse,
@@ -62,4 +63,5 @@ export {
   useElementByPoint,
   useWindowPosition,
   useMouseInElement,
+  useCrossTab,
 }

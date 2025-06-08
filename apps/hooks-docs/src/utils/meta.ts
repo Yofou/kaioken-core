@@ -1,5 +1,11 @@
 export const Pages = new Map([
   [
+    "/state/useCrossTab",
+    {
+      name: "useCrossTab",
+    },
+  ],
+  [
     "/state/useEffectDeep",
     {
       name: "useEffectDeep",
