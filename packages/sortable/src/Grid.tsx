@@ -4,6 +4,7 @@ import {
   Derive,
   ElementProps,
   Signal,
+  useAppContext,
   useEffect,
   useRef,
   useSignal,
@@ -11,6 +12,7 @@ import {
 } from "kaioken"
 import Muuri from "muuri"
 import { type GridOptions, type GridEvents } from "muuri"
+import { _internalGridToSignal, hasLastItemMovedGrid } from "./util"
 
 type Eventify<T extends string> = `on${Capitalize<T>}`
 
@@ -25,6 +27,7 @@ type GridProps = Kaioken.FCProps<
     ref?: Kaioken.MutableRefObject<Muuri | null> | Signal<Muuri | null>
     asChild?: boolean
     position?: "relative" | "absolute" | "fixed"
+    signal?: Signal<any[]>
   } & Omit<ElementProps<"div">, "ref"> &
     GridOptions &
     Partial<KaiokenGridEvents>
@@ -69,6 +72,7 @@ export const Grid = (props: GridProps) => {
   const {
     asChild,
     position = "relative",
+    signal,
     ref,
     children,
     onAdd,
@@ -98,6 +102,8 @@ export const Grid = (props: GridProps) => {
     onDragReleaseStart,
     ...rest
   } = props
+
+  const appContext = useAppContext()
 
   const Events = {
     onAdd,
@@ -145,6 +151,7 @@ export const Grid = (props: GridProps) => {
     if (!containerRef.value) {
       return () => {}
     } else if (MuuriModule.peek()) {
+      console.log("creating a new muri?")
       muuriInstance.value = new (MuuriModule.value as typeof Muuri)(
         containerRef.value,
         rest
@@ -156,9 +163,14 @@ export const Grid = (props: GridProps) => {
         ref.current = muuriInstance.value
       }
 
+      if (signal) {
+        _internalGridToSignal.set(muuriInstance.value, signal)
+      }
+
       return () => {
         if (muuriInstance.value) {
           muuriInstance.value.destroy()
+          _internalGridToSignal.delete(muuriInstance.value)
         }
 
         if (Signal.isSignal(ref)) {
@@ -239,6 +251,90 @@ export const Grid = (props: GridProps) => {
     onDragReleaseEnd,
     onDragReleaseStart,
   ])
+
+  const onDragRelease: GridEvents["dragReleaseEnd"] = () => {
+    console.log("drag release", signal?.displayName)
+    if (signal?.value) {
+      appContext.scheduler?.nextIdle(() => {
+        signal.notify()
+      })
+    }
+  }
+
+  useWatch(() => {
+    if (!muuriInstance.value || !hasLoaded.value || !signal?.value) {
+      return () => {}
+    }
+
+    const onSend: GridEvents["send"] = (data) => {
+      const fromGridSignal = _internalGridToSignal.get(data.fromGrid)
+      const toGridSignal = _internalGridToSignal.get(data.toGrid)
+      hasLastItemMovedGrid.value = true
+
+      if (!fromGridSignal || !toGridSignal) {
+        console.warn(
+          "Sent Item from or to a grid, not hooked up with @kaioken-core/sortable"
+        )
+        return
+      }
+
+      const fromCopy = [...fromGridSignal.value]
+      fromCopy.splice(data.fromIndex, 1)
+
+      const toCopy = [...toGridSignal.value]
+      toCopy.splice(data.toIndex, 0, fromGridSignal.value[data.fromIndex])
+
+      console.log(data.fromIndex, data.toIndex, [...toCopy])
+
+      fromGridSignal.sneak(fromCopy)
+      toGridSignal.sneak(toCopy)
+
+      const triggerVNodeUpdate = () => {
+        console.log(
+          "trigger layout end event for ",
+          fromGridSignal.displayName,
+          fromGridSignal.value
+        )
+        appContext.scheduler?.nextIdle(() => {
+          fromGridSignal.notify()
+        })
+        data.fromGrid.off("layoutEnd", triggerVNodeUpdate)
+      }
+      data.fromGrid.on("layoutEnd", triggerVNodeUpdate)
+    }
+
+    const onMove: GridEvents["move"] = (data) => {
+      console.log("move")
+      if (!signal.value) {
+        return
+      }
+
+      const copy = [...signal.value]
+      if (data.action === "move") {
+        copy.splice(data.fromIndex, 1)
+        copy.splice(data.toIndex, 0, signal.value[data.fromIndex])
+      } else if (data.action === "swap") {
+        ;[copy[data.toIndex], copy[data.fromIndex]] = [
+          copy[data.fromIndex],
+          copy[data.toIndex],
+        ]
+      }
+
+      signal.sneak(copy)
+    }
+
+    muuriInstance.value.on("move", onMove)
+    muuriInstance.value.on("dragReleaseEnd", onDragRelease)
+    muuriInstance.value.on("send", onSend)
+
+    return () => {
+      if (muuriInstance.value) {
+        muuriInstance.value.off("move", onMove)
+        muuriInstance.value.off("dragReleaseEnd", onDragRelease)
+        muuriInstance.value.off("send", onSend)
+      }
+    }
+  })
 
   return (
     <GridProvider.Provider value={muuriInstance}>

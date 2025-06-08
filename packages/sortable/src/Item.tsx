@@ -1,13 +1,14 @@
 import {
   ElementProps,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useSignal,
   useWatch,
 } from "kaioken"
 import { GridProvider } from "./Grid"
 import { Signal } from "kaioken"
 import { Item as MuuriItem } from "muuri"
+import { _internalGridToSignal, hasLastItemMovedGrid } from "./util"
 
 type ItemProps = Kaioken.FCProps<
   Omit<ElementProps<"div">, "ref"> & {
@@ -15,6 +16,7 @@ type ItemProps = Kaioken.FCProps<
     innerStyle?: string
     innerProps?: ElementProps<"div">
     ref?: Kaioken.MutableRefObject<MuuriItem | null> | Signal<MuuriItem | null>
+    index?: number
   }
 >
 
@@ -22,17 +24,32 @@ export const Item = (props: ItemProps) => {
   const {
     innerProps = {},
     innerStyle,
+    key,
     innerClassName,
     children,
     ref,
+    index,
     ...outerProps
   } = props
   const itemEl = useSignal<HTMLDivElement | null>(null)
   const gridInstance = useContext(GridProvider)
 
-  useEffect(() => {
-    return () => {
-      gridInstance?.value?.remove
+  useLayoutEffect(() => {
+    if (!gridInstance?.value) {
+      return () => {}
+    }
+
+    if (index != null) {
+      const previousItem = gridInstance.value.getItem(index)
+
+      if (
+        previousItem?.getElement()?.dataset.sortableKey === key &&
+        hasLastItemMovedGrid.peek()
+      ) {
+        console.log("removing", previousItem, previousItem?.getElement())
+        gridInstance.value.remove([previousItem!])
+        previousItem?.getElement()?.remove()
+      }
     }
   }, [])
 
@@ -42,8 +59,17 @@ export const Item = (props: ItemProps) => {
     }
 
     let itemInstance = gridInstance.value.getItem(itemEl.value)
+
     if (!itemInstance) {
-      ;[itemInstance] = gridInstance.value.add(itemEl.value)
+      ;[itemInstance] = gridInstance.value.add(
+        itemEl.value,
+        index != null
+          ? {
+              index,
+              layout: "instant",
+            }
+          : {}
+      )
     }
 
     if (ref && Signal.isSignal(ref)) {
@@ -68,7 +94,12 @@ export const Item = (props: ItemProps) => {
   })
 
   return (
-    <div style={"position: absolute;"} {...outerProps} ref={itemEl}>
+    <div
+      style={"position: absolute;"}
+      data-sortable-key={key}
+      {...outerProps}
+      ref={itemEl}
+    >
       <div style={innerStyle} className={innerClassName} {...innerProps}>
         {children}
       </div>

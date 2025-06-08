@@ -1,19 +1,6 @@
 import { ContextMenu, Tooltip } from "@kaioken-core/components"
-import {
-  Derive,
-  For,
-  Signal,
-  useCallback,
-  useComputed,
-  useEffect,
-  useMemo,
-  useRef,
-  useSignal,
-  useState,
-  useWatch,
-} from "kaioken"
+import { For, useComputed, useMemo, useSignal, useWatch } from "kaioken"
 import * as Sortable from "@kaioken-core/sortable"
-import Grid, { type Item } from "muuri"
 
 export { Page }
 
@@ -64,74 +51,61 @@ const TestTooltipMenu: Kaioken.FC = () => {
 function Page() {
   const grid1 = useSignal(null)
   const grid2 = useSignal(null)
-  const grid3 = useSignal(null)
 
-  const items1 = useSignal([
-    {
-      name: "Hello world",
-      class: "bg-black",
-    },
-    {
-      name: "boop 1",
-      class: "bg-red-950",
-    },
-    {
-      name: "boop 2",
-      class: "bg-green-950",
-    },
-    {
-      name: "boop 3",
-      class: "bg-purple-950",
-    },
-  ])
-  const items2 = useSignal([
-    {
-      name: "Hello world",
-      class: "bg-black",
-    },
-    {
-      name: "boop 1",
-      class: "bg-red-950",
-    },
-    {
-      name: "boop 2",
-      class: "bg-green-950",
-    },
-    {
-      name: "boop 3",
-      class: "bg-purple-950",
-    },
-  ])
-  const items3 = useSignal([
-    {
-      name: "Hello world",
-      class: "bg-black",
-    },
-    {
-      name: "boop 1",
-      class: "bg-red-950",
-    },
-    {
-      name: "boop 2",
-      class: "bg-green-950",
-    },
-    {
-      name: "boop 3",
-      class: "bg-purple-950",
-    },
-  ])
-
-  const onMove = useCallback(() => {
-    console.log("moved")
+  const dragSort = useMemo(() => {
+    return () => [grid1.peek(), grid2.peek()]
   }, [])
 
-  const dragSort = useCallback(() => {
-    if (!grid1.value || !grid2.value || !grid3.value) {
-      return []
-    }
+  const items1 = useSignal(
+    [
+      {
+        name: "Hello world",
+        class: "bg-black",
+      },
+      {
+        name: "boop 1",
+        class: "bg-red-950",
+      },
+      {
+        name: "boop 2",
+        class: "bg-green-950",
+      },
+      {
+        name: "boop 3",
+        class: "bg-purple-950",
+      },
+    ],
+    "grid item 1"
+  )
 
-    return [grid1.value, grid3.value, grid2.value]
-  }, [])
+  const items2 = useSignal(
+    [
+      {
+        name: "John doe",
+        class: "bg-blue-950",
+      },
+      {
+        name: "boop 4",
+        class: "bg-pink-950",
+      },
+      {
+        name: "boop 5",
+        class: "bg-yellow-950",
+      },
+      {
+        name: "boop 6",
+        class: "bg-gray-950",
+      },
+    ],
+    "grid item 2"
+  )
+
+  useWatch(() => {
+    console.log("Im listening to grid 1 ", items1.value)
+  })
+  useWatch(() => {
+    console.log("Im listening to grid 2 ", items2.value)
+  })
 
   return (
     <div className={"w-full flex justify-center mx-auto gap-10"}>
@@ -139,14 +113,16 @@ function Page() {
         className="w-full max-w-[500px] border border-red-300"
         dragEnabled
         ref={grid1}
+        signal={items1}
         dragSort={dragSort}
         dragAxis="xy"
       >
         <For each={items1}>
-          {(item) => {
+          {(item, i) => {
             return (
               <Sortable.Item
-                key={"grid-1-boop-1"}
+                key={item.name}
+                index={i}
                 className={"w-full max-w-[500px]"}
               >
                 <div className={`w-full ${item.class} h-[300px]`}>
@@ -159,41 +135,19 @@ function Page() {
       </Sortable.Grid>
 
       <Sortable.Grid
-        className="w-full max-w-[501px] border border-green-300"
-        ref={grid2}
-        dragSort={dragSort}
+        className="w-full max-w-[500px] border border-red-300"
         dragEnabled
+        ref={grid2}
+        signal={items2}
+        dragSort={dragSort}
         dragAxis="xy"
       >
         <For each={items2}>
-          {(item) => {
+          {(item, i) => {
             return (
               <Sortable.Item
-                key={"grid-1-boop-1"}
-                className={"w-full max-w-[500px]"}
-              >
-                <div className={`w-full ${item.class} h-[300px]`}>
-                  {item.name}
-                </div>
-              </Sortable.Item>
-            )
-          }}
-        </For>
-      </Sortable.Grid>
-
-      <Sortable.Grid
-        className="w-full max-w-[501px] border border-green-300"
-        ref={grid3}
-        dragSort={dragSort}
-        dragEnabled
-        dragAxis="xy"
-        onMove={onMove}
-      >
-        <For each={items3}>
-          {(item) => {
-            return (
-              <Sortable.Item
-                key={"grid-1-boop-1"}
+                key={item.name}
+                index={i}
                 className={"w-full max-w-[500px]"}
               >
                 <div className={`w-full ${item.class} h-[300px]`}>
