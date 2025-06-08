@@ -9,7 +9,7 @@ import {
   useRef,
 } from "kaioken"
 import { Slot, Slottable } from "../Slot"
-import { styleObjectToCss } from "kaioken/utils"
+import { styleObjectToString } from "kaioken/utils"
 
 const RootContext = createContext<{
   name: string
@@ -76,7 +76,7 @@ export const Item: Kaioken.FC<ItemProps> = (props) => {
   const radioGroupContext = useContext(RootContext)
   const Container = asChild ? Slot : "label"
   const inputStyles = useMemo(() => {
-    return styleObjectToCss({
+    return styleObjectToString({
       pointerEvents: "none",
       opacity: "0",
       position: "absolute",

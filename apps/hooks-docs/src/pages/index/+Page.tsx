@@ -1,6 +1,6 @@
 import { Button } from "$/components/Button"
 import { Pages } from "$/utils/meta"
-import { navigate } from "kaioken"
+import { navigate } from "kaioken/router"
 import Bash from "./bash.mdx"
 
 export { Page }
