@@ -4,7 +4,6 @@ import {
   Derive,
   ElementProps,
   Signal,
-  useAppContext,
   useEffect,
   useRef,
   useSignal,
@@ -102,8 +101,6 @@ export const Grid = (props: GridProps) => {
     onDragReleaseStart,
     ...rest
   } = props
-
-  const appContext = useAppContext()
 
   const Events = {
     onAdd,
@@ -255,9 +252,7 @@ export const Grid = (props: GridProps) => {
   const onDragRelease: GridEvents["dragReleaseEnd"] = () => {
     console.log("drag release", signal?.displayName)
     if (signal?.value) {
-      appContext.scheduler?.nextIdle(() => {
-        signal.notify()
-      })
+      signal.notify()
     }
   }
 
@@ -295,12 +290,10 @@ export const Grid = (props: GridProps) => {
           fromGridSignal.displayName,
           fromGridSignal.value
         )
-        appContext.scheduler?.nextIdle(() => {
-          fromGridSignal.notify()
-        })
-        data.fromGrid.off("layoutEnd", triggerVNodeUpdate)
+        fromGridSignal.notify()
+        data.toGrid.off("dragReleaseEnd", triggerVNodeUpdate)
       }
-      data.fromGrid.on("layoutEnd", triggerVNodeUpdate)
+      data.toGrid.on("dragReleaseEnd", triggerVNodeUpdate)
     }
 
     const onMove: GridEvents["move"] = (data) => {
