@@ -1,4 +1,4 @@
-import { styleObjectToCss } from "kaioken/utils"
+import { styleObjectToString } from "kaioken/utils"
 import { setPolyRef } from "../utils"
 
 const styleStringToObject = (value: string | null | undefined) => {
@@ -38,7 +38,7 @@ export const mergeEventProps = (slotProps: any, childProps: any) => {
           ? slotProps[key]
           : styleStringToObject(slotProps[key])
 
-      newProps[key] = styleObjectToCss({
+      newProps[key] = styleObjectToString({
         ...childStyle,
         ...slotStyle,
       })

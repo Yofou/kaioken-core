@@ -9,7 +9,7 @@ import {
   useMemo,
 } from "kaioken"
 import { Slot } from "../Slot"
-import { styleObjectToCss } from "kaioken/utils"
+import { styleObjectToString } from "kaioken/utils"
 import { GroupContext } from "./group"
 
 export const ItemContext = createContext<{
@@ -32,7 +32,7 @@ export const Item: Kaioken.FC<ItemProps> = (props) => {
   const internalChecked = useSignal(false)
   const checked = propChecked ?? internalChecked
   const inputStyles = useMemo(() => {
-    return styleObjectToCss({
+    return styleObjectToString({
       pointerEvents: "none",
       opacity: "0",
       position: "absolute",

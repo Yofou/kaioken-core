@@ -1,7 +1,7 @@
 import { sideEffectsEnabled, useSignal, useHook } from "kaioken"
 
 export const findMountedDomRecursive = <T extends Element>(
-  vNode?: Kaioken.VNode
+  vNode?: Kaioken.VNode | null
 ): T | undefined => {
   if (!vNode) return undefined
   const stack: Kaioken.VNode[] = [vNode]

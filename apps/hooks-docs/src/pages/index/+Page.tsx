@@ -1,5 +1,5 @@
 import { Pages } from "$/utils/meta"
-import { navigate } from "kaioken"
+import { navigate } from "kaioken/router"
 import Bash from "./bash.mdx"
 import { Button } from "@kaioken-core/private-docs-components"
 
