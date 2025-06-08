@@ -25,13 +25,13 @@
   "devDependencies": {
     "@kaioken-core/components": "workspace:^",
     "@kaioken-core/hooks": "workspace:^",
-    "kaioken": "0.35.10",
+    "kaioken": "0.40.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.7.3"
   },
   "dependencies": {
     "muuri": "^0.9.5",
-    "vite-plugin-kaioken": "^0.15.0"
+    "vite-plugin-kaioken": "^0.20.1"
   }
 }

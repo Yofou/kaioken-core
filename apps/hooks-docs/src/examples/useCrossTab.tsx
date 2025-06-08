@@ -1,6 +1,5 @@
-import { Button } from "$/components/Button"
-import { DemoContainer } from "$/components/DemoContainer"
 import { useCrossTab } from "@kaioken-core/hooks"
+import { DemoContainer, Button } from "@kaioken-core/private-docs-components"
 
 export const UseCrossTabMainExample = () => {
   const counter = useCrossTab("counter", 0)

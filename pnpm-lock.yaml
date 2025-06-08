@@ -210,8 +210,8 @@ importers:
         specifier: ^4.0.14
         version: 4.1.8
       vite-plugin-kaioken:
-        specifier: ^0.15.0
-        version: 0.15.0(kaioken@0.35.10)
+        specifier: ^0.20.1
+        version: 0.20.1(kaioken@0.40.1)
     devDependencies:
       "@kaioken-core/components":
         specifier: workspace:^
@@ -220,8 +220,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       kaioken:
-        specifier: 0.35.10
-        version: 0.35.10
+        specifier: 0.40.1
+        version: 0.40.1
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
@@ -260,8 +260,8 @@ importers:
         specifier: ^0.9.5
         version: 0.9.5
       vite-plugin-kaioken:
-        specifier: ^0.15.0
-        version: 0.15.0(kaioken@0.35.10)
+        specifier: ^0.20.1
+        version: 0.20.1(kaioken@0.40.1)
     devDependencies:
       "@kaioken-core/components":
         specifier: workspace:^
@@ -270,8 +270,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       kaioken:
-        specifier: 0.35.10
-        version: 0.35.10
+        specifier: 0.40.1
+        version: 0.40.1
       typescript:
         specifier: ^5.3.3
         version: 5.5.4
@@ -2804,12 +2804,6 @@ packages:
         integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==,
       }
 
-  kaioken@0.35.10:
-    resolution:
-      {
-        integrity: sha512-2Xa4qNtuYfI5i0qiR24S3GaP3ZVLO43M58cRsMWvh7ajXB2JNfZLrDpR1uEArICajMSHhAe358Nc4DTMkr1chQ==,
-      }
-
   kaioken@0.40.1:
     resolution:
       {
@@ -4467,14 +4461,6 @@ packages:
       vite:
         optional: true
 
-  vite-plugin-kaioken@0.15.0:
-    resolution:
-      {
-        integrity: sha512-VL5xqgbxQKod98qNWESLmjnl6AakijdLrZqQrzz4PMugTzYREJh5MWLxL0kje1jyVJr/CxapXNHGE7NLQ5qqfA==,
-      }
-    peerDependencies:
-      kaioken: ">=0.35.0"
-
   vite-plugin-kaioken@0.20.1:
     resolution:
       {
@@ -6073,8 +6059,6 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  kaioken@0.35.10: {}
-
   kaioken@0.40.1: {}
 
   kolorist@1.8.0: {}
@@ -7270,10 +7254,6 @@ snapshots:
       - "@types/node"
       - rollup
       - supports-color
-
-  vite-plugin-kaioken@0.15.0(kaioken@0.35.10):
-    dependencies:
-      kaioken: 0.35.10
 
   vite-plugin-kaioken@0.20.1(kaioken@0.40.1):
     dependencies:
