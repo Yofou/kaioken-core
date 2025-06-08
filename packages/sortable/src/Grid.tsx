@@ -148,7 +148,6 @@ export const Grid = (props: GridProps) => {
     if (!containerRef.value) {
       return () => {}
     } else if (MuuriModule.peek()) {
-      console.log("creating a new muri?")
       muuriInstance.value = new (MuuriModule.value as typeof Muuri)(
         containerRef.value,
         rest
@@ -250,7 +249,6 @@ export const Grid = (props: GridProps) => {
   ])
 
   const onDragRelease: GridEvents["dragReleaseEnd"] = () => {
-    console.log("drag release", signal?.displayName)
     if (signal?.value) {
       signal.notify()
     }
@@ -279,17 +277,10 @@ export const Grid = (props: GridProps) => {
       const toCopy = [...toGridSignal.value]
       toCopy.splice(data.toIndex, 0, fromGridSignal.value[data.fromIndex])
 
-      console.log(data.fromIndex, data.toIndex, [...toCopy])
-
       fromGridSignal.sneak(fromCopy)
       toGridSignal.sneak(toCopy)
 
       const triggerVNodeUpdate = () => {
-        console.log(
-          "trigger layout end event for ",
-          fromGridSignal.displayName,
-          fromGridSignal.value
-        )
         fromGridSignal.notify()
         data.toGrid.off("dragReleaseEnd", triggerVNodeUpdate)
       }
@@ -297,7 +288,6 @@ export const Grid = (props: GridProps) => {
     }
 
     const onMove: GridEvents["move"] = (data) => {
-      console.log("move")
       if (!signal.value) {
         return
       }

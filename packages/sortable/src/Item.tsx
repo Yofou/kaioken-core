@@ -46,7 +46,6 @@ export const Item = (props: ItemProps) => {
         previousItem?.getElement()?.dataset.sortableKey === key &&
         hasLastItemMovedGrid.peek()
       ) {
-        console.log("removing", previousItem, previousItem?.getElement())
         gridInstance.value.remove([previousItem!])
         previousItem?.getElement()?.remove()
       }
