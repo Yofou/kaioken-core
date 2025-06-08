@@ -11,12 +11,10 @@ resizes a text area to always fit the content
 ## Usage
 
 ```tsx twoslash
-import { useModel } from "kaioken"
+import { useRef } from "kaioken"
 import { useTextareaAutoSize } from "@kaioken-core/hooks"
 
 // ---cut---
-const [ref, value] = useModel<HTMLTextAreaElement>(
-  "Press enter to resize text area"
-)
+const ref = useRef<HTMLTextAreaElement>(null)
 const controls = useTextareaAutoSize(ref)
 ```

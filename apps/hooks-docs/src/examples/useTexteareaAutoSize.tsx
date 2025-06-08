@@ -1,11 +1,10 @@
 import { DemoContainer } from "$/components/DemoContainer"
 import { useTextareaAutoSize } from "@kaioken-core/hooks"
-import { useModel } from "kaioken"
+import { useRef, useSignal } from "kaioken"
 
 export const UseTextareaAutoSizeExample = () => {
-  const [ref, value] = useModel<HTMLTextAreaElement>(
-    "Press enter to resize text area"
-  )
+  const value = useSignal("Press enter to resize text area")
+  const ref = useRef<HTMLTextAreaElement>(null)
   useTextareaAutoSize(ref)
 
   return (
@@ -13,7 +12,7 @@ export const UseTextareaAutoSizeExample = () => {
       <textarea
         className="h-12 w-full cursor-default rounded-md border border-gray-800 bg-[#121212] p-3.5 text-gray-100 transition-colors duration-500 placeholder:select-none placeholder:text-gray-500 focus:border-red focus:outline-none"
         ref={ref}
-        value={value}
+        bind:value={value}
       />
     </DemoContainer>
   )
