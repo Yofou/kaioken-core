@@ -59,3 +59,5 @@ export function getInterpolator<T>(a: T, b: T): (t: number) => T {
 
   throw new Error(`Cannot interpolate ${type} values`)
 }
+
+export const noop = Object.freeze(() => {})

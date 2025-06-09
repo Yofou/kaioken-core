@@ -1,5 +1,5 @@
-import { noop } from "kaioken/utils"
 import { Task } from "./types"
+import { noop } from "./utils"
 
 /*
   Copied from https://github.com/sveltejs/svelte/tree/main/packages/svelte/src/motion
