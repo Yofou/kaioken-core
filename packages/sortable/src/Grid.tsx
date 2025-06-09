@@ -148,6 +148,7 @@ export const Grid = (props: GridProps) => {
     if (!containerRef.value) {
       return () => {}
     } else if (MuuriModule.peek()) {
+      console.log("creatinging muri")
       muuriInstance.value = new (MuuriModule.value as typeof Muuri)(
         containerRef.value,
         rest
