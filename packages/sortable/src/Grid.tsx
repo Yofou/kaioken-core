@@ -148,7 +148,6 @@ export const Grid = (props: GridProps) => {
     if (!containerRef.value) {
       return () => {}
     } else if (MuuriModule.peek()) {
-      console.log("creatinging muri")
       muuriInstance.value = new (MuuriModule.value as typeof Muuri)(
         containerRef.value,
         rest
@@ -184,6 +183,7 @@ export const Grid = (props: GridProps) => {
 
   const handleEventAttaching = () => {
     const cleanupFn = () => {
+      // memory leak is happening here, for some reason, they're not getting cleaned up properly
       if (
         !muuriInstance.value ||
         Object.keys(attachedEvents.current).length === 0
@@ -263,7 +263,7 @@ export const Grid = (props: GridProps) => {
     const onSend: GridEvents["send"] = (data) => {
       const fromGridSignal = _internalGridToSignal.get(data.fromGrid)
       const toGridSignal = _internalGridToSignal.get(data.toGrid)
-      hasLastItemMovedGrid.value = true
+      hasLastItemMovedGrid.value = data.item
 
       if (!fromGridSignal || !toGridSignal) {
         console.warn(

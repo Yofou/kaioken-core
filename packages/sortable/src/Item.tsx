@@ -28,7 +28,6 @@ export const Item = (props: ItemProps) => {
     innerClassName,
     children,
     ref,
-    index,
     ...outerProps
   } = props
   const itemEl = useSignal<HTMLDivElement | null>(null)
@@ -39,28 +38,16 @@ export const Item = (props: ItemProps) => {
       return () => {}
     }
 
-    if (index != null) {
-      const previousItem = gridInstance.value.getItem(index)
-
-      if (
-        previousItem?.getElement()?.dataset.sortableKey === key &&
-        hasLastItemMovedGrid.peek()
-      ) {
-        gridInstance.value.remove([previousItem!])
-        previousItem?.getElement()?.remove()
-      }
-    }
-  }, [])
-
-  useWatch(() => {
-    if (!itemEl.value || !gridInstance?.value) {
-      return () => {}
-    }
-
-    let itemInstance = gridInstance.value.getItem(itemEl.value)
-
-    if (!itemInstance) {
-      ;[itemInstance] = gridInstance.value.add(
+    const previousItem = hasLastItemMovedGrid.peek()
+    // @ts-expect-error
+    const index = gridInstance.value._items.indexOf(previousItem)
+    if (
+      previousItem?.getElement()?.dataset?.sortableKey === key &&
+      itemEl.value
+    ) {
+      gridInstance.value.remove([previousItem!])
+      previousItem?.getElement()?.remove()
+      gridInstance.value.add(
         itemEl.value,
         index != null
           ? {
@@ -70,6 +57,16 @@ export const Item = (props: ItemProps) => {
           : {}
       )
     }
+
+    return () => {}
+  }, [])
+
+  useWatch(() => {
+    if (!itemEl.value || !gridInstance?.value) {
+      return () => {}
+    }
+
+    let itemInstance = gridInstance.value.getItem(itemEl.value)
 
     if (ref && Signal.isSignal(ref)) {
       ref.value = itemInstance
@@ -96,6 +93,7 @@ export const Item = (props: ItemProps) => {
     <div
       style={"position: absolute;"}
       data-sortable-key={key}
+      key={key}
       {...outerProps}
       ref={itemEl}
     >
