@@ -10,7 +10,7 @@
     "release:major:hooks": "cd ./packages/hooks && pnpm build && pnpm version major && git add . && git commit -a -m 'hooks version bump' && git push && pnpm publish",
     "release:minor:hooks": "cd ./packages/hooks && pnpm build && pnpm version minor && git add . && git commit -a -m 'hooks version bump' && git push && pnpm publish",
     "release:patch:hooks": "cd ./packages/hooks && pnpm build && pnpm version patch && git add . && git commit -a -m 'hooks version bump' && git push && pnpm publish",
-    "release:__pre:components": "cd ./packages/components && pnpm build && pnpm version prerelease && git add . && git commit -a -m 'components version bump' && git push && pnpm publish",
+    "release:__pre:components": "cd ./packages/components && pnpm build && pnpm version prerelease && git add . && git commit -a -m 'components version bump' && git push && pnpm publish --access=public",
     "release:major:components": "cd ./packages/components && pnpm build && pnpm version major && git add . && git commit -a -m 'components version bump' && git push && pnpm publish",
     "release:minor:components": "cd ./packages/components && pnpm build && pnpm version minor && git add . && git commit -a -m 'components version bump' && git push && pnpm publish",
     "release:patch:components": "cd ./packages/components && pnpm build && pnpm version patch && git add . && git commit -a -m 'components version bump' && git push && pnpm publish"
